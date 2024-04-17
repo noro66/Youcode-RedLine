@@ -12,6 +12,7 @@ import MyServices from "./pages/myServices/MyServices.jsx";
 import Add from "./pages/add/Add.jsx";
 import Message from "./pages/message/Message.jsx";
 import Messages from "./pages/messages/Messages.jsx";
+import './app.scss'
 
 function App() {
 

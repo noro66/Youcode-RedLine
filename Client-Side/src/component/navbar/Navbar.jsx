@@ -1,10 +1,26 @@
 import  './Navbar.scss'
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 const Navbar = () =>{
 const  [active, setActive] = useState(false);
 const  [open, setOpen] = useState(false);
+const {pathname} = useLocation();
+
+    const categories = [
+        'Oil Drilling',
+        'Gas Drilling',
+        'Water Well Drilling',
+        'Geothermal Drilling',
+        'Mining Drilling',
+        'Directional Drilling',
+        'Horizontal Drilling',
+        'Vertical Drilling',
+        'Core Drilling',
+        'Rotary Drilling',
+        'Hydraulic Fracturing',
+    ];
+
 const isActive = ()=>{
     window.scrollY > 0 ? setActive(true) : setActive(false);
 }
@@ -22,10 +38,12 @@ const currentUser = {
 
 }
     return (
-        <div className={active ? "navbar is-active" : "navbar"}>
+        <div className={(active || pathname !== '/') ? "navbar is-active" : "navbar"}>
             <div className="container">
                 <div className="logo">
-                    <span className={'firstText'}>Drill</span>
+                    <Link to={'/'} className={'link'}>
+                        <span className={'firstText'}>Drill</span>
+                    </Link>
                     <span className={'secondText'}>.</span>
                 </div>
                 <div className="links">
@@ -42,32 +60,26 @@ const currentUser = {
                             {
                                 currentUser.isSeller && (
                                     <>
-                                        <span>Service</span>
-                                        <span>Add New Service</span>
+                                       <Link className={'link'}  to={'/myservices'}> <span>Service</span> </Link>
+                                       <Link className={'link'}  to={'/add'}> <span>Add New Service</span>< /Link>
                                     </>
                                 )
                             }
-                            <span>Orders</span>
-                            <span>Messages</span>
+                           <Link className={'link'}  to={'/orders'}>  <span>Orders</span> </Link>
+                           <Link  className={'link'} to={'messages'} > <span>Messages</span> </Link>
                             <span>Logout</span>
                         </div>}
                     </div>}
-                    {/*<Link to={'#'}>*/}
-                    {/*    <span>Drilling Business</span>*/}
-                    {/*</Link>*/}
-                    {/*<Link to={'#'}><span>Explore</span></Link>*/}
-                    {/*<Link to={'#'}><span>English</span></Link>*/}
-                    {/*<Link to={'#'}> <span>SignIn</span></Link>*/}
-                    {/*<Link to={'#'}><span>Join Us</span></Link>*/}
-
                 </div>
             </div>
-              {active &&  <>
+              {(active || pathname !== '/') &&  <>
                    <hr/>
                    <div className="menu">
-                   <span>Test</span>
-                   <span>Test1</span>
-                   <span>Test2</span>
+                       {categories.map((category, index) => (
+                           <Link key={index} className={'link'} to={'/'}>
+                               <span>{category}</span>
+                           </Link>
+                       ))}
                    </div>
               </>
               }
