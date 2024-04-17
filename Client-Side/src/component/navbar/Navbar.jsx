@@ -36,7 +36,7 @@ const currentUser = {
                     {!currentUser?.isSeller && <span>Became a Server</span>}
                     {!currentUser && <button>Join Us</button>}
                     {currentUser && <div className="user" onClick={()=>setOpen(!open)}>
-                        <img src="../../public/images/profile.svg" alt=""/>
+                        <img src="../../../public/images/profile.svg" alt=""/>
                         <span>{currentUser.username}</span>
                         {open && <div className="options">
                             {
