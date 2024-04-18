@@ -48,3 +48,42 @@ export  const cards = [
         image: "https://via.placeholder.com/300x200"
     }
 ];
+
+export const  projects = [
+    {
+        "id": 1,
+        "img": "https://via.placeholder.com/300x200?text=Innovation",
+        "pp": "https://via.placeholder.com/150x150?text=User1",
+        "cat": "Innovation",
+        "username": "innovator_01"
+    },
+    {
+        "id": 2,
+        "img": "https://via.placeholder.com/300x200?text=Technology",
+        "pp": "https://via.placeholder.com/150x150?text=User2",
+        "cat": "Technology",
+        "username": "tech_wizard"
+    },
+    {
+        "id": 3,
+        "img": "https://via.placeholder.com/300x200?text=Education",
+        "pp": "https://via.placeholder.com/150x150?text=User3",
+        "cat": "Education",
+        "username": "edu_champ"
+    },
+    {
+        "id": 4,
+        "img": "https://via.placeholder.com/300x200?text=Health",
+        "pp": "https://via.placeholder.com/150x150?text=User4",
+        "cat": "Health",
+        "username": "health_guru"
+    },
+    {
+        "id": 5,
+        "img": "https://via.placeholder.com/300x200?text=Art",
+        "pp": "https://via.placeholder.com/150x150?text=User5",
+        "cat": "Art",
+        "username": "art_lover"
+    }
+]
+
