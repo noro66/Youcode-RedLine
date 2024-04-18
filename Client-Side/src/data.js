@@ -87,3 +87,52 @@ export const  projects = [
     }
 ]
 
+export const servicesData = [
+    {
+        "id": 1,
+        "image": "https://via.placeholder.com/400x300",
+        "pp": "https://via.placeholder.com/150x150",
+        "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "price": "$20",
+        "star": 4.5,
+        "username": "user123"
+    },
+    {
+        "id": 2,
+        "image": "https://via.placeholder.com/400x300",
+        "pp": "https://via.placeholder.com/150x150",
+        "desc": "Nulla facilisi. Sed non urna sed lacus volutpat aliquet a ac ex.",
+        "price": "$15",
+        "star": 3.8,
+        "username": "user456"
+    },
+    {
+        "id": 3,
+        "image": "https://via.placeholder.com/400x300",
+        "pp": "https://via.placeholder.com/150x150",
+        "desc": "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.",
+        "price": "$30",
+        "star": 4.0,
+        "username": "user789"
+    },
+    {
+        "id": 4,
+        "image": "https://via.placeholder.com/400x300",
+        "pp": "https://via.placeholder.com/150x150",
+        "desc": "Phasellus eget ex ultricies, rutrum lacus ut, ultrices mi. Mauris sed elit vitae neque tincidunt vestibulum.",
+        "price": "$25",
+        "star": 4.2,
+        "username": "user101112"
+    },
+    {
+        "id": 5,
+        "image": "https://via.placeholder.com/400x300",
+        "pp": "https://via.placeholder.com/150x150",
+        "desc": "Suspendisse potenti. Fusce aliquet mauris sed nisi dapibus, vitae dapibus purus tincidunt.",
+        "price": "$18",
+        "star": 4.8,
+        "username": "user131415"
+    }
+]
+
+
