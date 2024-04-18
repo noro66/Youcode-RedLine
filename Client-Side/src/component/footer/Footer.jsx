@@ -14,31 +14,9 @@ const Footer  = () => {
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
                   </div>
                   <div className="item">
                       <h2>Categories</h2>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                  </div>
-                  <div className="item">
-                      <h2>Categories</h2>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
@@ -56,10 +34,6 @@ const Footer  = () => {
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
-                      <span>Drilling Category</span>
                   </div>
                   <div className="item">
                       <h2>Categories</h2>
@@ -67,6 +41,12 @@ const Footer  = () => {
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
+                      <span>Drilling Category</span>
+                      <span>Drilling Category</span>
+                      <span>Drilling Category</span>
+                  </div>
+                  <div className="item">
+                      <h2>Categories</h2>
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>
                       <span>Drilling Category</span>

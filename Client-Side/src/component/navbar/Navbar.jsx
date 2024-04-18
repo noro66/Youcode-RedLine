@@ -82,6 +82,7 @@ const currentUser = {
                            </Link>
                        ))}
                    </div>
+                  <hr/>
               </>
               }
 
