@@ -1,0 +1,49 @@
+.myOrders{
+  display: flex;
+  justify-content: center;
+
+  .container{
+    width: 80%;
+    padding: 50px 0;
+    .title{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      button{
+        background: #1dbf73;
+        color: white;
+        font-weight: 500;
+        border: none;
+        padding: 10px;
+        border-radius: 1px;
+        cursor: pointer;
+      }
+    }
+    table{
+      width: 100%;
+      tr{
+        th{
+          text-align: left;
+        }
+        height: 50px;
+        td{
+          .img{
+            width: 50px;
+            height: 25px;
+            object-fit: cover;
+          }
+          .delete{
+            width: 20px;
+            cursor: pointer;
+            background-color: transparent;
+          }
+        }
+        &:nth-child(even){
+          background-color: rgba(14, 74, 46, 0.06);
+        }
+      }
+
+    }
+  }
+}

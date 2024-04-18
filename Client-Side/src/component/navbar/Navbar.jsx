@@ -35,7 +35,6 @@ const currentUser = {
     id:1,
     username: "john doe",
     isSeller: true
-
 }
     return (
         <div className={(active || pathname !== '/') ? "navbar is-active" : "navbar"}>
