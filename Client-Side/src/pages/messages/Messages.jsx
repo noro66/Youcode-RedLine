@@ -1,76 +1,82 @@
 
 import './Messages.scss'
-const Messages = (props) => {
+const Messages = () => {
+
+    const currentUser = {
+        id:1,
+        username: "john doe",
+        isSeller: true
+    }
 return (
     <div className={'messages'}>
         <div className="container">
             <div className="title">
-                <h1>Orders</h1>
+                <h1>Messages</h1>
             </div>
             <table>
                 <thead>
                 <tr>
-                    <th>Image</th>
-                    <th>Title</th>
-                    <th>Price</th>
+                    <th>Client</th>
+                    <th>Last Message</th>
+                    <th>Date</th>
                     <th>{currentUser?.isSeller ? 'Client' : 'Service Provider'}</th>
-                    <th>Contact</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        <img className={'img'} src="/images/icons8-decision-64.png" alt=""/>
+                    <td>John Doe</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, dicta doloremque perspiciatis
+                        praesentium quo voluptatem.
                     </td>
-                    <td>Service 1</td>
-                    <td>88</td>
-                    <td>78</td>
+                    <td>1 day ago</td>
+                    <td>1 day ago</td>
                     <td>
-                        <button>
-                            <img className={'delete'} src="/images/icons8-message-48.png" alt=""/>
-                        </button>
+                        <button>Mark As Read</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <img className={'img'} src="/images/icons8-decision-64.png" alt=""/>
+                    <td>John Doe</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, dicta doloremque perspiciatis
+                        praesentium quo voluptatem.
                     </td>
-                    <td>Service 1</td>
-                    <td>88</td>
-                    <td>78</td>
+                    <td>1 day ago</td>
+                    <td>1 day ago</td>
                     <td>
-                        <button>
-                            <img className={'delete'} src="/images/icons8-message-48.png" alt=""/>
-
-                        </button>
+                        <button>Mark As Read</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <img className={'img'} src="/images/icons8-decision-64.png" alt=""/>
+                    <td>John Doe</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, dicta doloremque perspiciatis
+                        praesentium quo voluptatem.
                     </td>
-                    <td>Service 1</td>
-                    <td>88</td>
-                    <td>78</td>
+                    <td>1 day ago</td>
+                    <td>1 day ago</td>
                     <td>
-                        <button>
-                            <img className={'delete'} src="/images/icons8-message-48.png" alt=""/>
-
-                        </button>
+                        <button>Mark As Read</button>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <img className={'img'} src="/images/icons8-decision-64.png" alt=""/>
+                    <td>John Doe</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, dicta doloremque perspiciatis
+                        praesentium quo voluptatem.
                     </td>
-                    <td>Service 1</td>
-                    <td>88</td>
-                    <td>78</td>
+                    <td>1 day ago</td>
+                    <td>1 day ago</td>
                     <td>
-                        <button>
-                            <img className={'delete'} src="/images/icons8-message-48.png" alt=""/>
-
-                        </button>
+                        <button>Mark As Read</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>John Doe</td>
+                    <td>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, dicta doloremque perspiciatis
+                        praesentium quo voluptatem.
+                    </td>
+                    <td>1 day ago</td>
+                    <td>1 day ago</td>
+                    <td>
+                        <button>Mark As Read</button>
                     </td>
                 </tr>
                 </tbody>
