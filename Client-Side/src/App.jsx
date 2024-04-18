@@ -13,6 +13,7 @@ import Add from "./pages/add/Add.jsx";
 import Message from "./pages/message/Message.jsx";
 import Messages from "./pages/messages/Messages.jsx";
 import './app.scss'
+import Service from "./pages/service/Service.jsx";
 
 function App() {
 
@@ -40,8 +41,8 @@ function App() {
                     element: <Services/>
                 },
                 {
-                    path: '/services/:serviceId',
-                    element: <Services/>
+                    path: '/service/:serviceId',
+                    element: <Service/>
                 },
                 {
                     path: '/orders',

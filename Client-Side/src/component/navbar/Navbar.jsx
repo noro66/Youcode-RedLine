@@ -67,6 +67,7 @@ const currentUser = {
                             }
                            <Link className={'link'}  to={'/orders'}>  <span>Orders</span> </Link>
                            <Link  className={'link'} to={'messages'} > <span>Messages</span> </Link>
+                            <hr/>
                             <span>Logout</span>
                         </div>}
                     </div>}
