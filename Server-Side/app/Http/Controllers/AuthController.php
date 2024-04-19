@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
+use App\Models\Client;
+use App\Models\Seller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -16,17 +21,46 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
+    public function register(UserRequest $request): \Illuminate\Http\JsonResponse
+    {
+       $request->validated();
+        $user =  User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
+            'type' => $request->input('type')
+        ]);
+        if ($user->type === 'seller'){
+            Seller::create([
+                'user_id' => $user->id,
+            ]);
+        }elseif ($user->type === 'client'){
+            Client::create([
+                'user_id' => $user->id,
+            ]);
+        }
+        return \response()->json([
+            'status' => true,
+            'message' => 'User Created Successfully',
+        ]);
+    }
     /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
+    public function login(Request $request): \Illuminate\Http\JsonResponse
     {
+        if ($request->isMethod('GET')) {
+            return \response()->json([
+                'success' => false,
+                'message' => 'you have to log in first to access to this page',
+            ]);
+        }
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['success' => false, 'error' => 'Unauthorized'], 401);
         }
 
         return $this->respondWithToken($token);
