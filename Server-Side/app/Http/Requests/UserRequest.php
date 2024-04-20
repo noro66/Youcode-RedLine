@@ -27,7 +27,9 @@ class UserRequest extends FormRequest
             'password' => 'required|confirmed|max:255',
             'isSeller' => 'boolean',
             'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'type' => 'required|in:seller,client'
+            'type' => 'required|in:seller,client',
+            'phone' => 'nullable|numeric|digits_between:8,12',
+            'description' => 'nullable|string'
         ];
     }
 }

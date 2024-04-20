@@ -49,6 +49,7 @@ class AuthController extends Controller
                 ]);
 
                 if ($validator->fails()) {
+                    $user->delete();
                     return response()->json([
                         'status' => false,
                         'message' => $validator->errors()->first(),
