@@ -22,10 +22,12 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255||unique:users,name',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed',
-            'type' => 'required|in:organizer,participant'
+            'username' => 'required|max:255|unique:users,username',
+            'email' => 'required|email|unique:users,email|max:255',
+            'password' => 'required|confirmed|max:255',
+            'isSeller' => 'boolean',
+            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'type' => 'required|in:seller,client'
         ];
     }
 }

@@ -63,4 +63,13 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function client(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Client::class);
+    }
+    public function seller(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Seller::class);
+    }
 }

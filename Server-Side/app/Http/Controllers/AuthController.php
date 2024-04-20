@@ -8,6 +8,8 @@ use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -18,32 +20,66 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
+    /**
+     * @throws ValidationException
+     */
     public function register(UserRequest $request): \Illuminate\Http\JsonResponse
     {
-       $request->validated();
-        $user =  User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'type' => $request->input('type')
-        ]);
-        if ($user->type === 'seller'){
-            Seller::create([
-                'user_id' => $user->id,
+        try {
+            $credentials = $request->validated();
+            $credentials['img'] = $request->hasFile('img')
+                ? $request->file('img')->store('userImages', 'public')
+                : 'testImage';
+
+            $user = User::create([
+                'username' => $credentials['username'],
+                'email' => $credentials['email'],
+                'img' => $credentials['img'],
+                'password' => Hash::make($credentials['password']),
+                'type' => $credentials['type']
             ]);
-        }elseif ($user->type === 'client'){
-            Client::create([
-                'user_id' => $user->id,
+
+            if ($user->type === 'seller') {
+                $validator = Validator::make($credentials, [
+                    'phone' => 'required|unique:sellers,phone',
+                    'description' => 'required|string',
+                ]);
+
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false,
+                        'message' => $validator->errors()->first(),
+                    ], 422);
+                }
+
+                $user->seller()->create([
+                    'phone' => $credentials['phone'],
+                    'description' => $credentials['description'],
+                ]);
+            } elseif ($user->type === 'client') {
+                $user->client()->create();
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'User Created Successfully',
             ]);
+        } catch (\Illuminate\Validation\ValidationException $exception) {
+            return response()->json([
+                'status' => false,
+                'message' => $exception->validator->errors()->first(),
+            ], 422);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'status' => false,
+                'message' => $exception->getMessage(),
+            ], 500);
         }
-        return \response()->json([
-            'status' => true,
-            'message' => 'User Created Successfully',
-        ]);
     }
+
     /**
      * Get a JWT via given credentials.
      *
