@@ -19,9 +19,10 @@ return new class extends Migration
             $table->text('cover_image');
             $table->text('short_desc');
             $table->integer('price');
+            $table->integer('sales')->default(0);
             $table->unsignedInteger('total_stars');
-            $table->unsignedTinyInteger('star_number');
-            $table->unsignedTinyInteger('delivery_time');
+            $table->unsignedTinyInteger('star_number')->default(0);
+            $table->unsignedTinyInteger('delivery_time')->default(0);
             $table->unsignedTinyInteger('revision_time');
             $table->foreignId('seller_id')->constrained('sellers')
                 ->cascadeOnUpdate()->cascadeOnDelete();
