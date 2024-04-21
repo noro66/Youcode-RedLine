@@ -134,7 +134,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
+        Cookie::forget('jwt_token');
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -143,9 +143,21 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function refresh()
+    public function refresh(): \Illuminate\Http\JsonResponse
     {
-        return $this->respondWithToken(auth()->refresh());
+
+        $user = Auth::user();
+
+        $isSeller = $user->isSeller;
+        $userType = $user->type;
+        $userId = $user->id;
+
+        $token = auth()->claims([
+            'is_seller' => $isSeller,
+            'user_type' => $userType,
+            'user_id' => $userId
+        ])->refresh();
+        return $this->respondWithToken($token);
     }
 
     /**
