@@ -7,6 +7,8 @@ use App\Models\Client;
 use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -55,7 +57,8 @@ class AuthController extends Controller
                         'message' => $validator->errors()->first(),
                     ], 422);
                 }
-
+                $user->isSeller = true;
+                $user->save();
                 $user->seller()->create([
                     'phone' => $credentials['phone'],
                     'description' => $credentials['description'],
@@ -96,10 +99,20 @@ class AuthController extends Controller
         }
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['success' => false, 'error' => 'Unauthorized'], 401);
+        if (!auth()->attempt($credentials)) {
+            return response()->json(['success' => false, 'error' => 'User Not Found'], 401);
         }
+        $user = Auth::user();
 
+        $isSeller = $user->isSeller;
+        $userType = $user->type;
+        $userId = $user->id;
+
+        $token = auth()->claims([
+            'is_seller' => $isSeller,
+            'user_type' => $userType,
+            'user_id' => $userId
+        ])->attempt($credentials);
         return $this->respondWithToken($token);
     }
 
@@ -138,16 +151,18 @@ class AuthController extends Controller
     /**
      * Get the token array structure.
      *
-     * @param  string $token
+     * @param string $token
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    protected function respondWithToken(string $token): \Illuminate\Http\JsonResponse
     {
-        return response()->json([
-            'access_token' => $token,
+        Cookie::queue(Cookie::forget('jwt_token'));
+        $response = response()->json([
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
+        $response->cookie('jwt_token', $token);
+        return $response;
     }
 }
