@@ -14,6 +14,7 @@ import Message from "./pages/message/Message.jsx";
 import Messages from "./pages/messages/Messages.jsx";
 import './app.scss'
 import Service from "./pages/service/Service.jsx";
+import Login from "./pages/login/Login.jsx";
 
 function App() {
 
@@ -63,6 +64,10 @@ function App() {
                 {
                     path: '/message/:messageId',
                     element: <Message/>
+                },
+                {
+                    path: '/login',
+                    element: <Login/>
                 }
             ]
         },

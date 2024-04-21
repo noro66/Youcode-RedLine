@@ -42,9 +42,13 @@
           width: 120px;
           height: 40px;
           border:none;
-          background-color: #167f1e;
+          background-color: #03066f;
+          border-radius: 1px;
           color: white;
           cursor: pointer;
+          &:hover{
+            background-color: #3b40e4;
+          }
         }
       }
       .popular{

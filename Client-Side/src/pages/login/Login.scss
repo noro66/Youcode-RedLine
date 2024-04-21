@@ -1,0 +1,68 @@
+.login-signup-form {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .form {
+    width: 360px;
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    padding: 34px;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+
+    .title {
+      font-size: 20px;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .message {
+      margin: 15px 0 0;
+      color: #b3b3b3;
+      font-size: 16px;
+      text-align: center;
+
+      a {
+        color: #1dbf73;
+        text-decoration: none;
+      }
+    }
+  }
+
+  input {
+    outline: 0;
+    background: #ffffff;
+    width: 100%;
+    border: 2px solid #e6e6e6;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    transition: all 0.3s;
+  }
+
+  .btn {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #1dbf73;
+    border: 0;
+    text-decoration: none;
+    padding: 15px;
+    color: #FFFFFF;
+    font-size: 16px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+
+    &.btn-block {
+      width: 100%;
+    }
+  }
+
+  .text-center {
+    text-align: center;
+  }
+}
