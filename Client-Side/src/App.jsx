@@ -2,7 +2,7 @@ import Navbar from "./component/navbar/Navbar.jsx";
 import {
     createBrowserRouter,
     RouterProvider,
-    Outlet
+    Outlet, Navigate, useNavigate
 } from "react-router-dom";
 import Footer from "./component/footer/Footer.jsx";
 import Home from "./pages/home/Home.jsx";
@@ -15,10 +15,16 @@ import Messages from "./pages/messages/Messages.jsx";
 import './app.scss'
 import Service from "./pages/service/Service.jsx";
 import Login from "./pages/login/Login.jsx";
+import {useStateContext} from "./context/ContextProvider.jsx";
 
 function App() {
 
     const Layout = ()=> {
+        // const {token} = useStateContext();
+        // const navigate = useNavigate();
+        // if (!token){
+        //     return navigate('/login');
+        // }
         return (
             <div className="App">
                 <Navbar/>
