@@ -1,14 +1,23 @@
-import './Login.scss'
 import {Link} from "react-router-dom";
+// import {useStateContext} from "../Context/ContextProvider.jsx";
 import {useForm} from "react-hook-form";
+import customAxios from "../../../CustomAxios.js";
+import './Login.scss';
+import {useState} from "react";
+import CustomAxios from "../../../CustomAxios.js";
+import {useStateContext} from "../../context/ContextProvider.jsx";
+import {jwtDecode} from "jwt-decode";
 
-const Login = (props) => {
+
+export  default function Login (key, value) {
+    const {setUser, setToken} = useStateContext();
+    const [error, setError] = useState(null);
+
     function onsubmit(data) {
-        // CustomAxios.post("auth/login", data).then(({data}) =>  {
-        //     setUser(JSON.stringify(data.user));
-        //     setToken(data.token);
-        // }).catch(err => console.log(err));
-        console.log(data);
+        CustomAxios.post("auth/login", data).then(({data}) =>  {
+            let token = jwtDecode(data.token);
+            setToken(data.token);
+        }).catch(err => console.log(err));
     }
     const {register, handleSubmit,formState: {errors : formErrors}} = useForm();
 
@@ -25,10 +34,9 @@ const Login = (props) => {
                     <p className={'message'}>
                         Not Registered ? <Link to={'/register'}>Create an account !</Link>
                     </p>
+                    {error && JSON.stringify(error)}
                 </form>
             </div>
         </div>
-    )
-};
-
-export default Login;
+    );
+}
