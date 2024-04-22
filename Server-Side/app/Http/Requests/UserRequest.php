@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
             'email' => 'required|email|unique:users,email|max:255',
             'password' => 'required|confirmed|max:255',
             'isSeller' => 'boolean',
-            'img' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'type' => 'required|in:seller,client',
             'phone' => 'nullable|numeric|digits_between:8,12',
             'description' => 'nullable|string'

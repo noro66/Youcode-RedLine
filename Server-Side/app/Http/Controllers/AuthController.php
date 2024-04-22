@@ -6,6 +6,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\Client;
 use App\Models\Seller;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -22,24 +23,21 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api')->except(['login', 'register']);
     }
 
     /**
      * @throws ValidationException
      */
-    public function register(UserRequest $request): \Illuminate\Http\JsonResponse
+    public function register(UserRequest $request): JsonResponse
     {
         try {
             $credentials = $request->validated();
-            $credentials['img'] = $request->hasFile('img')
-                ? $request->file('img')->store('userImages', 'public')
-                : 'testImage';
-
+            $imgPath = $request->file('img')->store('userImages', 'public');
             $user = User::create([
                 'username' => $credentials['username'],
                 'email' => $credentials['email'],
-                'img' => $credentials['img'],
+                'img' => $imgPath,
                 'password' => Hash::make($credentials['password']),
                 'type' => $credentials['type']
             ]);
@@ -87,9 +85,10 @@ class AuthController extends Controller
     /**
      * Get a JWT via given credentials.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
+     * @throws ValidationException
      */
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function login(Request $request): JsonResponse
     {
         if ($request->isMethod('GET')) {
             return \response()->json([
@@ -97,21 +96,17 @@ class AuthController extends Controller
                 'message' => 'you have to log in first to access to this page',
             ]);
         }
-        $credentials = request(['email', 'password']);
+        $credentials = Validator::make(request()->only('email', 'password'), [
+            'email' => 'required|email',
+            'password' => 'required',
+        ])->validated();
 
-        if (!auth()->attempt($credentials)) {
-            return response()->json(['success' => false, 'error' => 'User Not Found'], 401);
+        if (! $token = auth()->attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
         $user = Auth::user();
-
-        $isSeller = $user->isSeller;
-        $userType = $user->type;
-        $userId = $user->id;
-
         $token = auth()->claims([
-            'is_seller' => $isSeller,
-            'user_type' => $userType,
-            'user_id' => $userId
+            'user' => auth()->user(),
         ])->attempt($credentials);
         return $this->respondWithToken($token);
     }
@@ -119,9 +114,9 @@ class AuthController extends Controller
     /**
      * Get the authenticated User.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function me()
+    public function me(): JsonResponse
     {
         return response()->json(auth()->user());
     }
@@ -129,33 +124,23 @@ class AuthController extends Controller
     /**
      * Log the user out (Invalidate the token).
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function logout()
+    public function logout(): JsonResponse
     {
         auth()->logout();
-        Cookie::forget('jwt_token');
         return response()->json(['message' => 'Successfully logged out']);
     }
 
     /**
      * Refresh a token.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function refresh(): \Illuminate\Http\JsonResponse
+    public function refresh(): JsonResponse
     {
-
-        $user = Auth::user();
-
-        $isSeller = $user->isSeller;
-        $userType = $user->type;
-        $userId = $user->id;
-
         $token = auth()->claims([
-            'is_seller' => $isSeller,
-            'user_type' => $userType,
-            'user_id' => $userId
+            'user' => auth()->user(),
         ])->refresh();
         return $this->respondWithToken($token);
     }
@@ -165,16 +150,16 @@ class AuthController extends Controller
      *
      * @param string $token
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    protected function respondWithToken(string $token): \Illuminate\Http\JsonResponse
+    protected function respondWithToken(string $token): JsonResponse
     {
-        Cookie::queue(Cookie::forget('jwt_token'));
-        $response = response()->json([
+       return response()->json([
+            'success' => true,
+            'token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
-        $response->cookie('jwt_token', $token);
-        return $response;
+
     }
 }
