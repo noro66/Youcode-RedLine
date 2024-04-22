@@ -6,8 +6,7 @@ import {useStateContext} from "../../context/ContextProvider.jsx";
 import customAxios from "../../../CustomAxios.js";
 
 const Navbar = () =>{
-    const {setToken, setUser} = useStateContext()
-    const { user ,token} = useStateContext();
+    const {setToken, setUser,  user ,token} = useStateContext()
 
     function onLogout(e) {
         e.preventDefault();
@@ -47,7 +46,7 @@ const isActive = ()=>{
         }
     }, []);
 
-const currentUser = user;
+// const user = user;
     return (
         <div className={(active || pathname !== '/') ? "navbar is-active" : "navbar"}>
             <div className="container">
@@ -62,16 +61,16 @@ const currentUser = user;
                     <span>Explore</span>
                     <span>English</span>
                     <span>SignIn</span>
-                    {!currentUser?.isSeller && <span>Became a Server</span>}
-                    {!currentUser && <Link to={'/login'}>
+                    {!user?.isSeller && <span>Became a Server</span>}
+                    {!user  && <Link to={'/login'}>
                         <button>Join Us</button>
                     </Link>}
-                    {currentUser && <div className="user" onClick={()=>setOpen(!open)}>
+                    {user && <div className="user" onClick={()=>setOpen(!open)}>
                         <img src="../../../public/images/profile.svg" alt=""/>
-                        <span>{currentUser.username}</span>
+                        <span>{user.username}</span>
                         {open && <div className="options">
                             {
-                                currentUser.isSeller && (
+                                user.isSeller && (
                                     <>
                                        <Link className={'link'}  to={'/myservices'}> <span>Service</span> </Link>
                                        <Link className={'link'}  to={'/add'}> <span>Add New Service</span>< /Link>

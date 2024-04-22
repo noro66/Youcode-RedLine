@@ -12,7 +12,7 @@ const stateContext = createContext({
 export const ContextProvider = ({ children }) => {
 
     const [token, _setToken] = useState(sessionStorage.getItem("token"));
-    const buffer = token ?  jwtDecode(token).user :  {}
+    const buffer = token ?  jwtDecode(token).user :  null
     const [user, setUser] = useState(buffer);
 
     const setToken = (token) => {

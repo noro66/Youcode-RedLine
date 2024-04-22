@@ -16,6 +16,7 @@ import './app.scss'
 import Service from "./pages/service/Service.jsx";
 import Login from "./pages/login/Login.jsx";
 import {useStateContext} from "./context/ContextProvider.jsx";
+import Rejister from "./pages/register/Rejister.jsx";
 
 function App() {
 
@@ -74,6 +75,10 @@ function App() {
                 {
                     path: '/login',
                     element: <Login/>
+                },
+                {
+                    path: '/register',
+                    element: <Rejister />
                 }
             ]
         },
