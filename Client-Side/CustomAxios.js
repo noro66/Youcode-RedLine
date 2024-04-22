@@ -1,12 +1,9 @@
-import axios from 'axios';
-
+import axios from "axios";
 
 const customAxios = axios.create({
     baseURL: 'http://127.0.0.1:8000/api/',
-    withCredentials: true
 });
 
-// Interceptor to handle 401 Unauthorized responses
 customAxios.interceptors.request.use(config => {
     const token = sessionStorage.getItem('token');
     config.headers.Authorization = `Bearer ${token}`;
@@ -21,7 +18,7 @@ customAxios.interceptors.response.use(
         try {
             const { status} = error;
             if (status === 401) {
-                localStorage.removeItem('token');
+                sessionStorage.removeItem('token');
             }
         }catch (err){
             console.log(err);

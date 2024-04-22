@@ -19,8 +19,10 @@ export const ContextProvider = ({ children }) => {
         _setToken(token);
         if (token) {
             sessionStorage.setItem("token", token);
+            setUser(jwtDecode(token).user);
         } else {
             sessionStorage.removeItem("token");
+            setUser({});
         }
     };
 

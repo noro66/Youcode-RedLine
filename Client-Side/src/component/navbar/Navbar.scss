@@ -12,6 +12,10 @@
   &.is-active{
     background-color: white;
     color: black;
+    button{
+      background-color: white;
+      color: black;
+    }
   }
 
 
@@ -73,7 +77,8 @@
         cursor: pointer;
         background-color: transparent;
         &:hover{
-          background-color: #6C63FF;
+          border: none;
+          background-color: #090549;
           color: var(--background-color);
         }
       }

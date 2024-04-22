@@ -3,6 +3,7 @@ import {Link, useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CustomAxios from "../../../CustomAxios.js";
 import {useStateContext} from "../../context/ContextProvider.jsx";
+import customAxios from "../../../CustomAxios.js";
 
 const Navbar = () =>{
     const {setToken, setUser} = useStateContext()
@@ -10,7 +11,7 @@ const Navbar = () =>{
 
     function onLogout(e) {
         e.preventDefault();
-        CustomAxios().get("auth/logout", {token: token}).then(() =>  {
+        customAxios.post("auth/logout", {token: token}).then(() =>  {
             setToken(null);
             setUser(null);
             sessionStorage.removeItem("token");
@@ -46,11 +47,7 @@ const isActive = ()=>{
         }
     }, []);
 
-const currentUser = {
-    id:1,
-    username: "john doe",
-    isSeller: true
-}
+const currentUser = user;
     return (
         <div className={(active || pathname !== '/') ? "navbar is-active" : "navbar"}>
             <div className="container">
@@ -66,7 +63,9 @@ const currentUser = {
                     <span>English</span>
                     <span>SignIn</span>
                     {!currentUser?.isSeller && <span>Became a Server</span>}
-                    {!currentUser && <button>Join Us</button>}
+                    {!currentUser && <Link to={'/login'}>
+                        <button>Join Us</button>
+                    </Link>}
                     {currentUser && <div className="user" onClick={()=>setOpen(!open)}>
                         <img src="../../../public/images/profile.svg" alt=""/>
                         <span>{currentUser.username}</span>
@@ -82,7 +81,7 @@ const currentUser = {
                            <Link className={'link'}  to={'/orders'}>  <span>Orders</span> </Link>
                            <Link  className={'link'} to={'messages'} > <span>Messages</span> </Link>
                             <hr/>
-                            <span>Logout</span>
+                            <span onClick={onLogout}>Logout</span>
                         </div>}
                     </div>}
                 </div>
