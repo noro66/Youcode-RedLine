@@ -2,64 +2,69 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreServiceRequest;
+use App\Models\Image;
 use App\Models\Service;
+use App\Repositories\Services\ServicesService;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    protected ServicesService $serviceRepository;
+
+    public function __construct(ServicesService $serviceRepository) {
+        $this->middleware('auth:api')->except(['index', 'show']);
+        $this->serviceRepository = $serviceRepository;
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @throws AuthorizationException
      */
-    public function create()
+    public function store(StoreServiceRequest $request): JsonResponse
     {
-        //
+        $this->authorize('create', Auth::user());
+        $imgPath = $request->file('cover_image')->store('coverImages', 'public');
+
+        $data = $request->only(['title',
+            'short_title',
+            'desc',
+            'short_desc',
+            'price',
+            'sales',
+            'star_number',
+            'delivery_time',
+            'revision_time',
+            'service_category_id',
+            ]);
+        $data['seller_id'] = Auth::id();
+        $data['cover_image'] = $imgPath;
+        $service = $this->serviceRepository->create($data);
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                $imgPath = $image->store('coverImages', 'public');
+                Image::create([
+                    'image_url' => $imgPath,
+                    'service_id' => $service->id,
+                ]);
+            }
+        }
+        return response()->json($service, 201);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function update(Request $request, $id): JsonResponse
     {
-        //
+        $data = $request->only(['name', 'description', 'price']);
+        $service = $this->serviceRepository->update($id, $data);
+        return response()->json($service, 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Service $service)
+    public function destroy($id): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Service $service)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Service $service)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Service $service)
-    {
-        //
+        $service = $this->serviceRepository->delete($id);
+        return response()->json($service, 200);
     }
 }

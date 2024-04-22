@@ -20,10 +20,10 @@ return new class extends Migration
             $table->text('short_desc');
             $table->integer('price');
             $table->integer('sales')->default(0);
-            $table->unsignedInteger('total_stars');
-            $table->unsignedTinyInteger('star_number')->default(0);
-            $table->unsignedTinyInteger('delivery_time')->default(0);
-            $table->unsignedTinyInteger('revision_time');
+            $table->unsignedInteger('total_stars')->default(1);
+            $table->unsignedTinyInteger('star_number')->default(1);
+            $table->unsignedTinyInteger('delivery_time')->default(1);
+            $table->unsignedTinyInteger('revision_time')->default(1);
             $table->foreignId('seller_id')->constrained('sellers')
                 ->cascadeOnUpdate()->cascadeOnDelete();
             $table->foreignId('service_category_id')->constrained('service_categories')
