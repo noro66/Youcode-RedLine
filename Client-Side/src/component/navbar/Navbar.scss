@@ -12,9 +12,15 @@
   &.is-active{
     background-color: white;
     color: black;
-    button{
-      background-color: white;
-      color: black;
+
+    button {
+      background-color: white !important;
+      color: #6C63FF !important;
+      border: 1px solid #6C63FF !important;
+      &:hover{
+        background-color: #a4a0e1 !important;
+        color: white !important;
+      }
     }
   }
 
@@ -77,9 +83,9 @@
         cursor: pointer;
         background-color: transparent;
         &:hover{
-          border: none;
-          background-color: #090549;
-          color: var(--background-color);
+          //border: none;
+          background-color: #3c34b5;
+          color: white;
         }
       }
     }

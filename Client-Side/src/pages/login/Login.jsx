@@ -29,7 +29,9 @@ export  default function Login (key, value) {
             <div className='form'>
                 <h1 className={'title'}>Login To Your Account</h1>
                 <form onSubmit={handleSubmit(onsubmit)}>
+                    <label htmlFor="">Email</label>
                     <input type="email" placeholder={'Email'} {...register('email', {required: true})} />
+                    <label htmlFor="">password</label>
                     <input type="password" placeholder="Password" {...register('password', {required: true})}/>
                     <button type="submit" className={'btn btn-block'}>Login</button>
                     <p className={'message'}>

@@ -1,105 +1,80 @@
-import React, { useState } from "react";
-// import upload from "../../utils/upload";
+import React, {useState} from "react";
+import { useForm } from "react-hook-form";
 import "./register.scss";
-// import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
+import customAxios from "../../../CustomAxios.js";
 
 function Register() {
-    const [file, setFile] = useState(null);
-    const [user, setUser] = useState({
-        username: "",
-        email: "",
-        password: "",
-        img: "",
-        country: "",
-        isSeller: false,
-        desc: "",
-    });
-
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const navigate = useNavigate();
+    const [imageData, setImageData] = useState('');
+    const [type, setType] = useState(false);
 
-    const handleChange = (e) => {
-        setUser((prev) => {
-            return { ...prev, [e.target.name]: e.target.value };
-        });
-    };
 
-    const handleSeller = (e) => {
-        setUser((prev) => {
-            return { ...prev, isSeller: e.target.checked };
-        });
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
 
-        const url = await upload(file);
+
+    const onSubmit = async (data) => {
         try {
-            await newRequest.post("/auth/register", {
-                ...user,
-                img: url,
+            data.type = type ? 'seller' : 'client';
+            data.isSeller = type ? 1 : 0 ;
+            const formData = new FormData();
+            formData.append('img', imageData);
+            Object.keys(data).forEach(key => {
+                formData.append(key, data[key]);
             });
-            navigate("/")
+
+            console.log(formData);
+
+            await customAxios.post("/auth/register", formData);
+
+            navigate("/");
         } catch (err) {
             console.log(err);
         }
     };
+
+
     return (
         <div className="register">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="left">
                     <h1>Create a new account</h1>
-                    <label htmlFor="">Username</label>
-                    <input
-                        name="username"
-                        type="text"
-                        placeholder="johndoe"
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="">Email</label>
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="email"
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="">Password</label>
-                    <input name="password" type="password" onChange={handleChange} />
-                    <label htmlFor="">Profile Picture</label>
-                    <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-                    <label htmlFor="">Country</label>
-                    <input
-                        name="country"
-                        type="text"
-                        placeholder="Usa"
-                        onChange={handleChange}
-                    />
+                    <label htmlFor="username">Username</label>
+                    <input {...register("username", { required: true, min: 8, max: 35 })} type="text" placeholder="johndoe" />
+                    {errors.username && <span>This field is required</span>}
+                    <label htmlFor="email">Email</label>
+                    <input  {...register("email", { required: true, pattern: /^\S+@\S+\.\S+$/i })} type="email" placeholder="email" />
+                    {errors.email && <span>This field is required</span>}
+                    <label htmlFor="password">Password</label>
+                    <input {...register("password", { required: true, min: 8, max:255 })} type="password" />
+                    {errors.password && <span>This field is required</span>}
+                    <label htmlFor="password_confirmation">Password Confirmation</label>
+                    <input {...register("password_confirmation", { required: true })} type="password" />
+                    {errors.password && <span>This field is required</span>}
+                    <label htmlFor="img">Profile Image</label>
+                    <input name="image" type="file" onChange={(e)=>{setImageData(e.target.files[0])}} />
+                    {errors.password && <span>This field is required</span>}
+                    <label htmlFor="country">Country</label>
+                    <input {...register("country", { required: true })} type="text" placeholder="USA" />
+                    {errors.country && <span>This field is required</span>}
                     <button type="submit">Register</button>
                 </div>
                 <div className="right">
                     <h1>I want to become a seller</h1>
                     <div className="toggle">
-                        <label htmlFor="">Activate the seller account</label>
                         <label className="switch">
-                            <input type="checkbox" onChange={handleSeller} />
+                            <input type="checkbox" {...register("isSeller")} onChange={() => setType(!type)}/>
                             <span className="slider round"></span>
                         </label>
                     </div>
-                    <label htmlFor="">Phone Number</label>
-                    <input
-                        name="phone"
-                        type="text"
-                        placeholder="+1 234 567 89"
-                        onChange={handleChange}
-                    />
-                    <label htmlFor="">Description</label>
-                    <textarea
-                        placeholder="A short description of yourself"
-                        name="desc"
-                        id=""
-                        cols="30"
-                        rows="10"
-                        onChange={handleChange}
-                    ></textarea>
+                    <label htmlFor="phone">Phone Number</label>
+                    <input {...register("phone", {
+                        required: true,
+                        pattern: /^\+?[0-9\s-]+$/
+                    })} type="text" placeholder="+212 634 567 89"/>
+                    <label htmlFor="desc">Description</label>
+                    <textarea {...register("description",{min: 45,max: 255 })} placeholder="A short description of yourself" cols="30"
+                              rows="10"></textarea>
                 </div>
             </form>
         </div>
