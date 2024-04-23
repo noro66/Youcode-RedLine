@@ -17,12 +17,35 @@ class ServiceController extends Controller
         $this->middleware('auth')->except(['index', 'show']);
     }
 
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
+
+        $serviceQuery = Service::with('images', 'seller', 'service_category', 'user');
+
+        if (request()->has('category')) {
+            $serviceQuery->where('service_category_id', request()->input('category'));
+        }
+
+// Initialize the min and max variables
+        $min = request()->has('min') ? request()->input('min') : null;
+        $max = request()->has('max') ? request()->input('max') : null;
+
+        if ($min !== null) {
+            $serviceQuery->where('price', '>=', $min);
+        }
+
+        if ($max !== null) {
+            $serviceQuery->where('price', '<=', $max);
+        }
+
+        $services = $serviceQuery->get();
+
         return response()->json([
-            'count' => Service::all()->count(),
-            'services' => Service::with('images', 'seller', 'service_category', 'user')->get()
+            'request' => $request->all(),
+            'count' => Service::count(),
+            'services' => $services,
         ]);
+
     }
 
 //    public function store(StoreServiceRequest $request): JsonResponse
