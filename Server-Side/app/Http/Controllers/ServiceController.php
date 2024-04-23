@@ -26,7 +26,6 @@ class ServiceController extends Controller
             $serviceQuery->where('service_category_id', request()->input('category'));
         }
 
-// Initialize the min and max variables
         $min = request()->has('min') ? request()->input('min') : null;
         $max = request()->has('max') ? request()->input('max') : null;
 
@@ -37,11 +36,17 @@ class ServiceController extends Controller
         if ($max !== null) {
             $serviceQuery->where('price', '<=', $max);
         }
+        $sort = request()->input('sort');
+
+        if ($sort === 'latest') {
+            $serviceQuery->latest();
+        } elseif ($sort === 'sales') {
+            $serviceQuery->orderBy('sales', 'desc');
+        }
 
         $services = $serviceQuery->get();
 
         return response()->json([
-            'request' => $request->all(),
             'count' => Service::count(),
             'services' => $services,
         ]);
