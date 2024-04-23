@@ -1,5 +1,5 @@
 import './Services.scss'
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {projects, servicesData} from "../../data.js";
 import ServiceCard from "../../component/serviceCard/ServiceCard.jsx";
 import customAxios from "../../../CustomAxios.js";
@@ -15,7 +15,7 @@ const Services = () => {
     const {search} = useLocation();
     console.log(search);
     const {isLoading, error, data, refetch} = useQuery({ queryKey: ['repoData'],
-            queryFn: ()=> customAxios.get(`service${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}`).then(res => res.data.services) });
+            queryFn: ()=> customAxios.get(`service${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data.services) });
 
     const reSort = (type) => {
         setSort(type);
@@ -25,6 +25,10 @@ const Services = () => {
     function fetchData() {
         refetch();
     }
+
+    useEffect(() => {
+        refetch()
+    }, [sort]);
 
     return (
     <div className="services">
@@ -45,7 +49,7 @@ const Services = () => {
                     <img src="./images/icons8-down-50.png" alt="" onClick={()=>{setOpen(!open)}}/>
                     {open &&
                         <div className="rightMenu">
-                            {sort === 'sales' ? <span onClick={() => reSort('CreatedAt')}>Newest</span>
+                            {sort === 'sales' ? <span onClick={() => reSort('latest')}>Newest</span>
                                 : <span onClick={()=> reSort('sales')} >Best Selling</span>}
                         </div>}
                 </div>
