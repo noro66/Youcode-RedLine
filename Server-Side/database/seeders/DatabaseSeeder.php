@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Client;
+use App\Models\Seller;
 use Carbon\Traits\Date;
 use Illuminate\Database\Seeder;
 
@@ -22,8 +24,10 @@ class DatabaseSeeder extends Seeder
 //             'isSeller' => false,
 //             'type' => 'client'
 //         ]);
-        \App\Models\ServiceCategory::create([
-            'name' => 'random category ',
-            ]);
+//        \App\Models\ServiceCategory::create([
+//            'name' => 'random category ',
+//            ]);
+        Client::factory()->count(10)->create();
+        Seller::factory()->count(10)->create();
     }
 }

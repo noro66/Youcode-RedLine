@@ -19,7 +19,7 @@ class SellerFactory extends Factory
     {
         return [
             'user_id' => function () {
-                return User::factory()->create()->id;
+                return User::factory()->create(['isSeller'=> true, 'type' => 'seller'])->id;
             },
             'phone' => '1234567890',
             'description' => $this->faker->realText(),

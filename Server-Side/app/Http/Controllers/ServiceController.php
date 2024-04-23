@@ -19,6 +19,33 @@ class ServiceController extends Controller
 
     public function index(): JsonResponse
     {
-        return response()->json(Service::with('images', 'seller', 'service_category')->get());
+        return response()->json([
+            'count' => Service::all()->count(),
+            'services' => Service::with('images', 'seller', 'service_category')->get()
+        ]);
     }
+
+//    public function store(StoreServiceRequest $request): JsonResponse
+//    {
+//
+//    }
+    public function show(Service $service): JsonResponse
+    {
+        return response()->json([
+            'service' => $service->load('images', 'seller', 'service_category')
+        ]);
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function destroy(Service $service): JsonResponse
+    {
+        $this->authorize('delete', $service);
+        return response()->json([
+            'success' => $service->delete()
+        ]);
+    }
+
+
 }

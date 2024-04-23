@@ -45,6 +45,10 @@ class ServicePolicy
      */
     public function delete(User $user, Service $service): bool
     {
+        if ($user->seller){
+            return $user->seller->id === $service->seller_id;
+        }
+        return false;
     }
 
     /**
