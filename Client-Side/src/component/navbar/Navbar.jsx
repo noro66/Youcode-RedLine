@@ -60,8 +60,8 @@ const isActive = ()=>{
                     <span>Drilling Business</span>
                     <span>Explore</span>
                     <span>English</span>
-                    <span>SignIn</span>
                     {!user?.isSeller && <span>Became a Server</span>}
+                    <Link to={'/register'} className={'link'}> <span>Sign in</span> </Link>
                     {!user  && <Link to={'/login'}>
                         <button>Join Us</button>
                     </Link>}

@@ -60,8 +60,9 @@ function Register() {
                     <button type="submit">Register</button>
                 </div>
                 <div className="right">
-                    <h1>I want to become a seller</h1>
+                    <h1>You want to become a server seller ?</h1>
                     <div className="toggle">
+                        <label htmlFor="">Activate the seller account</label>
                         <label className="switch">
                             <input type="checkbox" {...register("isSeller")} onChange={() => setType(!type)}/>
                             <span className="slider round"></span>

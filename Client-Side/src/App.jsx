@@ -16,10 +16,22 @@ import './app.scss'
 import Service from "./pages/service/Service.jsx";
 import Login from "./pages/login/Login.jsx";
 import {useStateContext} from "./context/ContextProvider.jsx";
-import Rejister from "./pages/register/Rejister.jsx";
+import Register from "./pages/register/Rejister.jsx";
+
+import {
+    useQuery,
+    useMutation,
+    useQueryClient,
+    QueryClient,
+    QueryClientProvider,
+} from '@tanstack/react-query'
+import customAxios from "../CustomAxios.js";
 
 function App() {
+    const queryClient = new QueryClient();
 
+
+    //
     const Layout = ()=> {
         // const {token} = useStateContext();
         // const navigate = useNavigate();
@@ -27,11 +39,13 @@ function App() {
         //     return navigate('/login');
         // }
         return (
+            <QueryClientProvider client={queryClient}>
             <div className="App">
                 <Navbar/>
                 <Outlet/>
                 <Footer/>
             </div>
+            </QueryClientProvider>
         )
 
     }
@@ -78,7 +92,7 @@ function App() {
                 },
                 {
                     path: '/register',
-                    element: <Rejister />
+                    element: <Register />
                 }
             ]
         },

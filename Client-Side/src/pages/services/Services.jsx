@@ -2,10 +2,16 @@ import './Services.scss'
 import {useState} from "react";
 import {projects, servicesData} from "../../data.js";
 import ServiceCard from "../../component/serviceCard/ServiceCard.jsx";
+import customAxios from "../../../CustomAxios.js";
+import {useQuery} from "@tanstack/react-query";
 
 const Services = () => {
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState('sales');
+
+    const {isPending, error, data} = useQuery({ queryKey: ['repoData'],
+            queryFn: ()=> customAxios.get('service') });
+    console.log(data?.data);
 
     const reSort = (type) => {
         setSort(type);
@@ -36,7 +42,7 @@ return (
                 </div>
             </div>
             <div className="cards">
-                {servicesData.map(service => (
+                {isPending ? "Loading..." : error ?  "Something Went Wrong !" :   servicesData.map(service => (
                     <ServiceCard key={service.id} item={service} />
                 ))}
             </div>
