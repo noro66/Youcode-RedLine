@@ -21,7 +21,7 @@ class ServiceController extends Controller
     {
         return response()->json([
             'count' => Service::all()->count(),
-            'services' => Service::with('images', 'seller', 'service_category')->get()
+            'services' => Service::with('images', 'seller', 'service_category', 'user')->get()
         ]);
     }
 

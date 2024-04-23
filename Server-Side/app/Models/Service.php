@@ -38,4 +38,9 @@ class Service extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function user(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+    {
+        return $this->hasOneThrough(User::class, Seller::class, 'user_id', 'id', 'seller_id', 'id');
+    }
 }
