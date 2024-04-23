@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\features;
+use App\Models\Feature;
 use Illuminate\Http\Request;
 
 class FeaturesController extends Controller
@@ -34,7 +34,7 @@ class FeaturesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(features $features)
+    public function show(Feature $features)
     {
         //
     }
@@ -42,7 +42,7 @@ class FeaturesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(features $features)
+    public function edit(Feature $features)
     {
         //
     }
@@ -50,7 +50,7 @@ class FeaturesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, features $features)
+    public function update(Request $request, Feature $features)
     {
         //
     }
@@ -58,7 +58,7 @@ class FeaturesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(features $features)
+    public function destroy(Feature $features)
     {
         //
     }

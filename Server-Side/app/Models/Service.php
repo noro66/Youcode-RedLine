@@ -32,7 +32,8 @@ class Service extends Model
 
     public function seller(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Seller::class);
+         return $this->belongsTo(Seller::class)->with('user');
+
     }
     public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
@@ -52,6 +53,13 @@ class Service extends Model
         return $this->hasMany(Order::class);
     }
 
+    public function getSellerWithLastDelivery(): Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
+    {
+        return $this->seller()->with( 'lastDelivery')->get();
+    }
 
-
+    public function features(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Feature::class);
+    }
 }
