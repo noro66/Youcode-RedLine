@@ -51,9 +51,9 @@ const Services = () => {
                 </div>
             </div>
             <div className="cards">
-                {isLoading ? "Loading..." : error ?  "Something Went Wrong !" :   data.map(service => (
+                {isLoading ? "Loading..." : error ?  "Something Went Wrong !" :  data.length > 0 ?   data.map(service => (
                     <ServiceCard key={service.id} item={service} />
-                ))}
+                )) : <p className="alert">Ops there is no Service with this specifications !</p>}
             </div>
         </div>
     </div>
