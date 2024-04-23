@@ -24,4 +24,18 @@ class Service extends Model
         'seller_id',
         'service_category_id'
     ];
+
+    public function service_category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ServiceCategory::class);
+    }
+
+    public function seller(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Seller::class);
+    }
+    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Image::class);
+    }
 }
