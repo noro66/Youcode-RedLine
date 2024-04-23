@@ -60,7 +60,7 @@ class ServiceController extends Controller
     public function show(Service $service): JsonResponse
     {
         return response()->json([
-            'service' => $service->load('images', 'seller', 'service_category')
+            'service' => $service->load('images', 'seller', 'service_category', 'review')
         ]);
     }
 

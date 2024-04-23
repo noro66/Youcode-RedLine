@@ -43,4 +43,15 @@ class Service extends Model
     {
         return $this->hasOneThrough(User::class, Seller::class, 'user_id', 'id', 'seller_id', 'id');
     }
+    public function review(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Review::class)->with( 'userReviewed');
+    }
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+
+
 }

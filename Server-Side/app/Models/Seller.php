@@ -9,8 +9,9 @@ class Seller extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'user_id',
         'phone',
-        'description',
+        'description'
     ];
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
