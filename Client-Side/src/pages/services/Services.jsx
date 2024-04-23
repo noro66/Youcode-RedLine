@@ -1,23 +1,32 @@
 import './Services.scss'
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {projects, servicesData} from "../../data.js";
 import ServiceCard from "../../component/serviceCard/ServiceCard.jsx";
 import customAxios from "../../../CustomAxios.js";
 import {useQuery} from "@tanstack/react-query";
 import service from "../service/Service.jsx";
+import {useLocation} from "react-router-dom";
 
 const Services = () => {
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState('sales');
-
-    const {isLoading, error, data} = useQuery({ queryKey: ['repoData'],
-            queryFn: ()=> customAxios.get('service').then(res => res.data.services) });
+    const minRef = useRef(null);
+    const maxRef = useRef(null);
+    const {search} = useLocation();
+    console.log(search);
+    const {isLoading, error, data, refetch} = useQuery({ queryKey: ['repoData'],
+            queryFn: ()=> customAxios.get(`service${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}`).then(res => res.data.services) });
 
     const reSort = (type) => {
         setSort(type);
         setOpen(false);
     }
-return (
+
+    function fetchData() {
+        refetch();
+    }
+
+    return (
     <div className="services">
         <div className="container">
             <span className="breathcrumbs">Drill > Water Drilling ></span>
@@ -26,9 +35,9 @@ return (
             <div className="menu">
                 <div className="left">
                     <span>Budget</span>
-                    <input type="text" placeholder={'min'}/>
-                    <input type="text" placeholder={'max'}/>
-                    <button>apply</button>
+                    <input type="text" ref={minRef} placeholder={'min'}/>
+                    <input type="text" ref={maxRef} placeholder={'max'}/>
+                    <button onClick={fetchData}>apply</button>
                 </div>
                 <div className="right">
                     <span className={'sortBy'}>Sort By</span>
