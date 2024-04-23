@@ -10,9 +10,8 @@ const Services = () => {
     const [open, setOpen] = useState(false);
     const [sort, setSort] = useState('sales');
 
-    const {isPending, error, data} = useQuery({ queryKey: ['repoData'],
+    const {isLoading, error, data} = useQuery({ queryKey: ['repoData'],
             queryFn: ()=> customAxios.get('service').then(res => res.data.services) });
-    console.log(data);
 
     const reSort = (type) => {
         setSort(type);
@@ -43,7 +42,7 @@ return (
                 </div>
             </div>
             <div className="cards">
-                {isPending ? "Loading..." : error ?  "Something Went Wrong !" :   data.map(service => (
+                {isLoading ? "Loading..." : error ?  "Something Went Wrong !" :   data.map(service => (
                     <ServiceCard key={service.id} item={service} />
                 ))}
             </div>
