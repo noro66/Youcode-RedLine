@@ -14,7 +14,7 @@ const Services = () => {
     const maxRef = useRef(null);
     const {search} = useLocation();
     console.log(search);
-    const {isLoading, error, data, refetch} = useQuery({ queryKey: ['repoData'],
+    const {isLoading, error, data, refetch} = useQuery({ queryKey: ['services'],
             queryFn: ()=> customAxios.get(`service${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data.services) });
 
     const reSort = (type) => {

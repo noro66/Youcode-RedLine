@@ -14,7 +14,7 @@ const ServiceCard = ({item}) => {
                     <p>{item.desc.slice(0, 20)}</p>
                     <div className="star">
                         <img src="./images/icons8-star-48.png" alt=""/>
-                        <span>{item.star_number}</span>
+                        <span>{Math.round(item.total_stars / item.star_number)}</span>
                     </div>
                 </div>
                 <hr/>

@@ -63,7 +63,7 @@ function App() {
                     element: <Services/>
                 },
                 {
-                    path: '/service/:serviceId',
+                    path: '/service/:id',
                     element: <Service/>
                 },
                 {

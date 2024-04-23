@@ -1,27 +1,43 @@
 import './Service.scss'
 import InfiniteCarousel from "infinite-react-carousel";
+import {useParams} from "react-router-dom";
+import {useQuery} from "@tanstack/react-query";
+import customAxios from "../../../CustomAxios.js";
+import {timeformater} from "../../utils/time/time.js";
 
 const Service = () => {
+
+    const {id} = useParams();
+    console.log(id);
+
+    const {isLoading, error, data, refetch} = useQuery({ queryKey: ['service', id],
+        queryFn: ()=> customAxios.get(`service/${id}`).then(res => res.data.service) });
+
+    const stars =Math.round(data.total_stars/data.star_number) ;//  2; // ??
+    const {seller} = data;
+    console.log(data, stars);
     return (
         <div className="service">
             <div className="container">
                 <div className="left">
-                    <span className="breadCrumbs">Drill >  Water Drilling ></span>
-                    <h1>I Will Provide you a good Drilling Service</h1>
+                    <span className="breadCrumbs">Drill >  Water Drilling > </span>
+                    <h1>{/**/data.title}</h1>
                     <div className="user">
                         <div className="pp">
                             <div className="pp">
                                 <img src="/images/profile.svg" alt=""/>
                             </div>
                         </div>
-                        <span>John doe</span>
+                        <span> {/**/seller.user.username} </span>
                         <div className="stars">
-                            <img src="/images/icons8-star-48.png" alt=""/>
-                            <img src="/images/icons8-star-48.png" alt=""/>
-                            <img src="/images/icons8-star-48.png" alt=""/>
-                            <img src="/images/icons8-star-48.png" alt=""/>
-                            <img src="/images/icons8-star-48.png" alt=""/>
-                            <span>5</span>
+                            {stars > 0 ? (
+                                Array.from({ length: stars }, (_, index) => (
+                                    <img key={index} src="/images/icons8-star-48.png" alt=""/>
+                                ))
+                            ) : (
+                                <img src="/images/icons8-star-48.png" alt=""/>
+                            )}
+                            <span>{stars}</span>
                         </div>
                     </div>
                     <InfiniteCarousel
@@ -39,27 +55,26 @@ const Service = () => {
                                 arrowsBlock: true,
                             },
                         }}
-                    >   <img src="/images/picture.svg" alt=""/>
-                        <img src="/images/picture.svg" alt=""/>
-                        <img src="/images/picture.svg" alt=""/>
-                        <img src="/images/picture.svg" alt=""/>
-                        <img src="/images/picture.svg" alt=""/>
+                    >   {data.images.map((image, index) => (<img src={image.image_url} alt=""/>))}
+
                     </InfiniteCarousel>
-                    <h1>About This Service</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci debitis fugiat iusto modi molestias perferendis quae quos sed, soluta voluptatem. Dolor eaque error labore magni modi natus nemo, nobis quae.Amet culpa deleniti eaque in ipsum, ullam voluptas. Dolorem, eum ex nulla officiis sed vel velit. Architecto autem commodi eaque eius error illo, omnis optio sit, soluta ut vel veniam.Aspernatur consequuntur corporis cum delectus deleniti dicta dolore est exercitationem illo illum iste modi necessitatibus nihil nobis numquam officia perspiciatis praesentium, quam repellendus similique velit veniam voluptas voluptate. Iste, temporibus?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam assumenda, commodi consequuntur dolore eum exercitationem facere ipsa minus odio odit quam quisquam ratione repellat repudiandae, rerum saepe sapiente tempora vitae.Id quisquam vel vitae! Animi aspernatur assumenda, atque, blanditiis dolor dolore eligendi ex incidunt ipsum iusto laboriosam, laudantium magnam nihil non nostrum optio possimus sed tenetur ullam unde voluptas voluptate.</p>
+                    <h1>{data.short_title}</h1>
+                    <p>{data.desc}</p>
                     <div className="seller">
                         <h2>About The Service Provider</h2>
                         <div className="user">
                                 <img src="/images/profile.svg" alt=""/>
                             <div className="info">
-                                <span>John Doe</span>
+                                <span>{seller.user.username}</span>
                                 <div className="stars">
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <span>5</span>
+                                    {stars > 0 ? (
+                                        Array.from({ length: stars }, (_, index) => (
+                                            <img key={index} src="/images/icons8-star-48.png" alt=""/>
+                                        ))
+                                    ) : (
+                                        <img src="/images/icons8-star-48.png" alt=""/>
+                                    )}
+                                    <span>{stars}</span>
                                 </div>
                                 <button>Contact Me</button>
                             </div>
@@ -68,11 +83,11 @@ const Service = () => {
                             <div className="items">
                                 <div className="item">
                                     <span className="title">From</span>
-                                    <span className="desc">Morocco</span>
+                                    <span className="desc">{seller.user.city ?? 'Casablanca'}</span>
                                 </div>
                                 <div className="item">
                                     <span className="title">Member since</span>
-                                    <span className="desc">Aug 2022</span>
+                                    <span className="desc">{timeformater(seller.created_at)}</span>
                                 </div>
                                 <div className="item">
                                     <span className="title">Avg response time</span>
@@ -88,8 +103,7 @@ const Service = () => {
                                 </div>
                             </div>
                             <hr/>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum, eligendi error eveniet facere ipsum quam voluptates. Accusamus, beatae est ex fugiat inventore nobis obcaecati quo quod repudiandae similique tempore ullam!</p>
-
+                            <p>{seller.description}</p>
                         </div>
                     </div>
                     <div className="reviews">
