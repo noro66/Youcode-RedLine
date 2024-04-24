@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
@@ -36,7 +37,7 @@ class Service extends Model
          return $this->belongsTo(Seller::class)->with('user');
 
     }
-    public function images(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function images(): HasMany
     {
         return $this->hasMany(Image::class);
     }
@@ -45,11 +46,8 @@ class Service extends Model
     {
         return $this->hasOneThrough(User::class, Seller::class, 'user_id', 'id', 'seller_id', 'id');
     }
-    public function review(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Review::class)->with( 'userReviewed');
-    }
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
@@ -59,7 +57,7 @@ class Service extends Model
         return $this->seller()->with( 'lastDelivery')->get();
     }
 
-    public function features(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function features(): HasMany
     {
         return $this->hasMany(Feature::class);
     }
@@ -72,5 +70,9 @@ class Service extends Model
     public function reviewedBy(User $user)
     {
         return   $this->review->contains('client_id', $user->client->id);
+    }
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class)->with( 'userReviewed');
     }
 }

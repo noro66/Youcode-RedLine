@@ -21,7 +21,7 @@ class ServiceController extends Controller
     public function index(Request $request): JsonResponse
     {
 
-        $serviceQuery = Service::with('images', 'seller', 'service_category', 'user', 'review');
+        $serviceQuery = Service::with('images', 'seller', 'service_category', 'user', 'reviews');
 
         if (request()->has('category')) {
             $serviceQuery->where('service_category_id', request()->input('category'));
@@ -63,7 +63,7 @@ class ServiceController extends Controller
     public function show(Service $service): JsonResponse
     {
         return response()->json([
-            'service' => $service->load('images', 'seller', 'service_category', 'review', 'features')
+            'service' => $service->load('images', 'seller', 'service_category', 'reviews', 'features')
         ]);
     }
 

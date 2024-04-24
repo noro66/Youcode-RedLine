@@ -16,9 +16,9 @@ class ReviewController extends Controller
         $this->middleware('auth:api')->except(['index', 'show']);
     }
 
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(Service $service): \Illuminate\Http\JsonResponse
     {
-        $reviews = Review::all();
+        $reviews = $service->reviews;
         return response()->json([
             'reviews' => $reviews,
         ]);
