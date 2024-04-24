@@ -18,6 +18,8 @@ return new class extends Migration
                 $table->string('phone');
                 $table->text('description');
                 $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

@@ -19,6 +19,7 @@ return new class extends Migration
                 ->cascadeOnUpdate()->cascadeOnDelete();
             $table->text('description');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

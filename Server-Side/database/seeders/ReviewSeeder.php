@@ -22,10 +22,12 @@ class ReviewSeeder extends Seeder
         foreach ($services as $service) {
             for ($i = 0; $i < 3; $i++) {
                 $randomClient = $clients->random();
-                Review::factory()->create([
-                    'service_id' => $service->id,
-                    'client_id' => $randomClient->id,
-                ]);
+                if ($service->orderedBy($randomClient->user)){
+                    Review::factory()->create([
+                        'service_id' => $service->id,
+                        'client_id' => $randomClient->id,
+                    ]);
+                }
             }
         }
     }

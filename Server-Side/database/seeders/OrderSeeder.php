@@ -2,18 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Feature;
-use Database\Factories\FeatureFactory;
+use App\Models\Order;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class FeatureSeeder extends Seeder
+class OrderSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-      Feature::factory()->count(600)->create();
+        Order::factory()->count(50)->create();
     }
 }

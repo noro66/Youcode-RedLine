@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Client;
 use App\Models\Review;
+use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -23,10 +25,10 @@ class ReviewFactory extends Factory
             'star' => $this->faker->numberBetween(1, 5),
             'description' => $this->faker->paragraph,
             'service_id' => function () {
-                return \App\Models\Service::factory()->create()->id;
+                return Service::factory()->create()->id;
             },
             'client_id' => function () {
-                return \App\Models\Client::factory()->create()->id;
+                return Client::factory()->create()->id;
             },
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => now(),

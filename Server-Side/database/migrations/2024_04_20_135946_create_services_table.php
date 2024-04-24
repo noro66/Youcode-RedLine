@@ -29,6 +29,7 @@ return new class extends Migration
             $table->foreignId('service_category_id')->constrained('service_categories')
                 ->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

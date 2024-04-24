@@ -17,15 +17,15 @@ class ImageSeeder extends Seeder
 
     public function run(): void
     {
-//        Image::factory(10)->create();
-        $services = Service::all();
-        foreach ($services as $service) {
-           for ($i = 0; $i < 3; $i++) {
-                Image::factory()->create([
-                    'service_id' => $service->id,
-                ]);
-            }
-        }
+        Image::factory(600)->create();
+//        $services = Service::all();
+//        foreach ($services as $service) {
+//           for ($i = 0; $i < 3; $i++) {
+//                Image::factory()->create([
+//                    'service_id' => $service->id,
+//                ]);
+//            }
+//        }
     }
 
 }

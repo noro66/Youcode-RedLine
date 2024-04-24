@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('clients')
                 ->cascadeOnUpdate()->cascadeOnDelete();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

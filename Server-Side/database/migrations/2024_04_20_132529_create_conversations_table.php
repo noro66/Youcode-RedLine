@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('readBy_seller')->default(false);
             $table->boolean('readBy_client')->default(false);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

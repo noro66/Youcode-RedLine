@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreServiceRequest;
 use App\Models\Image;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Repositories\Services\ServicesService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
@@ -20,10 +21,11 @@ class ServiceController extends Controller
     public function index(Request $request): JsonResponse
     {
 
-        $serviceQuery = Service::with('images', 'seller', 'service_category', 'user');
+        $serviceQuery = Service::with('images', 'seller', 'service_category', 'user', 'review');
 
         if (request()->has('category')) {
             $serviceQuery->where('service_category_id', request()->input('category'));
+            $category = ServiceCategory::find(request()->input('category'));
         }
 
         $min = request()->has('min') ? request()->input('min') : null;
@@ -47,7 +49,8 @@ class ServiceController extends Controller
         $services = $serviceQuery->get();
 
         return response()->json([
-            'count' => Service::count(),
+            'category' => $category ?? 'None',
+            'count' => $services->count(),
             'services' => $services,
         ]);
 

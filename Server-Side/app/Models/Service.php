@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Service extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -61,5 +62,11 @@ class Service extends Model
     public function features(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Feature::class);
+    }
+
+
+    public function orderedBy(User $user)
+    {
+        return  $this->orders->contains('client_id', $user->client->id);
     }
 }
