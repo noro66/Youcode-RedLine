@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Review;
 use App\Models\Service;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
@@ -25,16 +26,21 @@ class ReviewController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @throws AuthorizationException
      */
     public function store(ReviewRequest $request)
     {
-        $this->authorize('create', Service::class);
-        $reviewFrom = $request->validated();
-        Auth::user()->client->create([
-            'service_id' => $reviewFrom['service_id'],
-            'star' => $reviewFrom['rating'],
-            'description' => $reviewFrom['description'],
-        ]);
+        $service = Service::findOrFail($request->input('service_id'));
+        if ($service){
+            $this->authorize('createReview', $service);
+            $reviewFrom = $request->validated();
+            Auth::user()->client->create([
+                'service_id' => $reviewFrom['service_id'],
+                'star' => $reviewFrom['rating'],
+                'description' => $reviewFrom['description'],
+            ]);
+        }
+
 
     }
 
