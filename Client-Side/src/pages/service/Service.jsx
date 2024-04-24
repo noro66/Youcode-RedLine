@@ -5,6 +5,8 @@ import {useQuery} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {timeformater} from "../../utils/time/time.js";
 import {useEffect, useState} from "react";
+import Review from "../../component/review/Review.jsx";
+import Reviews from "../../component/reviews/Reviews.jsx";
 
 const Service = () => {
     const {id} = useParams();
@@ -17,6 +19,7 @@ const Service = () => {
     useEffect(() => {
         refetch();
     }, []);
+
     return(
         isPending ? "Loading..." : error ? "Ops Something went wrong !" : <div className="service">
                 <div className="container">
@@ -107,212 +110,7 @@ const Service = () => {
                                 <p>{/**/data?.seller.description}</p>
                             </div>
                         </div>
-                        <div className="reviews">
-                            <h2>Reviews</h2>
-                            <div className="item">
-                                <div className="user">
-                                    <div className="pp">
-                                        <img src="/images/profile.svg" alt=""/>
-                                    </div>
-                                    <div className="info">
-                                        <span>John Doe</span>
-                                        <div className="country">
-                                            <img src="/images/icons8-morocco-48.png" alt=""/>
-                                            <span>Morocco</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="stars">
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <span>5</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium amet
-                                    consequatur deserunt eligendi enim eos exercitationem laboriosam magnam maiores nam
-                                    nisi nulla quaerat quia quisquam quo vel voluptates voluptatum!</p>
-                                <div className="helpful">
-                                    <span>Helpful?</span>
-                                    <span>Yes</span>
-                                    <img src="/images/icons8-facebook-like-50.png" alt=""/>
-                                    <span>No</span>
-                                    <img src="/images/icons8-dislike-64.png" alt=""/>
-
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="item">
-                                <div className="user">
-                                    <div className="pp">
-                                        <img src="/images/profile.svg" alt=""/>
-                                    </div>
-                                    <div className="info">
-                                        <span>John Doe</span>
-                                        <div className="country">
-                                            <img src="/images/icons8-morocco-48.png" alt=""/>
-                                            <span>Morocco</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="stars">
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <span>5</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium amet
-                                    consequatur deserunt eligendi enim eos exercitationem laboriosam magnam maiores nam
-                                    nisi nulla quaerat quia quisquam quo vel voluptates voluptatum!</p>
-                                <div className="helpful">
-                                    <span>Helpful?</span>
-                                    <span>Yes</span>
-                                    <img src="/images/icons8-facebook-like-50.png" alt=""/>
-                                    <span>No</span>
-                                    <img src="/images/icons8-dislike-64.png" alt=""/>
-
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="item">
-                                <div className="user">
-                                    <div className="pp">
-                                        <img src="/images/profile.svg" alt=""/>
-                                    </div>
-                                    <div className="info">
-                                        <span>John Doe</span>
-                                        <div className="country">
-                                            <img src="/images/icons8-morocco-48.png" alt=""/>
-                                            <span>Morocco</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="stars">
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <span>5</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium amet
-                                    consequatur deserunt eligendi enim eos exercitationem laboriosam magnam maiores nam
-                                    nisi nulla quaerat quia quisquam quo vel voluptates voluptatum!</p>
-                                <div className="helpful">
-                                    <span>Helpful?</span>
-                                    <span>Yes</span>
-                                    <img src="/images/icons8-facebook-like-50.png" alt=""/>
-                                    <span>No</span>
-                                    <img src="/images/icons8-dislike-64.png" alt=""/>
-
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="item">
-                                <div className="user">
-                                    <div className="pp">
-                                        <img src="/images/profile.svg" alt=""/>
-                                    </div>
-                                    <div className="info">
-                                        <span>John Doe</span>
-                                        <div className="country">
-                                            <img src="/images/icons8-morocco-48.png" alt=""/>
-                                            <span>Morocco</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="stars">
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <span>5</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium amet
-                                    consequatur deserunt eligendi enim eos exercitationem laboriosam magnam maiores nam
-                                    nisi nulla quaerat quia quisquam quo vel voluptates voluptatum!</p>
-                                <div className="helpful">
-                                    <span>Helpful?</span>
-                                    <span>Yes</span>
-                                    <img src="/images/icons8-facebook-like-50.png" alt=""/>
-                                    <span>No</span>
-                                    <img src="/images/icons8-dislike-64.png" alt=""/>
-
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="item">
-                                <div className="user">
-                                    <div className="pp">
-                                        <img src="/images/profile.svg" alt=""/>
-                                    </div>
-                                    <div className="info">
-                                        <span>John Doe</span>
-                                        <div className="country">
-                                            <img src="/images/icons8-morocco-48.png" alt=""/>
-                                            <span>Morocco</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="stars">
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <span>5</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium amet
-                                    consequatur deserunt eligendi enim eos exercitationem laboriosam magnam maiores nam
-                                    nisi nulla quaerat quia quisquam quo vel voluptates voluptatum!</p>
-                                <div className="helpful">
-                                    <span>Helpful?</span>
-                                    <span>Yes</span>
-                                    <img src="/images/icons8-facebook-like-50.png" alt=""/>
-                                    <span>No</span>
-                                    <img src="/images/icons8-dislike-64.png" alt=""/>
-
-                                </div>
-                            </div>
-                            <hr/>
-                            <div className="item">
-                                <div className="user">
-                                    <div className="pp">
-                                        <img src="/images/profile.svg" alt=""/>
-                                    </div>
-                                    <div className="info">
-                                        <span>John Doe</span>
-                                        <div className="country">
-                                            <img src="/images/icons8-morocco-48.png" alt=""/>
-                                            <span>Morocco</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="stars">
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <img src="/images/icons8-star-48.png" alt=""/>
-                                    <span>5</span>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, accusantium amet
-                                    consequatur deserunt eligendi enim eos exercitationem laboriosam magnam maiores nam
-                                    nisi nulla quaerat quia quisquam quo vel voluptates voluptatum!</p>
-                                <div className="helpful">
-                                    <span>Helpful?</span>
-                                    <span>Yes</span>
-                                    <img src="/images/icons8-facebook-like-50.png" alt=""/>
-                                    <span>No</span>
-                                    <img src="/images/icons8-dislike-64.png" alt=""/>
-
-                                </div>
-                            </div>
-                        </div>
+                    <Reviews reviews={data?.reviews} />
                     </div>
                     <div className="right">
                         <div className="price">
