@@ -13,12 +13,12 @@ const Service = () => {
         queryFn: ()=> customAxios.get(`service/${id}`).then(res => res.data.service) });
         console.log(data, isPending);
 
-    const stars = Math.round(data.total_stars/data.star_number) ;  2; // ??
+    const stars = Math.round(data?.total_stars/data?.star_number) ;  2; // ??
     useEffect(() => {
         refetch();
     }, []);
     return(
-        isPending ? "Loading..." : <div className="service">
+        isPending ? "Loading..." : error ? "Ops Something went wrong !" : <div className="service">
                 <div className="container">
                     <div className="left">
                         <span className="breadCrumbs">Drill >  Water Drilling > </span>
@@ -323,7 +323,7 @@ const Service = () => {
                         <div className="details">
                             <div className="item">
                                 <img src="/images/icons8-hour-24.png" alt=""/>
-                                <span>{/**/data?.revision_time} days Delivery</span>
+                                <span>{/**/data?.revision_time} days Revisioin</span>
                             </div>
                             <div className="item">
                                 <img src="/images/icons8-recycle-60.png" alt=""/>
@@ -334,7 +334,7 @@ const Service = () => {
                             {data?.features.map((item, index) => (
                                 <div className="item">
                                     <img src="/images/icons8-check-mark-48.png" alt=""/>
-                                    <span>{item.name}</span>
+                                    <span>{item?.name}</span>
                                 </div>
                             ))}
                         </div>

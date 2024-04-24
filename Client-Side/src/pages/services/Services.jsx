@@ -14,8 +14,8 @@ const Services = () => {
     const maxRef = useRef(null);
     const {search} = useLocation();
     console.log(search);
-    const {isLoading, error, data, refetch} = useQuery({ queryKey: ['services'],
-            queryFn: ()=> customAxios.get(`service${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data.services) });
+    const {isPending, error, data, refetch} = useQuery({ queryKey: ['services'],
+            queryFn: ()=> customAxios.get(`service${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data) });
 
     const reSort = (type) => {
         setSort(type);
@@ -55,7 +55,7 @@ const Services = () => {
                 </div>
             </div>
             <div className="cards">
-                {isLoading ? "Loading..." : error ?  "Something Went Wrong !" :  data.length > 0 ?   data.map(service => (
+                {isPending ? "Loading..." : error ?  "Something Went Wrong !" :  data?.services.length > 0 ?   data?.services.map(service => (
                     <ServiceCard key={service.id} item={service} />
                 )) : <p className="alert">Ops there is no Service with this specifications !</p>}
             </div>
