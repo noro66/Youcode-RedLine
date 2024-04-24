@@ -18,7 +18,7 @@ class ReviewController extends Controller
 
     public function index(Service $service): \Illuminate\Http\JsonResponse
     {
-        $reviews = $service->reviews;
+        $reviews = Review::all();
         return response()->json([
             'reviews' => $reviews,
         ]);
@@ -94,4 +94,5 @@ class ReviewController extends Controller
             ]);
         }
     }
+
 }
