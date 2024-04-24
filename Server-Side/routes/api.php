@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,3 +31,5 @@ Route::group(['prefix' => 'auth'], static function () {
 });
 
 Route::resource('service', ServiceController::class);
+Route::resource('review', ReviewController::class);
+Route::resource('order', OrderController::class);
