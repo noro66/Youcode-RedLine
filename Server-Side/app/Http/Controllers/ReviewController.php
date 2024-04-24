@@ -16,12 +16,27 @@ class ReviewController extends Controller
         $this->middleware('auth:api')->except(['index', 'show']);
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
-        //
+        $reviews = Review::all();
+        return response()->json([
+            'reviews' => $reviews,
+        ]);
+
+    }
+
+    public function show(Review $review): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'review' => $review,
+        ]);
+    }
+
+    public function myReviews(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'review' => Auth::user()->client->reviews->all()->where('client_id', '=',  Auth::user()->client->id),
+            ]);
     }
 
     /**
@@ -34,45 +49,48 @@ class ReviewController extends Controller
         if ($service){
             $this->authorize('createReview', $service);
             $reviewFrom = $request->validated();
-            Auth::user()->client->create([
+            $review = Review::create([
                 'service_id' => $reviewFrom['service_id'],
-                'star' => $reviewFrom['rating'],
+                'star' => $reviewFrom['star'],
                 'description' => $reviewFrom['description'],
+                'client_id' => Auth::user()->client->id,
             ]);
+            return response()->json([
+                'message' => 'Review created',
+                'review' => $review,
+                ]);
         }
-
-
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
+     * @throws AuthorizationException
      */
-    public function update(ReviewRequest $request, string $id)
+    public function update(ReviewRequest $request, Review $review): \Illuminate\Http\JsonResponse
     {
-        //
+        $service = Service::findOrFail($request->input('service_id'));
+        $this->authorize('updateReview', $service);
+        $reviewFrom = $request->validated();
+         $review->update($reviewFrom);
+         return response()->json([
+             'review' => $review,
+         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Review $review)
     {
-        //
+        $delted = Auth::user()->client()->detach($review);
+        if ($delted){
+            $review->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Review deleted',
+                'review' => $review,
+            ]);
+        }
     }
 }

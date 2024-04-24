@@ -21,5 +21,8 @@ class Client extends Model
     {
         return $this->hasMany(Order::class);
     }
-
+    public function reviews(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+    {
+        return $this->hasOneThrough(Review::class, Order::class, 'client_id', 'id', 'id', 'id');
+    }
 }

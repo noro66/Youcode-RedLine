@@ -31,5 +31,8 @@ Route::group(['prefix' => 'auth'], static function () {
 });
 
 Route::resource('service', ServiceController::class);
+Route::put('review/update/{review}', [ReviewController::class, 'update']);
 Route::resource('review', ReviewController::class);
 Route::resource('order', OrderController::class);
+Route::get('myReviews', [ReviewController::class, 'myReviews']);
+Route::get('myOrders', [OrderController::class, 'myOrders']);

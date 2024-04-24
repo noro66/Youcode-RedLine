@@ -69,4 +69,8 @@ class Service extends Model
     {
         return  $this->orders->contains('client_id', $user->client->id);
     }
+    public function reviewedBy(User $user)
+    {
+        return   $this->review->contains('client_id', $user->client->id);
+    }
 }
