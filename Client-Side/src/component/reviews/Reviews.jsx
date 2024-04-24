@@ -5,6 +5,8 @@ import './reviews.scss'
 export default function Reviews({reviews}) {
 
 
+
+
     // const mutation = useMutation({
     //     mutationFn: (review) => {
     //         return customAxios().post("/review", review);
@@ -13,7 +15,7 @@ export default function Reviews({reviews}) {
     //         queryClient.invalidateQueries(["reviews"])
     //     }
     // });
-    //
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // const desc = e.target[0].value;

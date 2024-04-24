@@ -1,7 +1,7 @@
 import './Service.scss'
 import InfiniteCarousel from "infinite-react-carousel";
 import {useParams} from "react-router-dom";
-import {useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {timeformater} from "../../utils/time/time.js";
 import {useEffect, useState} from "react";
@@ -10,14 +10,14 @@ import Reviews from "../../component/reviews/Reviews.jsx";
 
 const Service = () => {
     const {id} = useParams();
-
+    const queryClient = new QueryClient();
     const { isPending, isLoading, error, data, refetch} = useQuery({ queryKey: ['service', id],
         queryFn: ()=> customAxios.get(`service/${id}`).then(res => res.data.service) });
-        console.log(data, isPending);
 
     const stars = Math.round(data?.total_stars/data?.star_number) ;  2; // ??
     useEffect(() => {
         refetch();
+        console.log(queryClient.getQueryData('service'));
     }, []);
 
     return(

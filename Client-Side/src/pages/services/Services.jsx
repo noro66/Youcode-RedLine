@@ -3,9 +3,9 @@ import {useEffect, useRef, useState} from "react";
 import {projects, servicesData} from "../../data.js";
 import ServiceCard from "../../component/serviceCard/ServiceCard.jsx";
 import customAxios from "../../../CustomAxios.js";
-import {useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 import service from "../service/Service.jsx";
-import {useLocation} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 
 const Services = () => {
     const [open, setOpen] = useState(false);
@@ -13,9 +13,26 @@ const Services = () => {
     const minRef = useRef(null);
     const maxRef = useRef(null);
     const {search} = useLocation();
-    console.log(search);
-    const {isPending, error, data, refetch} = useQuery({ queryKey: ['services'],
-            queryFn: ()=> customAxios.get(`service${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data) });
+    const {category} = useParams();
+    console.log(search, category);
+
+    const queryClient = useQueryClient();
+    const {isPending, error, data, refetch} = useQuery({
+        queryKey: ['services'],
+        queryFn: () => customAxios.get(`service${search ? search : '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data),
+        staleTime: 50000,
+        initialData: () => {
+            // Use 'services' key to retrieve initial data
+            const serviceData = queryClient.getQueryData('services');
+            console.log(serviceData);
+            // Manipulate or filter the data as needed
+            // return serviceData?.find((serviceItem) => serviceItem.id === parseInt(id));
+        }
+    });
+    const queryData = queryClient.getQueryData('services');
+
+    console.log(queryData);
+    console.log();
 
     const reSort = (type) => {
         setSort(type);
@@ -34,7 +51,7 @@ const Services = () => {
     <div className="services">
         <div className="container">
             <span className="breathcrumbs">Drill > Water Drilling ></span>
-            <h1>Custom Category</h1>
+            <h1>Services : </h1>
             <p>Explore the boundaries of Drill service Lorem ipsum dolor sit.</p>
             <div className="menu">
                 <div className="left">

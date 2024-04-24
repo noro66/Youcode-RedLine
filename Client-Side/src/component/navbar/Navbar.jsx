@@ -58,7 +58,7 @@ const isActive = ()=>{
                 </div>
                 <div className="links">
                     <span>Drilling Business</span>
-                    <span>Explore</span>
+                    <Link to={'/services'} className={'link'}><span>Services</span></Link>
                     <span>English</span>
                     {!user?.isSeller && <span>Became a Server</span>}
                     <Link to={'/register'} className={'link'}> <span>Sign in</span> </Link>
