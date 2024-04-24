@@ -35,11 +35,10 @@ class ServicePolicy
         if (!$user->isSeller ) {
             if ($service->orderedBy($user)){
                 $order = $service->orders->where('client_id', $user->client->id)->first();
-
                 if ($order) {
-                    $creationDate = Carbon::parse($order->created_at);
-                    $tenDaysFromNow = Carbon::now()->addDay(5);
-                    return $creationDate->greaterThan($tenDaysFromNow);
+                    $creationDate = Carbon::parse($order->updated_at);
+                    $DayFromNow = Carbon::now()->addDay(1);
+                    return !$order->is_completed && $creationDate->greaterThan($DayFromNow);
                 }
             }
             return  true;
