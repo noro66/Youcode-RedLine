@@ -83,8 +83,9 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        $delted = Auth::user()->client()->detach($review);
-        if ($delted){
+        $this->authorize('deleteReview', $review);
+        $deleted = $review->delete();
+        if ($deleted){
             $review->delete();
             return response()->json([
                 'success' => true,

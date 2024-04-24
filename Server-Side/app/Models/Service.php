@@ -69,8 +69,9 @@ class Service extends Model
     }
     public function reviewedBy(User $user)
     {
-        return   $this->review->contains('client_id', $user->client->id);
+        return $this->reviews->contains('client_id', $user->client->id);
     }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class)->with( 'userReviewed');
