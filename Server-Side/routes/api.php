@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ServiceController;
@@ -44,3 +45,5 @@ Route::resource('order', OrderController::class);
 
 
 Route::get('myOrders', [OrderController::class, 'myOrders']);
+
+Route::get('home', [HomeController::class, 'index']);

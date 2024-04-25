@@ -5,14 +5,20 @@ import Slide from "../../component/slide/Slide.jsx";
 import {cards, projects} from '../../data.js';
 import CategoCard from "../../component/categoCart/CategoCard.jsx";
 import ProjectCard from "../../component/projectCart/ProjectCard.jsx";
+import {useQuery} from "@tanstack/react-query";
+import customAxios from "../../../CustomAxios.js";
 
 const Home = () => {
-return (
+
+    const { isPending, isLoading, error, data:categories, refetch} = useQuery({ queryKey: ['categories'],
+        queryFn: ()=> customAxios.get('home').then(res => res.data.categories) });
+    console.log(categories);
+    return (
     <div className={'home'}>
         <Featured/>
         <TrustedBy/>
         <Slide slidesToShow={5} arrowsToScroll={5}>
-            {cards.map((card) => (
+            {categories.map((card) => (
                 <CategoCard item={card} key={card.id}/>
             ))}
         </Slide>
@@ -82,7 +88,7 @@ return (
             </div>
         </div>
         <Slide slidesToShow={4} arrowsToScroll={4}>
-            {projects.map((card) => (
+            {categories.map((card) => (
                 <ProjectCard item={card} key={card.id}/>
             ))}
         </Slide>

@@ -6,8 +6,8 @@ const CategoCard = ({item}) => {
         <Link to={'services?category='+item.id}>
             <div className="categoCard">
                 <img src={item.image} alt=""/>
-                <span className={'desc'}>{item.description}</span>
-                <span className={'title'}>{item.title}</span>
+                <span className={'desc'}>{item.description.substring(0,26)}...</span>
+                <span className={'title'}>{item.title.substring(0,20)}</span>
             </div>
         </Link>
     )

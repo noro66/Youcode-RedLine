@@ -16,10 +16,9 @@ const Service = () => {
     const dataQuery = queryClient.getQueryData(['service', id]);
     console.log(dataQuery, 'tested');
 
-    const stars = Math.round(data?.total_stars/data?.star_number) ; // ??
+    const stars = Math.round(data?.total_stars/data?.star_number) ?? 1 ; // ??
     useEffect(() => {
         refetch();
-        console.log(queryClient.getQueryData('service'));
     }, []);
 
     return(

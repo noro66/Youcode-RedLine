@@ -12,4 +12,9 @@ class ServiceCategory extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function services(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Service::class)->with('seller');
+    }
 }
