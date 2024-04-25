@@ -7,21 +7,25 @@ import CategoCard from "../../component/categoCart/CategoCard.jsx";
 import ProjectCard from "../../component/projectCart/ProjectCard.jsx";
 import {useQuery} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
+import {useEffect} from "react";
 
 const Home = () => {
 
     const { isPending, isLoading, error, data:categories, refetch} = useQuery({ queryKey: ['categories'],
         queryFn: ()=> customAxios.get('home').then(res => res.data.categories) });
     console.log(categories);
+    useEffect(() => {
+        refetch();
+    })
     return (
     <div className={'home'}>
         <Featured/>
         <TrustedBy/>
-        <Slide slidesToShow={5} arrowsToScroll={5}>
-            {categories.map((card) => (
+        {isLoading ? "loading..." : error ?  "Ops there is an error" : <Slide slidesToShow={5} arrowsToScroll={5}>
+            {categories && categories.map((card) => (
                 <CategoCard item={card} key={card.id}/>
             ))}
-        </Slide>
+        </Slide> }
         <div className="features">
             <div className="container">
                 <div className="item">
@@ -87,11 +91,14 @@ const Home = () => {
                 </div>
             </div>
         </div>
-        <Slide slidesToShow={4} arrowsToScroll={4}>
-            {categories.map((card) => (
-                <ProjectCard item={card} key={card.id}/>
-            ))}
-        </Slide>
+        {
+            isPending ? "loading..." : error ? 'Ops There is an Error ' :
+                <Slide slidesToShow={4} arrowsToScroll={4}>
+                    {categories?.map((card) => (
+                        <ProjectCard item={card} key={card.id}/>
+                    ))}
+                </Slide>
+        }
     </div>
 )
 };

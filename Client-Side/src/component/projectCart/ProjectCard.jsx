@@ -5,7 +5,7 @@ const ProjectCard = ({item}) => {
     const service = item.services[0];
     console.log('service : ',service);
     return(
-        <Link to={'services?project='+service.id} className={'link'}>
+        <Link to={'service/'+service.id} className={'link'}>
             <div className="projectCard">
                 <img src={service.cover_image} alt=""/>
                 <div className="info">
