@@ -19,7 +19,7 @@ const Service = () => {
 
     useEffect(() => {
         refetch();
-        if (!data) {
+        if (!data && error.status === 404) {
             navigate('/');
             return null;
         }
