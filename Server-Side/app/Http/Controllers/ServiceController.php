@@ -7,6 +7,7 @@ use App\Models\Image;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Repositories\Services\ServicesService;
+use http\Env\Response;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -56,13 +57,44 @@ class ServiceController extends Controller
 
     }
 
+//    public function store(StoreServiceRequest $request): JsonResponse
+//    {
+//        $serviceForm = $request->validated();
+//
+//        $service = Service::create($serviceForm);
+//        return response()->json([
+//            'service' => $service,
+//        ]);
+//    }
+    /**
+     * @throws AuthorizationException
+     */
     public function store(StoreServiceRequest $request): JsonResponse
     {
-        $serviceForm = $request->validated();
-        $service = Service::create($serviceForm);
-        return response()->json([
-            'service' => $service,
-        ]);
+        if (Auth::user()->isSeller) {
+//        return \response()->json(['isSeller' => Auth::user()->isSeller]);
+            $data = $request->validated();
+            $imgPath = $request->file('cover_image')->store('coverImages', 'public');
+            $data['seller_id'] = Auth::id();
+            $data['cover_image'] = $imgPath;
+            $service = Service::create($data);
+            if ($request->hasFile('images')) {
+                $images = $request->file('images');
+                foreach ($images as $image) {
+                    $imgPath = $image->store('coverImages', 'public');
+                    Image::create([
+                        'image_url' => $imgPath,
+                        'service_id' => $service->id,
+                    ]);
+                }
+            }
+            return response()->json([
+                'success' => true,
+                'service' => $service,
+            ], 201);
+        }else{
+            return \response()->json(['you dont Have permission to create a service']);
+        }
     }
     public function show(Service $service): JsonResponse
     {
@@ -84,10 +116,11 @@ class ServiceController extends Controller
 
     public function myServices(): JsonResponse
     {
-        $service = Auth::user()->seller->service;
+        $services = Auth::user()->seller->services;
         return response()->json([
-            'service' => $service,
+            'services' => $services,
         ]);
     }
+
 
 }

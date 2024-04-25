@@ -49,10 +49,6 @@ class ServicePolicy
     /**
      * Determine whether the user can create models.
      */
-    public function create(User $user): bool
-    {
-        return $user->isSeller;
-    }
 
     /**
      * Determine whether the user can update the model.

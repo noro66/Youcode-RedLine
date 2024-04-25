@@ -28,4 +28,9 @@ class Seller extends Model
     {
         return $this->hasManyThrough(Order::class, Service::class)->with('client');
     }
+
+    public function services(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Service::class);
+    }
 }

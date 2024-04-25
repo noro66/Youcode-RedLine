@@ -33,7 +33,6 @@ class StoreServiceRequest extends FormRequest
             'star_number' => 'sometimes|integer|min:1|max:5',
             'delivery_time' => 'required|integer|min:1',
             'revision_time' => 'required|integer|min:1',
-            'seller_id' => 'required|exists:sellers,id',
             'service_category_id' => 'required|exists:service_categories,id',
             'images.*' => 'required|image|mimes:jpg,jpeg,png,bmp|max:2048'
         ];
