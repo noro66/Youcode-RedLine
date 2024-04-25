@@ -1,7 +1,7 @@
 import './Service.scss'
 import InfiniteCarousel from "infinite-react-carousel";
 import {useParams} from "react-router-dom";
-import {QueryClient, useQuery} from "@tanstack/react-query";
+import {QueryClient, useQuery, useQueryClient} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {timeformater} from "../../utils/time/time.js";
 import {useEffect, useState} from "react";
@@ -10,11 +10,13 @@ import Reviews from "../../component/reviews/Reviews.jsx";
 
 const Service = () => {
     const {id} = useParams();
-    const queryClient = new QueryClient();
+    const queryClient = useQueryClient();
     const { isPending, isLoading, error, data, refetch} = useQuery({ queryKey: ['service', id],
         queryFn: ()=> customAxios.get(`service/${id}`).then(res => res.data.service) });
+    const dataQuery = queryClient.getQueryData(['service', id]);
+    console.log(dataQuery, 'tested');
 
-    const stars = Math.round(data?.total_stars/data?.star_number) ;  2; // ??
+    const stars = Math.round(data?.total_stars/data?.star_number) ; // ??
     useEffect(() => {
         refetch();
         console.log(queryClient.getQueryData('service'));
@@ -110,7 +112,7 @@ const Service = () => {
                                 <p>{/**/data?.seller.description}</p>
                             </div>
                         </div>
-                    <Reviews reviews={data?.reviews} />
+                    <Reviews reviews={data?.reviews} queryClient={queryClient} service_id={data.id} />
                     </div>
                     <div className="right">
                         <div className="price">
