@@ -11,15 +11,15 @@ import Reviews from "../../component/reviews/Reviews.jsx";
 const Service = () => {
     const {id} = useParams();
     const queryClient = useQueryClient();
-    const { isPending, isLoading, error, data, refetch} = useQuery({ queryKey: ['service', id],
-        queryFn: ()=> customAxios.get(`service/${id}`).then(res => res.data.service) });
-    const dataQuery = queryClient.getQueryData(['service', id]);
+    const { isPending, isLoading, error, data, refetch} = useQuery({ queryKey: ['services', id],
+        queryFn: ()=> customAxios.get(`services/${id}`).then(res => res.data.service) });
+    const dataQuery = queryClient.getQueryData(['services', id]);
     const navigate = useNavigate();
     const stars = Math.round(data?.total_stars/data?.star_number) ?? 1 ; // ??
 
     useEffect(() => {
         refetch();
-        if (!data && error.status === 404) {
+        if (!data && error?.status === 404) {
             navigate('/');
             return null;
         }

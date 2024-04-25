@@ -19,7 +19,7 @@ const Services = () => {
     const queryClient = useQueryClient();
     const {isPending, error, data, refetch} = useQuery({
         queryKey: ['services'],
-        queryFn: () => customAxios.get(`service${search ? search : '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data),
+        queryFn: () => customAxios.get(`services${search ? search : '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data),
         staleTime: 50000,
         initialData: () => {
             // Use 'services' key to retrieve initial data
