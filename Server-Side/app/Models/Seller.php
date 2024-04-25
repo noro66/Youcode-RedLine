@@ -15,11 +15,6 @@ class Seller extends Model
         'description'
     ];
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
-    {
-        return $this->hasManyThrough(Order::class, Service::class, 'seller_id', 'id', 'id', 'id');
-    }
-
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -27,6 +22,10 @@ class Seller extends Model
     public function lastDelivery()
     {
         return $this->orders()->latest()->value('updated_at') ?? false; // This will give you the timestamp of the last delivery
+    }
 
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(Order::class, Service::class)->with('client');
     }
 }
