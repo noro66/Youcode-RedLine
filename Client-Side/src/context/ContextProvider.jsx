@@ -14,7 +14,7 @@ export const ContextProvider = ({ children }) => {
     const [token, _setToken] = useState(sessionStorage.getItem("token"));
     const buffer = token ?  jwtDecode(token).user :  null
     const [user, setUser] = useState(buffer);
-
+    const [categories, setCategories] = useState([]);
     const setToken = (token) => {
         _setToken(token);
         if (token) {
@@ -33,6 +33,8 @@ export const ContextProvider = ({ children }) => {
             token,
             setToken,
             setUser,
+            setCategories,
+            categories
         }}>
             {children}
         </stateContext.Provider>

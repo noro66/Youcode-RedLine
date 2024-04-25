@@ -6,7 +6,7 @@ import {useStateContext} from "../../context/ContextProvider.jsx";
 import customAxios from "../../../CustomAxios.js";
 
 const Navbar = () =>{
-    const {setToken, setUser,  user ,token} = useStateContext()
+    const {setToken, setUser,  user ,token, categories} = useStateContext()
     const navigate = useNavigate();
     function onLogout(e) {
         e.preventDefault();
@@ -22,20 +22,6 @@ const Navbar = () =>{
 const  [active, setActive] = useState(false);
 const  [open, setOpen] = useState(false);
 const {pathname} = useLocation();
-
-    const categories = [
-        'Oil Drilling',
-        'Gas Drilling',
-        'Water Well Drilling',
-        'Geothermal Drilling',
-        'Mining Drilling',
-        'Directional Drilling',
-        'Horizontal Drilling',
-        'Vertical Drilling',
-        'Core Drilling',
-        'Rotary Drilling',
-        'Hydraulic Fracturing',
-    ];
 
 const isActive = ()=>{
     window.scrollY > 0 ? setActive(true) : setActive(false);
@@ -61,10 +47,10 @@ const isActive = ()=>{
                     <span>Drilling Business</span>
                     <Link to={'/services'} className={'link'}><span>Services</span></Link>
                     <span>English</span>
-                    {!user?.isSeller && <span>Became a Server</span>}
-                    <Link to={'/register'} className={'link'}> <span>Sign in</span> </Link>
+                    {!user?.isSeller && <span>Became a SP</span>}
+                    <Link to={'/register'} className={'link'}> <span>Join Us</span> </Link>
                     {!user  && <Link to={'/login'}>
-                        <button>Join Us</button>
+                        <button>Sign in</button>
                     </Link>}
                     {user && <div className="user" onClick={()=>setOpen(!open)}>
                         <img src="../../../public/images/profile.svg" alt=""/>
@@ -89,9 +75,9 @@ const isActive = ()=>{
               {(active || pathname !== '/') &&  <>
                    <hr/>
                    <div className="menu">
-                       {categories.map((category, index) => (
+                       {categories && categories?.map((category, index) => (
                            <Link key={index} className={'link'} to={'/'}>
-                               <span>{category}</span>
+                               <span>{category.title}</span>
                            </Link>
                        ))}
                    </div>

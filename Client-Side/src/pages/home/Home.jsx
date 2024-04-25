@@ -8,14 +8,18 @@ import ProjectCard from "../../component/projectCart/ProjectCard.jsx";
 import {useQuery} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {useEffect} from "react";
+import {useStateContext} from "../../context/ContextProvider.jsx";
 
 const Home = () => {
 
     const { isPending, isLoading, error, data:categories, refetch} = useQuery({ queryKey: ['categories'],
         queryFn: ()=> customAxios.get('home').then(res => res.data.categories) });
     console.log(categories);
+    const {setCategories} = useStateContext();
+
     useEffect(() => {
         refetch();
+        setCategories(categories);
     })
     return (
     <div className={'home'}>

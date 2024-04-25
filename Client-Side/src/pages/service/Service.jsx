@@ -14,7 +14,6 @@ const Service = () => {
     const { isPending, isLoading, error, data, refetch} = useQuery({ queryKey: ['service', id],
         queryFn: ()=> customAxios.get(`service/${id}`).then(res => res.data.service) });
     const dataQuery = queryClient.getQueryData(['service', id]);
-    console.log(dataQuery, 'tested');
 
     const stars = Math.round(data?.total_stars/data?.star_number) ?? 1 ; // ??
     useEffect(() => {
@@ -45,24 +44,26 @@ const Service = () => {
                                 <span>{stars}</span>
                             </div>
                         </div>
-                        <InfiniteCarousel
-                            arrows={true}
-                            slidesToShow={1}
-                            arrowsBlock={false}
-                            arrowsToScroll={1}
-                            dots={false}
-                            showControls={true}
-                            showStatus={false}
-                            breakpoints={{
-                                768: {
-                                    showDots: true,
-                                    showStatus: true,
-                                    arrowsBlock: true,
-                                },
-                            }}
-                        >
-                            {/**/data?.images.map((image, index) => (<img src={image.image_url} alt=""/>))}
-                        </InfiniteCarousel>
+                        {data.images && data.images.length > 0 ? (
+                            <InfiniteCarousel
+                                arrows={true}
+                                slidesToShow={1}
+                                arrowsBlock={false}
+                                arrowsToScroll={1}
+                                dots={false}
+                                showControls={true}
+                                showStatus={false}
+                                breakpoints={{
+                                    768: {
+                                        showDots: true,
+                                        showStatus: true,
+                                        arrowsBlock: true,
+                                    },
+                                }}
+                            >
+                                {/**/data?.images.map((image, index) => (<img src={image.image_url} alt=""/>))}
+                            </InfiniteCarousel>
+                        ) : <img src="/images/picture.svg" alt=""/>}
                         <h1> About This Service </h1>
                         <p>{/**/data?.desc}</p>
                         <div className="seller">
