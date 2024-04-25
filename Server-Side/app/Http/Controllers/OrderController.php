@@ -34,9 +34,15 @@ class OrderController extends Controller
 
     public function myOrders(): \Illuminate\Http\JsonResponse
     {
-        $orders = Auth::user()->client->orders;
+        $user = Auth::user();
+        $orders = [];
+        if ($user->client){
+            $orders = $user->client->orders;
+        }else{
+            $orders = $user->seller->orders;
+        }
         return response()->json([
-            'order' => $orders,
+            'orders' => $orders,
         ]);
     }
 
@@ -52,7 +58,7 @@ class OrderController extends Controller
             'client_id' => Auth::user()->client->id,
             'price' => $service->price,
             'image' => $service->cover_image,
-            'title' => uniqid('-', true). '='. $request->input('title'),
+            'title' => uniqid($service->id , true),
 
         ]);
         return response()->json([
@@ -62,5 +68,19 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
+    public function destroy(Order $order): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('destroyOrder', $order);
+       $delete =  $order->delete();
+       return response()->json([
+           'success' =>  $delete,
+           'message' => 'Order deleted!',
+           'order' => $order
+       ]);
+
+    }
 
 }

@@ -19,7 +19,7 @@ class Client extends Model
     }
     public function Orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class)->with('seller');
     }
     public function reviews(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
     {

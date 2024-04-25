@@ -15,9 +15,9 @@ class Seller extends Model
         'description'
     ];
 
-    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
-        return $this->hasMany(Order::class);
+        return $this->hasManyThrough(Order::class, Service::class, 'seller_id', 'id', 'id', 'id');
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo

@@ -30,6 +30,7 @@ Route::group(['prefix' => 'auth'], static function () {
     Route::post('me', [AuthController::class, 'me']);
 });
 
+Route::get('myServices', [ServiceController::class, 'myServices']);
 Route::resource('service', ServiceController::class);
 
 Route::put('review/update/{review}', [ReviewController::class, 'update']);

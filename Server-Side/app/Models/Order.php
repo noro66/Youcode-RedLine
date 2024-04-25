@@ -27,4 +27,13 @@ class Order extends Model
     {
         return $this->hasManyThrough(Review::class, Service::class);
     }
+    public function seller(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+    {
+        return $this->hasOneThrough(Seller::class, Service::class, 'id', 'id', 'service_id')->with('user');
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class)->with('user');
+    }
 }

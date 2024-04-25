@@ -25,7 +25,7 @@ class StoreServiceRequest extends FormRequest
             'title' => 'required|string|max:255',
             'short_title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'cover_image' => 'required|string|max:255',
+            'cover_image' => 'required|image|mimes:jpg,jpeg,png,bmp|max:2048',
             'short_desc' => 'required|string|max:255',
             'price' => 'required|integer|min:1',
             'sales' => 'sometimes|integer|min:1',

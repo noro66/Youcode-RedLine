@@ -56,10 +56,14 @@ class ServiceController extends Controller
 
     }
 
-//    public function store(StoreServiceRequest $request): JsonResponse
-//    {
-//
-//    }
+    public function store(StoreServiceRequest $request): JsonResponse
+    {
+        $serviceForm = $request->validated();
+        $service = Service::create($serviceForm);
+        return response()->json([
+            'service' => $service,
+        ]);
+    }
     public function show(Service $service): JsonResponse
     {
         return response()->json([
@@ -78,5 +82,12 @@ class ServiceController extends Controller
         ]);
     }
 
+    public function myServices(): JsonResponse
+    {
+        $service = Auth::user()->seller->service;
+        return response()->json([
+            'service' => $service,
+        ]);
+    }
 
 }

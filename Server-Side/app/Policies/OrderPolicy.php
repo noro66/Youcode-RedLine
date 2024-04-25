@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Order;
 use App\Models\User;
 
 class OrderPolicy
@@ -12,5 +13,13 @@ class OrderPolicy
     public function __construct()
     {
         //
+    }
+
+    public function destroyOrder(User $user, Order $order)
+    {
+        if ($client = $user->client){
+           return $client->orders()->where('id', $order->id)->exists();
+        }
+        return false;
     }
 }

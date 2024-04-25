@@ -8,6 +8,7 @@ use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
@@ -104,10 +105,13 @@ class AuthController extends Controller
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        $expirationTime = Carbon::now()->addDays(12);
+
+        config()->set('jwt.ttl', 60*24*7);
         $user = Auth::user();
         $token = auth()->claims([
             'user' => auth()->user(),
-        ])->attempt($credentials);
+        ])->attempt($credentials, ['exp' => $expirationTime->timestamp]);
         return $this->respondWithToken($token);
     }
 
