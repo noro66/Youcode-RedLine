@@ -1,5 +1,5 @@
 import  './Navbar.scss'
-import {Link, useLocation} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useEffect, useState} from "react";
 import CustomAxios from "../../../CustomAxios.js";
 import {useStateContext} from "../../context/ContextProvider.jsx";
@@ -7,7 +7,7 @@ import customAxios from "../../../CustomAxios.js";
 
 const Navbar = () =>{
     const {setToken, setUser,  user ,token} = useStateContext()
-
+    const navigate = useNavigate();
     function onLogout(e) {
         e.preventDefault();
         customAxios.post("auth/logout", {token: token}).then(() =>  {
@@ -15,6 +15,7 @@ const Navbar = () =>{
             setUser(null);
             sessionStorage.removeItem("token");
             sessionStorage.removeItem("user");
+            navigate('/');
         }).catch(r => console.log(r));
     }
 
