@@ -24,6 +24,9 @@ class ServiceController extends Controller
 
         $serviceQuery = Service::with('images', 'seller', 'service_category', 'user', 'reviews');
 
+        if (request()->has('search')){
+            $serviceQuery->where('title', 'like', '%'.request('search').'%');
+        }
         if (request()->has('category')) {
             $serviceQuery->where('service_category_id', request()->input('category'));
             $category = ServiceCategory::find(request()->input('category'));

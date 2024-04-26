@@ -14,25 +14,22 @@ const Services = () => {
     const maxRef = useRef(null);
     const {search} = useLocation();
     const {category} = useParams();
-    console.log(search, category);
+    console.log(search);
 
     const queryClient = useQueryClient();
     const {isPending, error, data, refetch} = useQuery({
         queryKey: ['services'],
-        queryFn: () => customAxios.get(`services${search ? search : '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data),
+        queryFn: () => customAxios.get(`services${search ? search :  '?'}&min=${minRef.current.value}&max=${maxRef.current.value}&sort=${sort}`).then(res => res.data),
         staleTime: 50000,
         initialData: () => {
             // Use 'services' key to retrieve initial data
             const serviceData = queryClient.getQueryData('services');
-            console.log(serviceData);
             // Manipulate or filter the data as needed
             // return serviceData?.find((serviceItem) => serviceItem.id === parseInt(id));
         }
     });
-    const queryData = queryClient.getQueryData('services');
 
-    console.log(queryData);
-    console.log();
+    const queryData = queryClient.getQueryData('services');
 
     const reSort = (type) => {
         setSort(type);
