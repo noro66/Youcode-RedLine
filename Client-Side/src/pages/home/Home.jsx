@@ -12,24 +12,25 @@ import {useStateContext} from "../../context/ContextProvider.jsx";
 
 const Home = () => {
 
-    const { isPending, isLoading, error, data:categories, refetch} = useQuery({ queryKey: ['categories'],
+    const { isPending, isLoading, error, data: categories, refetch} = useQuery({ queryKey: ['categories'],
         queryFn: ()=> customAxios.get('home').then(res => res.data.categories) });
-    console.log(categories);
     const {setCategories} = useStateContext();
 
     useEffect(() => {
         refetch();
         setCategories(categories);
-    })
+        console.log(categories);
+    }, [])
     return (
     <div className={'home'}>
         <Featured/>
         <TrustedBy/>
-        {isLoading ? "loading..." : error ?  "Ops there is an error" : <Slide slidesToShow={5} arrowsToScroll={5}>
-            {categories && categories.map((card) => (
-                <CategoCard item={card} key={card.id}/>
-            ))}
-        </Slide> }
+        {isLoading ? "loading..." : error ?  "Ops there is an error" :
+            <Slide slidesToShow={5} arrowsToScroll={5}>
+                {categories && categories.map((card) => (
+                    <CategoCard item={card} key={card.id}/>
+                ))}
+            </Slide> }
         <div className="features">
             <div className="container">
                 <div className="item">
@@ -95,13 +96,15 @@ const Home = () => {
                 </div>
             </div>
         </div>
-        {
-            isPending ? "loading..." : error ? 'Ops There is an Error ' :
-                <Slide slidesToShow={4} arrowsToScroll={4}>
-                    {categories?.map((card) => (
-                        <ProjectCard item={card} key={card.id}/>
-                    ))}
-                </Slide>
+        {isPending ? "loading..." : error ? 'Ops There is an Error ' :
+            categories.length > 0 && <Slide slidesToShow={4} arrowsToScroll={4}>
+                {categories.map((cat) => {
+                    if (cat.services && cat.services.length > 0) {
+                        return <ProjectCard item={cat.services[0]} key={cat.services[0].id} />;
+                    }
+                    return null;
+                })}
+            </Slide>
         }
     </div>
 )

@@ -14,7 +14,6 @@ const Services = () => {
     const maxRef = useRef(null);
     const {search} = useLocation();
     const {category} = useParams();
-    console.log(search);
 
     const queryClient = useQueryClient();
     const {isPending, error, data, refetch} = useQuery({
@@ -70,7 +69,7 @@ const Services = () => {
             </div>
             <div className="cards">
                 {isPending ? "Loading..." : error ?  "Something Went Wrong !" :  data?.services.length > 0 ?   data?.services.map(service => (
-                    <ServiceCard key={service.id} item={service} />
+                    <ServiceCard key={service?.id} item={service} />
                 )) : <p className="alert">Ops there is no Service with this specifications !</p>}
             </div>
         </div>

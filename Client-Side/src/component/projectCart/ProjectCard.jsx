@@ -2,16 +2,16 @@ import './ProjectCard.scss';
 import {Link} from "react-router-dom";
 
 const ProjectCard = ({item}) => {
-    const service = item.services[0];
+
     return(
-        <Link to={'service/'+service.id} className={'link'}>
+        <Link to={'service/'+item?.id} className={'link'}>
             <div className="projectCard">
-                <img src={service.cover_image} alt=""/>
+                <img src={item?.cover_image} alt=""/>
                 <div className="info">
-                    <img src={service.seller.user.img} alt=""/>
+                    <img src={item?.seller?.user.img} alt=""/>
                     <div className="texts">
                         <h2>{item.title}</h2>
-                        <span>{service.title.substring(0,10)}...</span>
+                        <span>{item?.desc.substring(0,25)}...</span>
                     </div>
                 </div>
             </div>

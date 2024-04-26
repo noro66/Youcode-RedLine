@@ -16,13 +16,13 @@ export default function  Review ({item})  {
                 </div>
                 <div className="stars">
                     {item.star > 0 ? (
-                        Array.from({length: item.star}, (_, index) => (
+                        Array.from({length: item?.star}, (_, index) => (
                             <img key={index} src="/images/icons8-star-48.png" alt=""/>
                         ))
                     ) : (
                         <img src="/images/icons8-star-48.png" alt=""/>
                     )}
-                    <span>{item.star}</span>
+                    <span>{item?.star}</span>
                 </div>
                 <p>{item.description}</p>
                 <div className="helpful">

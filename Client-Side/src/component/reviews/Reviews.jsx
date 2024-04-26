@@ -11,7 +11,7 @@ export default function Reviews({reviews, queryClient, service_id}) {
     const starRef = useRef(1);
     const mutation = useMutation({
         mutationFn: (review) => {
-            return customAxios.post("/review", review);
+            return customAxios.post("review", review);
         },
         onSuccess:()=>{
             queryClient.invalidateQueries(["service", id]);
@@ -32,7 +32,7 @@ export default function Reviews({reviews, queryClient, service_id}) {
     return (
         <div className="reviews">
             <h2>Reviews : </h2>
-            {reviews.length > 0 ? reviews.map((review, index) => (
+            {reviews?.length > 0 ? reviews.map((review, index) => (
                 <Review item={review} key={index}/>
             )) : <p>there is no reviews for this service !!</p>}
             <div className="add">

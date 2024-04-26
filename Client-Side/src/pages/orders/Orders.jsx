@@ -28,7 +28,7 @@ const Orders = (props) => {
                 </tr>
                 </thead>
                 <tbody>
-                {isLoading ? "Loading..." : error ? "Ops an Error !" : orders.map((order) => (
+                {isLoading ? "Loading..." : error ? "Ops an Error !" : orders?.map((order) => (
                     <tr key={order.id}>
                         <td>
                             <img className={'img'} src={order.image} alt=""/>
