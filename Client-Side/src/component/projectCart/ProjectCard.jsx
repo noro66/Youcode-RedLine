@@ -3,7 +3,6 @@ import {Link} from "react-router-dom";
 
 const ProjectCard = ({item}) => {
     const service = item.services[0];
-    console.log('service : ',service);
     return(
         <Link to={'service/'+service.id} className={'link'}>
             <div className="projectCard">

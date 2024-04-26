@@ -45,7 +45,7 @@ const Services = () => {
 
     useEffect(() => {
         refetch()
-    }, [sort]);
+    }, [sort, search]);
 
     return (
     <div className="services">

@@ -15,7 +15,7 @@ const Service = () => {
         queryFn: ()=> customAxios.get(`services/${id}`).then(res => res.data.service) });
     const dataQuery = queryClient.getQueryData(['services', id]);
     const navigate = useNavigate();
-    const stars = Math.round(data?.total_stars/data?.star_number) ?? 1 ; // ??
+    const stars = Math.round(data?.total_stars/data?.star_number) ?? 1; // ??
 
     useEffect(() => {
         refetch();

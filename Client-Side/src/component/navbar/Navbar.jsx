@@ -53,7 +53,7 @@ const isActive = ()=>{
                         <button>Sign in</button>
                     </Link>}
                     {user && <div className="user" onClick={()=>setOpen(!open)}>
-                        <img src="../../../public/images/profile.svg" alt=""/>
+                        <img src={user?.img} alt=""/>
                         <span>{user.username}</span>
                         {open && <div className="options">
                             {
@@ -76,7 +76,7 @@ const isActive = ()=>{
                    <hr/>
                    <div className="menu">
                        {categories && categories?.map((category, index) => (
-                           <Link key={index} className={'link'} to={'/'}>
+                           <Link key={index} className={'link'} to={`services?category=${category?.id}`}>
                                <span>{category.title}</span>
                            </Link>
                        ))}
