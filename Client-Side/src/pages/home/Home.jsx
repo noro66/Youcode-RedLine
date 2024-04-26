@@ -19,8 +19,7 @@ const Home = () => {
     useEffect(() => {
         refetch();
         setCategories(categories);
-        console.log(categories);
-    }, [])
+    }, [categories]);
     return (
     <div className={'home'}>
         <Featured/>

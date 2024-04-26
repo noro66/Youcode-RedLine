@@ -6,6 +6,8 @@ const stateContext = createContext({
     token: null,
     setToken: () => {},
     setUser: () => {},
+    categories: null,
+    setCategories: () => [],
 });
 
 // eslint-disable-next-line react/prop-types
