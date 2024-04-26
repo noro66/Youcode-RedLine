@@ -4,6 +4,7 @@ import {useStateContext} from "../../context/ContextProvider.jsx";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {handleClick} from "infinite-react-carousel/lib/carousel/listener.js";
+import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
 
 const MyServices = (props) => {
 
@@ -50,7 +51,7 @@ const MyServices = (props) => {
                 { isPending ? "Loading..." : error ? "Ops there is an error please try again later" : services?.map((service) => (
                     <tr key={service?.id}>
                         <td>
-                            <img className={'img'} src={service?.cover_image} alt=""/>
+                            <img className={'img'} src={imageFromat(service?.cover_image)} alt=""/>
                         </td>
                         <td>{service?.title}</td>
                         <td>{service?.price}</td>
