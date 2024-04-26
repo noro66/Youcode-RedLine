@@ -7,6 +7,7 @@ import {timeformater} from "../../utils/time/time.js";
 import {useEffect, useState} from "react";
 import Review from "../../component/review/Review.jsx";
 import Reviews from "../../component/reviews/Reviews.jsx";
+import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
 
 const Service = () => {
     const {id} = useParams();
@@ -33,7 +34,7 @@ const Service = () => {
                 <div className="service">
                     <div className="container">
                         <div className="left">
-                            <span className="breadCrumbs">Drill >  Water Drilling > </span>
+                            <span className="breadCrumbs">Drill > {data?.category?.title ?? "Water Drilling"} > </span>
                             <h1>{/**/data.title}</h1>
                             <div className="user">
                                 <div className="pp">
@@ -70,7 +71,7 @@ const Service = () => {
                                         },
                                     }}
                                 >
-                                    {/**/data?.images.map((image, index) => (<img src={image.image_url} alt=""/>))}
+                                    {/**/data?.images.map((image, index) => (<img src={imageFromat(image.image_url)} alt=""/>))}
                                 </InfiniteCarousel>
                             ) : <img src="/images/picture.svg" alt=""/>}
                             <h1> About This Service </h1>

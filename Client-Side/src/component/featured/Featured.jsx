@@ -18,7 +18,7 @@ const Featured = () => {
                         <img src="./images/searchicon.png" alt=""/>
                         <input type="text" onChange={(e)=>setInput(e.target.value)}  placeholder="Search..." />
                          </div>
-                    <button  onClick={handelClick}>Search</button>
+                    <button disabled={input === null}  onClick={handelClick}>Search</button>
                 </div>
                 <div className="popular">
                     <span>Popular : </span>

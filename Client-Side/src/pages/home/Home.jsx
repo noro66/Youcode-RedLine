@@ -13,7 +13,7 @@ import {useStateContext} from "../../context/ContextProvider.jsx";
 const Home = () => {
 
     const { isPending, isLoading, error, data: categories, refetch} = useQuery({ queryKey: ['categories'],
-        queryFn: ()=> customAxios.get('home').then(res => res.data.categories) });
+        queryFn: ()=> customAxios.get('home?limit=10').then(res => res.data.categories) });
     const {setCategories} = useStateContext();
 
     useEffect(() => {

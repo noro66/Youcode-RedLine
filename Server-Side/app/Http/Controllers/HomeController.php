@@ -7,10 +7,16 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(request $request)
     {
-        $categories = ServiceCategory::query()->limit(10)->with('services')->get();
+        if ($request->has('limit')){
+        $categories = ServiceCategory::query()->with('services')->limit(10)->get();
+        }else{
+            $categories = ServiceCategory::query()->with('services')->get();
+        }
         return response()->json([
+            'limit' => $request->input('limit'),
+            'count' => count($categories),
             'categories' => $categories
         ]);
     }

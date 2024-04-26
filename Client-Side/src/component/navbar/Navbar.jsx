@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import CustomAxios from "../../../CustomAxios.js";
 import {useStateContext} from "../../context/ContextProvider.jsx";
 import customAxios from "../../../CustomAxios.js";
+import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
 
 const Navbar = () =>{
     const {setToken, setUser,  user ,token, categories} = useStateContext()
@@ -53,7 +54,7 @@ const isActive = ()=>{
                         <button>Sign in</button>
                     </Link>}
                     {user && <div className="user" onClick={()=>setOpen(!open)}>
-                        <img src={user?.img} alt=""/>
+                        <img src={imageFromat(user?.img)} alt=""/>
                         <span>{user.username}</span>
                         {open && <div className="options">
                             {

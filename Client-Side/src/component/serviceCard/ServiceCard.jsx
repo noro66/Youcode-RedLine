@@ -1,14 +1,15 @@
 import './ServiceCard.scss'
 import {Link} from "react-router-dom";
+import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
 
 const ServiceCard = ({item}) => {
     return (
         <Link to={`/service/${item?.id}`} className={'link'}>
             <div className="serviceCard">
-                <img src={item?.cover_image} alt=""/>
+                <img src={imageFromat(item?.cover_image)} alt=""/>
                 <div className="info">
                     <div className="user">
-                        <img src={item?.user.img} alt=""/>
+                        <img src={imageFromat(item?.user.img)} alt=""/>
                         <span>{item?.user.username}</span>
                     </div>
                     <p>{item?.title.slice(0, 20)}</p>

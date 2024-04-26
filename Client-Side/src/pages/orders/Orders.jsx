@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {useContext} from "react";
 import {useStateContext} from "../../context/ContextProvider.jsx";
+import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
 
 const Orders = (props) => {
 
@@ -31,7 +32,7 @@ const Orders = (props) => {
                 {isLoading ? "Loading..." : error ? "Ops an Error !" : orders?.map((order) => (
                     <tr key={order.id}>
                         <td>
-                            <img className={'img'} src={order.image} alt=""/>
+                            <img className={'img'} src={imageFromat(order.image)} alt=""/>
                         </td>
                         <td>{order.title}</td>
                         <td>{order.price} $</td>

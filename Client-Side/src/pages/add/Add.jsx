@@ -1,6 +1,18 @@
 import './Add.scss'
+import {useReducer, useState} from "react";
+import {INITIAL_STATE, serviceReducer} from "../../reducers/serviceReducer.js";
+import {useQuery} from "@tanstack/react-query";
+import customAxios from "../../../CustomAxios.js";
 
-const Add = (props) => {
+const Add = () => {
+    const { isPending, isLoading, error, data: categories, refetch} = useQuery({ queryKey: ['categories'],
+        queryFn: ()=> customAxios.get('home').then(res => res.data.categories) });
+
+    const  [singleFile, setSingleFile] = useState(undefined);
+    const [files, setFiles] = useState([]);
+    const [uploading, setUploading] = useState(false);
+
+    const  [state, dispatch] = useReducer(serviceReducer ,INITIAL_STATE)
 return (
     <div className={'add'}>
         <div className="container">
@@ -11,10 +23,12 @@ return (
                     <input type="text" placeholder={'e.g I will provide a good drilling service'}/>
                     <label htmlFor="">Category</label>
                     <select name="cats" id="cats">
-                        <option value="">Select Category 0</option>
-                        <option value="cati1">Category 01</option>
-                        <option value="cati2">Category 02</option>
-                        <option value="cate3">Category 03</option>
+                        <option selected={true} value="">Select Category </option>
+                        {
+                            isPending ? "loading..." : error ? "error" :
+                                categories?.map((cat) => <option value={cat?.id}>{cat?.title}</option>
+                                )
+                        }
                     </select>
                     <label htmlFor="">Cover Image</label>
                     <input type="file" id="coverImage" name="coverImage"/>
