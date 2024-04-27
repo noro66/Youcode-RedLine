@@ -42,6 +42,10 @@
       align-items: center;
       font-size: 1.7rem;
       text-align: center;
+      input{
+        padding: 20px;
+        cursor: pointer;
+      }
     }
 
     .footer {
@@ -65,7 +69,7 @@
         }
 
         &:last-of-type {
-          background-color: cornflowerblue;
+          background-color:var(--first-color);
           color: white;
         }
       }
