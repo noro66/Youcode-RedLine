@@ -96,7 +96,7 @@ const Service = () => {
                                             )}
                                             <span>{stars}</span>
                                         </div>
-                                        <button>Contact Me</button>
+                                        <button onClick={()=>alert('Coming Soon')}>Contact Me</button>
                                     </div>
                                 </div>
                                 <div className="box">
@@ -126,7 +126,7 @@ const Service = () => {
                                     <p>{/**/data?.seller.description}</p>
                                 </div>
                             </div>
-                            <Reviews reviews={data?.reviews} queryClient={queryClient} service_id={data.id} />
+                            <Reviews reviews={data?.reviews} queryClient={queryClient} service={data} />
                         </div>
                         <div className="right">
                             <div className="price">

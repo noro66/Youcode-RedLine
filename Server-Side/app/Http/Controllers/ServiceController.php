@@ -102,7 +102,7 @@ class ServiceController extends Controller
     public function show(Service $service): JsonResponse
     {
         return response()->json([
-            'service' => $service->load('images', 'seller', 'service_category', 'reviews', 'features')
+            'service' => $service->load('images', 'seller', 'service_category', 'reviews', 'features', 'orders')
         ]);
     }
 
@@ -119,7 +119,7 @@ class ServiceController extends Controller
 
     public function myServices(): JsonResponse
     {
-        $services = Service::where('seller_id', Auth::user()->seller->id)->with('images')->get();
+        $services = Service::where('seller_id', Auth::user()->seller->id)->with('images', 'orderedBy')->get();
         return response()->json([
             'services' => $services,
         ]);

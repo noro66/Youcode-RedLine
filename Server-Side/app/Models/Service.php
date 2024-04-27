@@ -49,7 +49,7 @@ class Service extends Model
 
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class)->with('client');
     }
 
     public function getSellerWithLastDelivery(): Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null
@@ -61,7 +61,6 @@ class Service extends Model
     {
         return $this->hasMany(Feature::class);
     }
-
 
     public function orderedBy(User $user)
     {

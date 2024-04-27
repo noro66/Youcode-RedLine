@@ -24,7 +24,8 @@ const Featured = ({cat}) => {
                 </div>
                 <div className="popular">
                     <span>Popular : </span>
-                    {cat.map((category, i) => (
+                    {cat &&
+                        cat.map((category, i) => (
                         i > 4 ?  null :
                         <button onClick={()=> navigate(`services?category=${category.id}`)}>{category.title}</button>
                     ))}
