@@ -25,7 +25,7 @@ class StoreServiceRequest extends FormRequest
             'title' => 'required|string|max:255',
             'short_title' => 'required|string|max:255',
             'desc' => 'required|string',
-            'cover_image' => 'required|image|mimes:jpg,jpeg,png,bmp|max:2048',
+            'cover_image' => 'required|image|mimes:jpg,jpeg,png,bmp,svg|max:2048',
             'short_desc' => 'required|string|max:255',
             'price' => 'required|integer|min:1',
             'sales' => 'sometimes|integer|min:1',
@@ -34,7 +34,7 @@ class StoreServiceRequest extends FormRequest
             'delivery_time' => 'required|integer|min:1',
             'revision_time' => 'required|integer|min:1',
             'service_category_id' => 'required|exists:service_categories,id',
-            'images.*' => 'required|image|mimes:jpg,jpeg,png,bmp|max:2048'
+            'images.*' => 'required|image|mimes:jpg,jpeg,png,bmp,svg|max:2048'
         ];
     }
 }

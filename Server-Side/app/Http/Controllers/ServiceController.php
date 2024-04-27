@@ -84,7 +84,7 @@ class ServiceController extends Controller
             if ($request->hasFile('images')) {
                 $images = $request->file('images');
                 foreach ($images as $image) {
-                    $imgPath = $image->store('coverImages', 'public');
+                    $imgPath = $image->store('serviceImages', 'public');
                     Image::create([
                         'image_url' => $imgPath,
                         'service_id' => $service->id,
@@ -119,7 +119,7 @@ class ServiceController extends Controller
 
     public function myServices(): JsonResponse
     {
-        $services = Auth::user()->seller->services;
+        $services = Service::where('seller_id', Auth::user()->seller->id)->with('images')->get();
         return response()->json([
             'services' => $services,
         ]);
