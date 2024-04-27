@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import Review from "../../component/review/Review.jsx";
 import Reviews from "../../component/reviews/Reviews.jsx";
 import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
+import {useStateContext} from "../../context/ContextProvider.jsx";
+import Modal from "../../component/modal/Modal.jsx";
 
 const Service = () => {
     const {id} = useParams();
@@ -17,6 +19,8 @@ const Service = () => {
     const dataQuery = queryClient.getQueryData(['services', id]);
     const navigate = useNavigate();
     const stars = Math.round(data?.total_stars/data?.star_number) ?? 1; // ??
+    const {user} = useStateContext();
+    const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         refetch();
@@ -54,7 +58,7 @@ const Service = () => {
                                     <span>{stars}</span>
                                 </div>
                             </div>
-                            {data.images && data.images.length > 0 ? (
+                            {data.images && !modalOpen && data.images.length > 0 ? (
                                 <InfiniteCarousel
                                     arrows={true}
                                     slidesToShow={1}
@@ -148,11 +152,15 @@ const Service = () => {
                                     </div>
                                 ))}
                             </div>
-                            <button>Continue</button>
+                            <button onClick={() => {
+                                setModalOpen(true);
+                            }} className={user.isSeller &&  "hidden"}>Continue</button>
                         </div>
                     </div>
+                {modalOpen && <Modal setOpenModal={setModalOpen} />}
                 </div>
             </div>
+
         )
         }
     </>
