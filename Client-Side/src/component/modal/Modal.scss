@@ -42,10 +42,19 @@
       align-items: center;
       font-size: 1.7rem;
       text-align: center;
-      input{
-        padding: 20px;
-        cursor: pointer;
-      }
+      flex-direction: column;
+      gap: 20px;
+
+        label{
+          font-size: larger;
+          font-weight: 500;
+          color: #555555;
+        }
+        input{
+          padding: 20px;
+          cursor: pointer;
+        }
+
     }
 
     .footer {

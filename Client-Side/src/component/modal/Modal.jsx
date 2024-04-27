@@ -15,18 +15,16 @@ function Modal({ setOpenModal, serviceId }) {
             navigate('/orders');
         }
     });
-    const {dateRef} = useRef(null);
-    const date = dateRef.current.value;
+    const dateRef = useRef(null);
     function handelOrder() {
-        if (serviceId && date) {
-            mutation.mutate({
-                'service_id': serviceId,
-                'order_date': date,
-                'payment_intent': 'Not working for now'
-            })
-        }else{
-            console.log('error');
-        }
+        const date = dateRef.current.value;
+       if (date && serviceId) {
+           mutation.mutate({
+               'service_id': serviceId,
+               'order_date': date,
+               'payment_intent': 'Not working for now'
+           })
+       }
     }
 
     return (
@@ -45,9 +43,8 @@ function Modal({ setOpenModal, serviceId }) {
                     <h1>Are You Sure You Want to Continue?</h1>
                 </div>
                 <div className="body">
-                    <form >
-                        <input useRef={dateRef} type="date"/>
-                    </form>
+                        <label htmlFor="">Casual a Service date : </label>
+                        <input ref={dateRef}  type="date"/>
                 </div>
                 <div className="footer">
                     <button
@@ -58,7 +55,7 @@ function Modal({ setOpenModal, serviceId }) {
                     >
                         Cancel
                     </button>
-                    <button onClick={handelOrder}>Continue</button>
+                    <button  onClick={handelOrder}>Continue</button>
                 </div>
             </div>
         </div>
