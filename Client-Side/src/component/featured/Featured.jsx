@@ -1,13 +1,15 @@
 import './Featured.scss'
 import {useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
-const Featured = () => {
+import {useStateContext} from "../../context/ContextProvider.jsx";
+const Featured = ({cat}) => {
 
     const navigate = useNavigate();
     const [input, setInput] = useState(null);
     const handelClick = () => {
         navigate(`services/?search=${input}`);
     }
+
   return (
       <div className="featured">
           <div className="container">
@@ -22,10 +24,10 @@ const Featured = () => {
                 </div>
                 <div className="popular">
                     <span>Popular : </span>
-                    <button>Test pop</button>
-                    <button>Test pop</button>
-                    <button>Test pop</button>
-                    <button>Test pop</button>
+                    {cat.map((category, i) => (
+                        i > 4 ?  null :
+                        <button onClick={()=> navigate(`services?category=${category.id}`)}>{category.title}</button>
+                    ))}
                 </div>
             </div>
             <div className="right">

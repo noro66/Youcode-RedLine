@@ -24,6 +24,7 @@ class OrderRequest extends FormRequest
         return [
             'payment_intent' => 'required|string|max:255',
             'service_id' => 'required|exists:services,id',
+            'order_date' => 'required|date|not_passed',
         ];
     }
 }

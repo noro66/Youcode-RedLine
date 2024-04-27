@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\Interfaces\ServiceInterface;
 use App\Repositories\Services\ServicesService;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ServiceInterface::class, ServicesService::class);
+        //
     }
 
     /**ServicesService implements ServiceInterface
@@ -21,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Validator::extend('not_passed',  function ($attribute, $value) {
+            return strtotime($value) >= strtotime(date('Y-m-d'));
+        });
     }
 }

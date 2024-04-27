@@ -49,17 +49,19 @@ class OrderController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function store(OrderRequest $request)
+    public function store(OrderRequest $request): \Illuminate\Http\JsonResponse
     {
         $service = Service::findOrFail($request->input('service_id'));
         $this->authorize('OrderService', $service);
+        $user = Auth::user();
         $order = $service->orders()->create([
             'payment_intent' => $request->input('payment_intent'),
-            'client_id' => Auth::user()->client->id,
+            'client_id' => $user->client->id,
             'price' => $service->price,
             'image' => $service->cover_image,
-            'title' => uniqid($service->id , true),
-
+            'title' => $user->username  .'-' .  $service->title,
+            'order_date' => $request->input('order_date'),
+//            'status' => false,
         ]);
         return response()->json([
             'success' => true,
@@ -80,6 +82,11 @@ class OrderController extends Controller
            'message' => 'Order deleted!',
            'order' => $order
        ]);
+
+    }
+
+    public function approve(Order $order): \Illuminate\Http\JsonResponse
+    {
 
     }
 

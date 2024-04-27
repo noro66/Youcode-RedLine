@@ -18,6 +18,8 @@ class Order extends Model
         'payment_intent',
         'service_id',
         'client_id',
+        'order_date',
+        'status'
     ];
     public function service(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {

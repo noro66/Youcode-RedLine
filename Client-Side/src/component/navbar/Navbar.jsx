@@ -45,12 +45,10 @@ const isActive = ()=>{
                     <span className={'secondText'}>.</span>
                 </div>
                 <div className="links">
-                    <span>Drilling Business</span>
                     <Link to={'/services'} className={'link'}><span>Services</span></Link>
-                    <span>English</span>
                     {!user?.isSeller && <span>Became a SP</span>}
-                    <Link to={'/register'} className={'link'}> <span>Join Us</span> </Link>
                     {!user  && <Link to={'/login'}>
+                    <Link to={'/register'} className={'link'}> <span>Join Us</span> </Link>
                         <button>Sign in</button>
                     </Link>}
                     {user && <div className="user" onClick={()=>setOpen(!open)}>
@@ -58,15 +56,15 @@ const isActive = ()=>{
                         <span>{user.username}</span>
                         {open && <div className="options">
                             {
-                                user.isSeller && (
+                                user.isSeller ? (
                                     <>
                                        <Link className={'link'}  to={'/myservices'}> <span>Service</span> </Link>
                                        <Link className={'link'}  to={'/add'}> <span>Add New Service</span>< /Link>
                                     </>
-                                )
+                                ) : ""
                             }
                            <Link className={'link'}  to={'/orders'}>  <span>Orders</span> </Link>
-                           <Link  className={'link'} to={'messages'} > <span>Messages</span> </Link>
+                           <Link  className={'link'} to={'messages'} > <span>Profile</span> </Link>
                             <hr/>
                             <span onClick={onLogout}>Logout</span>
                         </div>}

@@ -25,7 +25,7 @@ const Orders = (props) => {
                     <th>Title</th>
                     <th>Price</th>
                     <th>{user?.isSeller ? 'Client' : 'Service Provider'}</th>
-                    <th>Contact</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -38,17 +38,24 @@ const Orders = (props) => {
                         <td>{order.price} $</td>
                         <td>{user?.isSeller ? order?.client?.user?.username : order?.seller?.user?.username}</td>
                         <td>
-                            <button>
-                                <img className={'rounded pointer'} src="/images/icons8-message-48.png" alt=""/>
-                            </button>
+                            {user?.isSeller && !order?.status ? (
+                                <button className={''}>Accept</button>
+                            ) : !order?.status ? (
+                                <button className={''}>Cancel</button>
+                            ) : null}
+
+                            {!user?.isSeller && order?.status ? (
+                                <button className={'complete'}>Complete?</button>
+                            ) : null}
                         </td>
+
                     </tr>
                 ))}
                 </tbody>
             </table>
         </div>
     </div>
-)
+    )
 };
 
 export default Orders;

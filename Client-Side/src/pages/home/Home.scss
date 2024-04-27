@@ -1,4 +1,12 @@
 .home{
+  .section-name{
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 2rem;
+    margin-bottom: -5rem;
+    color: var(--first-color);
+  }
   .features{
     background-color: #f1fdf7;
     display: flex;
