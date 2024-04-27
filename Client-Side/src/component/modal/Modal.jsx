@@ -1,7 +1,34 @@
-import React from "react";
+import React, {useRef} from "react";
 import "./Modal.scss";
+import {useMutation} from "@tanstack/react-query";
+import customAxios from "../../../CustomAxios.js";
+import {useNavigate} from "react-router-dom";
 
-function Modal({ setOpenModal }) {
+function Modal({ setOpenModal, serviceId }) {
+
+    const  navigate = useNavigate();
+    const mutation = useMutation({
+        mutationFn: (order) => {
+            return customAxios.post("order", order);
+        },
+        onSuccess:()=>{
+            navigate('/orders');
+        }
+    });
+    const {dateRef} = useRef(null);
+    const date = dateRef.current.value;
+    function handelOrder() {
+        if (serviceId && date) {
+            mutation.mutate({
+                'service_id': serviceId,
+                'order_date': date,
+                'payment_intent': 'Not working for now'
+            })
+        }else{
+            console.log('error');
+        }
+    }
+
     return (
         <div className="modalBackground">
             <div className="modalContainer">
@@ -19,7 +46,7 @@ function Modal({ setOpenModal }) {
                 </div>
                 <div className="body">
                     <form >
-                        <input type="date"/>
+                        <input useRef={dateRef} type="date"/>
                     </form>
                 </div>
                 <div className="footer">
@@ -31,7 +58,7 @@ function Modal({ setOpenModal }) {
                     >
                         Cancel
                     </button>
-                    <button>Continue</button>
+                    <button onClick={handelOrder}>Continue</button>
                 </div>
             </div>
         </div>

@@ -157,7 +157,7 @@ const Service = () => {
                             }} className={user.isSeller &&  "hidden"}>Continue</button>
                         </div>
                     </div>
-                {modalOpen && <Modal setOpenModal={setModalOpen} />}
+                {modalOpen && <Modal serviceId={data.id} setOpenModal={setModalOpen} />}
                 </div>
             </div>
 
