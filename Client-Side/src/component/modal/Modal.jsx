@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {useStateContext} from "../../context/ContextProvider.jsx";
 
 function Modal({ setOpenModal, serviceId }) {
-
+    const navigate = useNavigate();
     const mutation = useMutation({
         mutationFn: (order) => {
             return customAxios.post("order", order);

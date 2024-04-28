@@ -47,8 +47,8 @@ const isActive = ()=>{
                 <div className="links">
                     <Link to={'/services'} className={'link'}><span>Services</span></Link>
                     {!user?.isSeller && <span>Became a SP</span>}
-                    {!user  && <Link to={'/login'}>
                     <Link to={'/register'} className={'link'}> <span>Join Us</span> </Link>
+                    {!user  && <Link to={'/login'}>
                         <button>Sign in</button>
                     </Link>}
                     {user && <div className="user" onClick={()=>setOpen(!open)}>

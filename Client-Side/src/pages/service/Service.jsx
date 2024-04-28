@@ -152,9 +152,9 @@ const Service = () => {
                                     </div>
                                 ))}
                             </div>
-                            { user?.isSeller || !user &&  <button onClick={() => {
+                            { user && !user?.isSeller &&  <button onClick={() => {
                                 setModalOpen(true);
-                            }}>Continue</button> ? '' : ""}
+                            }}>Continue</button>}
                         </div>
                     </div>
                 {modalOpen && <Modal serviceId={data.id} setOpenModal={setModalOpen} />}

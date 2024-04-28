@@ -22,11 +22,13 @@ export default function Reviews({reviews, queryClient, service}) {
     });
     const [canReview, setCanReview] = useState(false);
         console.log(service);
-        service?.orders?.map((order) => {
-            if (order.client.user.id !== user.id) {
-                setCanReview(true);
-            }
-        })
+       if (typeof user !== 'undefined' && user !== null){
+           service?.orders?.map((order) => {
+               if (order?.client?.user?.id !== user?.id) {
+                   setCanReview(true);
+               }
+           })
+       }
     const handleSubmit = (e) => {
         e.preventDefault();
         const description = e.target[0].value;
