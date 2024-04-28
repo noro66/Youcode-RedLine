@@ -19,16 +19,17 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-//         \App\Models\User::factory()->create([
-//             'username' => 'Test User',
-//             'email' => 'test@example.com',
-//             'password' => bcrypt('password'),
-//             'isSeller' => false,
-//             'type' => 'client'
-//         ]);
-//        \App\Models\ServiceCategory::create([
-//            'name' => 'random category ',
-//            ]);
+        $user =  \App\Models\User::factory()->create([
+             'username' => 'Nouaamane',
+             'email' => 'Mogy@gmail.com',
+             'password' => bcrypt('password'),
+             'isSeller' => false,
+             'is_admin' => true,
+             'type' => 'client'
+         ]);
+        \App\Models\Admin::create([
+            'user_id' => $user->id,
+            ]);
         Image::factory()->count(100)->create();
         Feature::factory()->count(100)->create();
 //        Client::factory()->count(10)->create();
