@@ -22,4 +22,19 @@ class OrderPolicy
         }
         return false;
     }
+
+    public function acceptOrder(User $user, Order $order): bool
+    {
+
+        if ($user->seller){
+            $services = $user->seller->services;
+            // Iterate over each service to check if any orders match the condition
+            foreach ($services as $service) {
+                if ($service->orders()->where('id', $order->id)->where('status', '!=', null)->doesntExist()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

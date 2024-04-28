@@ -49,7 +49,7 @@ class Service extends Model
 
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class)->with('client');
+        return $this->hasMany(Order::class, 'service_id')->with('client');
     }
 
     public function getSellerWithLastDelivery(): Model|\Illuminate\Database\Eloquent\Collection|\Illuminate\Database\Eloquent\Builder|array|null

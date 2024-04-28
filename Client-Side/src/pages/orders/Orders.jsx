@@ -11,9 +11,15 @@ const Orders = (props) => {
     const {user} = useStateContext()
     const { isPending, isLoading, error, data : orders, refetch} = useQuery({ queryKey: ['orders', user.id],
         queryFn: ()=> customAxios.get(`myOrders`).then(res => res.data.orders) });
-   const handleClick = (id)=>{
+   const handleCancel = (id)=>{
        if (confirm("Are you sure you want to Cancel this order?")){
            customAxios.delete(`order/${id}`).then(_ => refetch())
+               .catch(r => console.log(r));
+       }
+    }
+    const handleAccept = (id)=>{
+       if (confirm("Are you sure you want to Accept this order?")){
+           customAxios.post(`accept/${id}`).then(_ => refetch())
                .catch(r => console.log(r));
        }
     }
@@ -48,11 +54,11 @@ const Orders = (props) => {
                         <td>{order.status ? <span className={'green-span'}>Accepted</span> : <span className={'gray-span'}>pending</span> } </td>
                         <td>{user?.isSeller ? order?.client?.user?.username : order?.seller?.user?.username}</td>
                         <td>
-                            {(user?.isSeller && !order?.status) ? <button className={'green-btn'}> Accept </button> :
-                                (!user?.isSeller && !order?.status) &&  <button onClick={()=> handleClick(order.id)} className={'red-btn'}> Cancel </button>
+                            {(user?.isSeller && !order?.status) ? <button onClick={()=> handleAccept(order.id)} className={'green-btn'}> Accept </button> :
+                                (!user?.isSeller && !order?.status) &&  <button onClick={()=> handleCancel(order.id)} className={'red-btn'}> Cancel </button>
                             }
                             {!user?.isSeller && order?.status ? (
-                                <button className={'complete'}>Complete?</button>
+                                <button  className={'complete'}>Complete?</button>
                             ) : null}
                         </td>
                     </tr>

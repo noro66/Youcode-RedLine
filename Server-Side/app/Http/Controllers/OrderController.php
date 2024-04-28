@@ -6,6 +6,7 @@ use App\Http\Requests\OrderRequest;
 use App\Models\Order;
 use App\Models\Service;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\Access\Gate;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -85,9 +86,19 @@ class OrderController extends Controller
 
     }
 
-    public function approve(Order $order): \Illuminate\Http\JsonResponse
+    /**
+     * @throws AuthorizationException
+     */
+    public function accept(Order $order): \Illuminate\Http\JsonResponse
     {
+        $this->authorize('acceptOrder', $order);
 
+        $order->status = true;
+        $order->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Order accepted!',
+        ]);
     }
 
 }

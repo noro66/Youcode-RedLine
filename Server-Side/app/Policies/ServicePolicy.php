@@ -36,7 +36,7 @@ class ServicePolicy
                 $order = $service->orders->where('client_id', $user->client->id)->first();
                 if ($order) {
                     $creationDate = Carbon::parse($order->updated_at);
-                    $DayFromNow = Carbon::now()->addDay(1);
+                    $DayFromNow = Carbon::now();
                     return !$order->is_completed && $creationDate->greaterThan($DayFromNow);
                 }
             }

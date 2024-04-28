@@ -119,7 +119,7 @@ class ServiceController extends Controller
 
     public function myServices(): JsonResponse
     {
-        $services = Service::where('seller_id', Auth::user()->seller->id)->with('images', 'orderedBy')->get();
+        $services = Service::where('seller_id', Auth::user()->seller->id)->with('images')->get();
         return response()->json([
             'services' => $services,
         ]);

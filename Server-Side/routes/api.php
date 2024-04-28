@@ -43,9 +43,8 @@ Route::resource('review', ReviewController::class);
 
 
 Route::resource('order', OrderController::class);
-
-
 Route::get('myOrders', [OrderController::class, 'myOrders']);
+Route::post('accept/{order}', [OrderController::class, 'accept']);
 
 Route::get('home', [HomeController::class, 'index']);
 
