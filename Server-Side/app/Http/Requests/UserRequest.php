@@ -29,7 +29,8 @@ class UserRequest extends FormRequest
             'img' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             'type' => 'required|in:seller,client',
             'phone' => 'nullable|numeric|digits_between:8,12',
-            'description' => 'nullable|string'
+            'description' => 'nullable|string',
+            'city' => 'string|max:255|min:4',
         ];
     }
 }

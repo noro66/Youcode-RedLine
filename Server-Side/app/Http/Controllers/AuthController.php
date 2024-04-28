@@ -40,7 +40,8 @@ class AuthController extends Controller
                 'email' => $credentials['email'],
                 'img' => $imgPath,
                 'password' => Hash::make($credentials['password']),
-                'type' => $credentials['type']
+                'type' => $credentials['type'],
+                'city' => $credentials['city'],
             ]);
 
             if ($user->type === 'seller') {

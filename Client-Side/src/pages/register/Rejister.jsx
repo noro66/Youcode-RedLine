@@ -54,9 +54,9 @@ function Register() {
                     <label htmlFor="img">Profile Image</label>
                     <input name="image" type="file" onChange={(e)=>{setImageData(e.target.files[0])}} />
                     {errors.password && <span>This field is required</span>}
-                    <label htmlFor="country">Country</label>
-                    <input {...register("country", { required: true })} type="text" placeholder="USA" />
-                    {errors.country && <span>This field is required</span>}
+                    <label htmlFor="city">City</label>
+                    <input {...register("city", { required: true })} type="text" placeholder="Casablanca" />
+                    {errors.city && <span>This field is required</span>}
                     <button type="submit">Register</button>
                 </div>
                 <div className="right">
@@ -70,11 +70,11 @@ function Register() {
                     </div>
                     <label htmlFor="phone">Phone Number</label>
                     <input {...register("phone", {
-                        required: true,
+                        required: type,
                         pattern: /^\+?[0-9\s-]+$/
                     })} type="text" placeholder="+212 634 567 89"/>
                     <label htmlFor="desc">Description</label>
-                    <textarea {...register("description",{min: 45,max: 255 })} placeholder="A short description of yourself" cols="30"
+                    <textarea {...register("description",{min: 45,max: 255 , required: type,})} placeholder="A short description of yourself" cols="30"
                               rows="10"></textarea>
                 </div>
             </form>
