@@ -19,19 +19,22 @@ class ServicePolicy
 
     public function createReview(User $user, Service $service): bool
     {
-        return !$user->isSeller && $service->orderedBy($user) && !$service->reviewedBy($user);
+        $order = $service->orders->where('client_id', $user->client->id)->first();
+
+        return !$user->isSeller && $service->orderedBy($user) && !$service->reviewedBy($user) && $order->is_complete &&
+            !$user->is_admin;
     }
 
     public function updateReview(User $user, Service $service): bool
     {
-        return !$user->isSeller && $service->orderedBy($user) && $service->reviewedBy($user);
+        return !$user->isSeller && $service->orderedBy($user) && $service->reviewedBy($user) &&!$user->is_admin;
     }
     /**
      * Determine whether the user can view the model.
      */
     public function OrderService(User $user, Service $service): bool
     {
-        if (!$user->isSeller ) {
+        if (!$user->isSeller && !$user->is_admin) {
             if ($service->orderedBy($user)){
                 $order = $service->orders->where('client_id', $user->client->id)->first();
                 if ($order) {

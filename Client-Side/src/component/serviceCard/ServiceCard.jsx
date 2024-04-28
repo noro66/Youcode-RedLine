@@ -9,8 +9,8 @@ const ServiceCard = ({item}) => {
                 <img src={imageFromat(item?.cover_image)} alt=""/>
                 <div className="info">
                     <div className="user">
-                        <img src={imageFromat(item?.user.img)} alt=""/>
-                        <span>{item?.user.username}</span>
+                        <img src={item?.user?.img && imageFromat(item?.user?.img)} alt=""/>
+                        <span>{item?.user?.username}</span>
                     </div>
                     <p>{item?.title.slice(0, 20)}</p>
                     <div className="star">

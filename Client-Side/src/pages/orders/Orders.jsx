@@ -1,5 +1,5 @@
 import './Orders.scss'
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {useContext, useEffect} from "react";
@@ -8,9 +8,10 @@ import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
 import {handleClick} from "infinite-react-carousel/lib/carousel/listener.js";
 
 const Orders = (props) => {
-    const {user} = useStateContext()
-    const { isPending, isLoading, error, data : orders, refetch} = useQuery({ queryKey: ['orders', user.id],
-        queryFn: ()=> customAxios.get(`myOrders`).then(res => res.data.orders) });
+    const {user, token} = useStateContext();
+
+    const { isPending, isLoading, error, data : orders, refetch} = useQuery({ queryKey: ['orders', user?.id],
+        queryFn: ()=> customAxios.get(`myOrders`).then(res => res?.data?.orders) });
    const handleCancel = (id)=>{
        if (confirm("Are you sure you want to Cancel this order?")){
            customAxios.delete(`order/${id}`).then(_ => refetch())
@@ -33,6 +34,10 @@ const Orders = (props) => {
     useEffect(() => {
         refetch();
     }, [orders]);
+
+    if (!token) {
+        return <Navigate to="/login" replace/>;
+    }
     return (
     <div className={'myOrders'}>
         <div className="container">

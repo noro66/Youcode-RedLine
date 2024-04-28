@@ -1,14 +1,16 @@
 import './MyServices.scss'
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import {useStateContext} from "../../context/ContextProvider.jsx";
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {handleClick} from "infinite-react-carousel/lib/carousel/listener.js";
 import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
+import {useEffect} from "react";
 
 const MyServices = (props) => {
 
-    const {user} = useStateContext();
+    const {token, user} = useStateContext();
+
     const queryClient = useQueryClient();
 
     const {isPending, isLoading, error, data: services, refetch} = useQuery({
@@ -27,6 +29,10 @@ const MyServices = (props) => {
 
    function handleClick(id){
             mutation.mutate(id);
+    }
+
+    if (!token || !user.isSeller) {
+        return <Navigate to="/login" replace/>;
     }
     return (
     <div className={'myServices'}>

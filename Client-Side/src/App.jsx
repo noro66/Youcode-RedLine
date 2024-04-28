@@ -26,6 +26,8 @@ import {
     QueryClientProvider,
 } from '@tanstack/react-query'
 import customAxios from "../CustomAxios.js";
+import Dashboard from "./pages/dashboard/Dashboard.jsx";
+import Users from "./component/users/Users.jsx";
 
 function App() {
     const queryClient = new QueryClient();
@@ -93,9 +95,19 @@ function App() {
                 {
                     path: '/register',
                     element: <Register />
-                }
+                },
             ]
         },
+        {
+            path: "/dashboard",
+            element: <Dashboard/>,
+            children:[
+                {
+                    path: '/dashboard/users',
+                    element: <Users/>
+                }
+            ]
+        }
     ]);
   return (
     <>

@@ -1,0 +1,45 @@
+.dashboard {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 60px 1fr;
+
+    .header {
+        background-color: #fff;
+        grid-column: 2 / -1;
+        grid-row: 1 / 2;
+    }
+
+    .sidebar {
+        background-color: #1c1f23;
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+    }
+
+    .main {
+        background: #c3c5ca;
+        grid-column: 2 / -1;
+        grid-row: 2 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        grid-template-areas:
+      "c1 c2 c3"
+      "c4 c4 c5"
+      "c4 c4 c6";
+        gap: 10px;
+        padding: 10px;
+
+        .card {
+            background: #f6f7f9;
+            border-radius: 10px;
+
+            &:nth-child(1) { grid-area: c1; }
+            &:nth-child(2) { grid-area: c2; }
+            &:nth-child(3) { grid-area: c3; }
+            &:nth-child(4) { grid-area: c4; }
+            &:nth-child(5) { grid-area: c5; }
+            &:nth-child(6) { grid-area: c6; }
+        }
+    }
+}
