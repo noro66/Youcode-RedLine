@@ -101,4 +101,18 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
+    public function completed(Order $order): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('completeOrder', $order);
+        $order->is_completed = true;
+        $order->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Order completed!',
+        ]);
+    }
+
 }

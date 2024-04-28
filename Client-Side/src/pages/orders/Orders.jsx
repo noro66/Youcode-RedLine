@@ -23,6 +23,13 @@ const Orders = (props) => {
                .catch(r => console.log(r));
        }
     }
+    const handelComplete = (id)=>{
+       if (confirm("is This Service complete ?")){
+           customAxios.post(`completed/${id}`).then(_ => navigate(`/service/${order.service_id}`))
+               .catch(r => console.log(r));
+       }
+    }
+
     useEffect(() => {
         refetch();
     }, [orders]);
@@ -57,12 +64,12 @@ const Orders = (props) => {
                             {(user?.isSeller && !order?.status) ? <button onClick={()=> handleAccept(order.id)} className={'green-btn'}> Accept </button> :
                                 (!user?.isSeller && !order?.status) &&  <button onClick={()=> handleCancel(order.id)} className={'red-btn'}> Cancel </button>
                             }
-                            { order.status ? ( order.is_completed ? <span className={'green-span'}>Completed</span> :
-                                    <span className={'gray-span'}>Ander Process</span>) : ''
+                            { order.status ? ( order.is_completed ? <span className={'green-span'}> Completed</span> :
+                                    <span className={'gray-span'}>working on it </span>) : ''
                             }
 
-                            {!user?.isSeller && order?.status ? (
-                                <button className={'complete'}>Complete?</button>
+                            {(!user?.isSeller && order?.status && !order.is_completed) ? (
+                                <button onClick={()=> handelComplete(order.id)} className={'complete'}>Complete?</button>
                             ) : null}
                         </td>
                     </tr>

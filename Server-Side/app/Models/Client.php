@@ -17,9 +17,9 @@ class Client extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function Orders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function orders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
-        return $this->hasMany(Order::class)->with('seller');
+        return $this->hasMany(Order::class, 'client_id');
     }
     public function reviews(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
     {
