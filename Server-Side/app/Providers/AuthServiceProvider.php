@@ -26,5 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
         Gate::policy(Service::class, ServicePolicy::class);
+
+        Gate::define('createReview', static function ($user, $service) {
+            return !$user->isSeller && $service->orderedBy($user) && !$service->reviewedBy($user);
+        });
     }
 }

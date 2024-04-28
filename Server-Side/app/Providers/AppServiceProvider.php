@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Validator::extend('not_passed',  function ($attribute, $value) {
+       Validator::extend('not_passed',  function ($attribute, $value) {
             return strtotime($value) >= strtotime(date('Y-m-d'));
         });
     }

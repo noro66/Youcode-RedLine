@@ -3,10 +3,11 @@ import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import './reviews.scss'
 import {useParams} from "react-router-dom";
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
+import data from "bootstrap/js/src/dom/data.js";
 export default function Reviews({reviews, queryClient, service}) {
 
-    const {id} = useParams();
+    // const {id} = useParams();
     const valArr = ["1", "2", "3", "4", "5"];
     const descRef = useRef(null);
     const starRef = useRef(1);
@@ -21,21 +22,35 @@ export default function Reviews({reviews, queryClient, service}) {
         }
     });
     const [canReview, setCanReview] = useState(false);
-        console.log(service);
-       if (typeof user !== 'undefined' && user !== null){
-           service?.orders?.map((order) => {
-               if (order?.client?.user?.id !== user?.id) {
-                   setCanReview(true);
-               }
-           })
-       }
+    useEffect(() => {
+        customAxios.get(`userCanReview/${service.id}` ).then(res => {
+            setCanReview(res.data.can);
+            queryClient.invalidateQueries(["service", id]);
+        })
+    }, [service]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
+       const service_id = service.id;
         const description = e.target[0].value;
         const star = e.target[1].value;
-        mutation.mutate({id , description, star });
+        mutation.mutate({service_id , description, star });
     };
-
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await customAxios.post('can-user', {
+                    action: 'createReview',
+                    subject: service
+                });
+                console.log(response);
+                setCanReview(response.data.can);
+            } catch (error) {
+                console.error('Error checking authorization:', error.response?.data);
+            }
+        };
+        fetchData();
+    }, [service]);
 
 
     return (
@@ -50,8 +65,8 @@ export default function Reviews({reviews, queryClient, service}) {
                     <input type="text" ref={descRef} placeholder="write your opinion"/>
                     <select ref={starRef} id="">
                         {
-                            valArr.map((val, key) => (
-                                <option key={key} value={val}>{val}</option>
+                            valArr.map(val => (
+                                <option key={val} value={val}>{val}</option>
                             ))
                         }
                     </select>

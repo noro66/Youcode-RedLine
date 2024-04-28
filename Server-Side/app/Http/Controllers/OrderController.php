@@ -108,6 +108,7 @@ class OrderController extends Controller
     {
         $this->authorize('completeOrder', $order);
         $order->is_completed = true;
+        ++$order->service->sales;
         $order->save();
         return response()->json([
             'success' => true,

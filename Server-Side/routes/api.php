@@ -39,6 +39,7 @@ Route::put('review/update/{review}', [ReviewController::class, 'update']);
 
 //Route::get('serviceReview/{service}', [ReviewController::class, 'serviceReview']);
 Route::get('myReviews', [ReviewController::class, 'myReviews']);
+Route::get('userCanReview/{service}', [ReviewController::class, 'userCanReview']);
 Route::resource('review', ReviewController::class);
 
 
@@ -49,5 +50,4 @@ Route::post('completed/{order}', [OrderController::class, 'completed']);
 
 Route::get('home', [HomeController::class, 'index']);
 
-Route::post('/can-user', [AuthorizationController::class,'check']);
 

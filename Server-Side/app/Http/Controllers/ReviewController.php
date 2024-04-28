@@ -46,6 +46,7 @@ class ReviewController extends Controller
     public function store(ReviewRequest $request)
     {
         $service = Service::findOrFail($request->input('service_id'));
+
         if ($service){
             $this->authorize('createReview', $service);
             $reviewFrom = $request->validated();
@@ -95,4 +96,14 @@ class ReviewController extends Controller
         }
     }
 
+    /**
+     * @throws AuthorizationException
+     */
+    public function userCanReview(Service $service): \Illuminate\Http\JsonResponse
+    {
+            $this->authorize('createReview', $service);
+            return response()->json([
+                'can' => true,
+            ]);
+    }
 }
