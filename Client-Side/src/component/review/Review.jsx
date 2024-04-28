@@ -4,13 +4,13 @@ export default function  Review ({item})  {
             <div className="item">
                 <div className="user">
                     <div className="pp">
-                        <img src={item.user_reviewed.img} className={'rounded'} alt=""/>
+                        <img src={item.client.user.img} className={'rounded'} alt=""/>
                     </div>
                     <div className="info">
-                        <span>{item.user_reviewed.username}</span>
+                        <span>{item.client.user.username}</span>
                         <div className="country">
                             <img src="/images/icons8-morocco-48.png" className={'rounded'} alt=""/>
-                            <span>{item.user_reviewed.city ?? 'Casablanca'}</span>
+                            <span>{item.client.user.city ?? 'Casablanca'}</span>
                         </div>
                     </div>
                 </div>

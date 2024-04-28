@@ -59,7 +59,7 @@ const Orders = (props) => {
                         <td>{order.title}</td>
                         <td>{order.price} $</td>
                         <td>{order.status ? <span className={'green-span'}>Accepted</span> : <span className={'gray-span'}>pending</span> } </td>
-                        <td>{user?.isSeller ? order?.client?.user?.username : order?.seller?.user?.username}</td>
+                        <td>{user?.isSeller ? order?.client?.user?.username : order?.seller[0]?.user?.username}</td>
                         <td>
                             {(user?.isSeller && !order?.status) ? <button onClick={()=> handleAccept(order.id)} className={'green-btn'}> Accept </button> :
                                 (!user?.isSeller && !order?.status) &&  <button onClick={()=> handleCancel(order.id)} className={'red-btn'}> Cancel </button>

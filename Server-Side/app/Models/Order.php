@@ -29,9 +29,9 @@ class Order extends Model
     {
         return $this->hasManyThrough(Review::class, Service::class);
     }
-    public function seller(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
+    public function seller(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
     {
-        return $this->hasOneThrough(Seller::class, Service::class, 'id', 'id', 'service_id')->with('user');
+        return $this->hasManyThrough(Seller::class, Service::class, 'id', 'id', 'service_id')->with('user');
     }
 
     public function client()

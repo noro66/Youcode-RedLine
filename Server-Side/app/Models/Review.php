@@ -18,11 +18,7 @@ class Review extends Model
 
     public function client(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(Client::class)->with('user');
     }
 
-    public function userReviewed(): \Illuminate\Database\Eloquent\Relations\HasOneThrough
-    {
-        return $this->hasOneThrough(User::class, Client::class, 'id', 'id', 'client_id');
-    }
 }
