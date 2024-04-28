@@ -57,8 +57,12 @@ const Orders = (props) => {
                             {(user?.isSeller && !order?.status) ? <button onClick={()=> handleAccept(order.id)} className={'green-btn'}> Accept </button> :
                                 (!user?.isSeller && !order?.status) &&  <button onClick={()=> handleCancel(order.id)} className={'red-btn'}> Cancel </button>
                             }
+                            { order.status ? ( order.is_completed ? <span className={'green-span'}>Completed</span> :
+                                    <span className={'gray-span'}>Ander Process</span>) : ''
+                            }
+
                             {!user?.isSeller && order?.status ? (
-                                <button  className={'complete'}>Complete?</button>
+                                <button className={'complete'}>Complete?</button>
                             ) : null}
                         </td>
                     </tr>
