@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
@@ -51,4 +52,6 @@ Route::post('completed/{order}', [OrderController::class, 'completed']);
 
 Route::get('home', [HomeController::class, 'index']);
 
+
+Route::get('users', [DashboardController::class, 'users']);
 
