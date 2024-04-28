@@ -45,6 +45,7 @@ Route::resource('review', ReviewController::class);
 
 Route::resource('order', OrderController::class);
 Route::get('myOrders', [OrderController::class, 'myOrders']);
+Route::get('userCanOrder/{service}', [OrderController::class, 'userCanOrder']);
 Route::post('accept/{order}', [OrderController::class, 'accept']);
 Route::post('completed/{order}', [OrderController::class, 'completed']);
 

@@ -116,4 +116,14 @@ class OrderController extends Controller
         ]);
     }
 
+    /**
+     * @throws AuthorizationException
+     */
+    public function userCanOrder(Service $service): \Illuminate\Http\JsonResponse
+    {
+        $this->authorize('OrderService', $service);
+        return response()->json([
+            'canOrder' => true,
+        ]);
+    }
 }
