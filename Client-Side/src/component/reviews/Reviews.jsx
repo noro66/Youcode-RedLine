@@ -7,7 +7,7 @@ import {useEffect, useRef, useState} from "react";
 import data from "bootstrap/js/src/dom/data.js";
 export default function Reviews({reviews, queryClient, service}) {
 
-    // const {id} = useParams();
+    const {id} = useParams();
     const valArr = ["1", "2", "3", "4", "5"];
     const descRef = useRef(null);
     const starRef = useRef(1);
@@ -19,6 +19,7 @@ export default function Reviews({reviews, queryClient, service}) {
             queryClient.invalidateQueries(["service", id]);
             descRef.current.value = '';
             starRef.current.value = 1;
+            setCanReview(false);
         }
     });
     const [canReview, setCanReview] = useState(false);

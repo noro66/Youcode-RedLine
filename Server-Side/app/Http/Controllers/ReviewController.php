@@ -35,7 +35,7 @@ class ReviewController extends Controller
     public function myReviews(): \Illuminate\Http\JsonResponse
     {
         return response()->json([
-            'review' => Auth::user()->client->reviews->all()->where('client_id', '=',  Auth::user()->client->id),
+            'review' => Auth::user()->client->reviews,
             ]);
     }
 
