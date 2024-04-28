@@ -23,6 +23,7 @@ export default function Reviews({reviews, queryClient, service}) {
         }
     });
     const [canReview, setCanReview] = useState(false);
+
     useEffect(() => {
         customAxios.get(`userCanReview/${service.id}` ).then(res => {
             setCanReview(res.data.can);
@@ -37,22 +38,6 @@ export default function Reviews({reviews, queryClient, service}) {
         const star = e.target[1].value;
         mutation.mutate({service_id , description, star });
     };
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await customAxios.post('can-user', {
-                    action: 'createReview',
-                    subject: service
-                });
-                console.log(response);
-                setCanReview(response.data.can);
-            } catch (error) {
-                console.error('Error checking authorization:', error.response?.data);
-            }
-        };
-        fetchData();
-    }, [service]);
-
 
     return (
         <div className="reviews">

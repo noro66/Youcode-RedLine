@@ -21,6 +21,7 @@ const Service = () => {
     const stars = Math.round(data?.total_stars/data?.star_number) ?? 1; // ??
     const {user} = useStateContext();
     const [modalOpen, setModalOpen] = useState(false);
+    const [canOrder, setCanOrder] = useState(false);
 
     useEffect(() => {
         refetch();
@@ -28,6 +29,10 @@ const Service = () => {
             navigate('/');
             return null;
         }
+       !isPending ?  customAxios.get(`userCanOrder/${data.id}` ).then(res => {
+            setCanOrder(res.data.canOrder);
+            queryClient.invalidateQueries(['services', id]);
+        }) : ''
     }, [data]);
 
     return <>
@@ -152,7 +157,7 @@ const Service = () => {
                                     </div>
                                 ))}
                             </div>
-                            { user && !user?.isSeller &&  <button onClick={() => {
+                            { canOrder &&  <button onClick={() => {
                                 setModalOpen(true);
                             }}>Continue</button>}
                         </div>
