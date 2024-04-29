@@ -29,6 +29,7 @@ import customAxios from "../CustomAxios.js";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Users from "./component/users/Users.jsx";
 import Categories from "./component/categories/Categories.jsx";
+import ServicesApprove from "./component/approveSrervices/ServicesApprove.jsx";
 
 function App() {
     const queryClient = new QueryClient();
@@ -110,6 +111,10 @@ function App() {
                 {
                     path: '/dashboard/categories',
                     element: <Categories />
+                },
+                {
+                    path: '/dashboard/approve',
+                    element: <ServicesApprove/>
                 }
             ]
         }

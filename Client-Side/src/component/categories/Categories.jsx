@@ -25,7 +25,7 @@ function Categories() {
     const fetchCategories = async () => {
         try {
             const response = await customAxios.get('/categories');
-            setCategories(response.data);
+            setCategories(response.data.data);
         } catch (error) {
             setMessage({ type: 'error', text: 'Failed to fetch categories ' + error.response.message});
         }

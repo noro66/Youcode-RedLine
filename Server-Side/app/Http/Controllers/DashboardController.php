@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -17,5 +18,17 @@ class DashboardController extends Controller
         $user->is_restricted = !$user->is_restricted;
         $user->save();
         return response()->json($user);
+    }
+
+    public function aproveService(Service $service): \Illuminate\Http\JsonResponse
+    {
+        $service->is_approved = true;
+        $service->save();
+        return response()->json($service);
+    }
+
+    public function servicestoApprove()
+    {
+        return response()->json(Service::all()->where('is_approved', false));
     }
 }

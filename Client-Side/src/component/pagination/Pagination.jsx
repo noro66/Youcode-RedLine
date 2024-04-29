@@ -1,5 +1,5 @@
 import React from 'react';
-import './Pagination.scss'; // Import Sass file for styling
+import './Pagination.scss';
 
 const Pagination = ({ links, onPageChange }) => {
     return (
