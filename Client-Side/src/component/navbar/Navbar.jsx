@@ -47,10 +47,17 @@ const isActive = ()=>{
                 <div className="links">
                     <Link to={'/services'} className={'link'}><span>Services</span></Link>
                     {!user?.isSeller && <span>Became a SP</span>}
-                    <Link to={'/register'} className={'link'}> <span>Join Us</span> </Link>
-                    {!user && <Link to={'/login'}>
-                        <button>Sign in</button>
-                    </Link>}
+                    {!user && (
+                        <>
+                            <Link to="/register" className="link">
+                                <span>Join Us</span>
+                            </Link>
+                            <Link to="/login">
+                                <button>Sign in</button>
+                            </Link>
+                        </>
+                    )}
+
                     {user && <div className="user" onClick={() => setOpen(!open)}>
                         <img src={imageFromat(user?.img)} alt=""/>
                         <span>{user.username}</span>
@@ -83,11 +90,6 @@ const isActive = ()=>{
                 <hr/>
             </>
             }
-            <div id="hamburger-menu" className="hamburger-menu">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
         </div>
     )
 }
