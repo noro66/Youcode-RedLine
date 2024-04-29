@@ -76,3 +76,26 @@
     }
   }
 }
+
+@media (max-width: 480px) {
+  .featured .container {
+    flex-direction: column;
+  }
+
+  .featured .left {
+    width: 100%; // Ensure it takes full width on smaller screens
+  }
+
+  .featured .right .popular{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .featured .left .popular span{
+    display: none;
+  }
+  .featured .left .popular{
+    display: flex;
+    flex-wrap: wrap;
+  }
+}

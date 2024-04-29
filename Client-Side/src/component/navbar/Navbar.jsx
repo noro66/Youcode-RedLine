@@ -28,13 +28,13 @@ const isActive = ()=>{
     window.scrollY > 0 ? setActive(true) : setActive(false);
 }
     useEffect(() => {
+
         window.addEventListener("scroll", isActive);
         return ()=>{
             window.removeEventListener("scroll", isActive)
         }
     }, []);
 
-// const user = user;
     return (
         <div className={(active || pathname !== '/') ? "navbar is-active" : "navbar"}>
             <div className="container">
@@ -48,42 +48,46 @@ const isActive = ()=>{
                     <Link to={'/services'} className={'link'}><span>Services</span></Link>
                     {!user?.isSeller && <span>Became a SP</span>}
                     <Link to={'/register'} className={'link'}> <span>Join Us</span> </Link>
-                    {!user  && <Link to={'/login'}>
+                    {!user && <Link to={'/login'}>
                         <button>Sign in</button>
                     </Link>}
-                    {user && <div className="user" onClick={()=>setOpen(!open)}>
+                    {user && <div className="user" onClick={() => setOpen(!open)}>
                         <img src={imageFromat(user?.img)} alt=""/>
                         <span>{user.username}</span>
                         {open && <div className="options">
                             {
                                 user.isSeller ? (
                                     <>
-                                       <Link className={'link'}  to={'/myservices'}> <span>Service</span> </Link>
-                                       <Link className={'link'}  to={'/add'}> <span>Add New Service</span>< /Link>
+                                        <Link className={'link'} to={'/myservices'}> <span>Service</span> </Link>
+                                        <Link className={'link'} to={'/add'}> <span>Add New Service</span>< /Link>
                                     </>
                                 ) : ""
                             }
-                           <Link className={'link'}  to={'/orders'}>  <span>Orders</span> </Link>
-                           <Link  className={'link'} to={'messages'} > <span>Profile</span> </Link>
+                            <Link className={'link'} to={'/orders'}> <span>Orders</span> </Link>
+                            <Link className={'link'} to={'messages'}> <span>Profile</span> </Link>
                             <hr/>
                             <span onClick={onLogout}>Logout</span>
                         </div>}
                     </div>}
                 </div>
             </div>
-              {(active || pathname !== '/') &&  <>
-                   <hr/>
-                   <div className="menu">
-                       {categories && categories?.map((category, index) => (
-                           <Link key={index} className={'link'} to={`services?category=${category?.id}`}>
-                               <span>{category.title}</span>
-                           </Link>
-                       ))}
-                   </div>
-                  <hr/>
-              </>
-              }
-
+            {(active || pathname !== '/') && <>
+                <hr/>
+                <div className="menu">
+                    {categories && categories?.map((category, index) => (
+                        <Link key={index} className={'link'} to={`services?category=${category?.id}`}>
+                            <span>{category.title}</span>
+                        </Link>
+                    ))}
+                </div>
+                <hr/>
+            </>
+            }
+            <div id="hamburger-menu" className="hamburger-menu">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
         </div>
     )
 }
