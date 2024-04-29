@@ -76,8 +76,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasOne(Seller::class);
     }
 
-//    public  function getCanRviewItem()
-//    {
-//        return this->
-//    }
+    public  function admin(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Admin::class);
+    }
 }

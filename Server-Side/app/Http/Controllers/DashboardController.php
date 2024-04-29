@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth', 'is_admin']);
+    }
+
     public function users(): \Illuminate\Http\JsonResponse
     {
         return response()->json(User::paginate(12));

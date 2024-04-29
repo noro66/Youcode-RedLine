@@ -20,7 +20,7 @@ const Dashboard = () => {
         }
     }
 
-   if (!token){
+   if (!token || !user?.is_admin){
        return  <Navigate to="/login"/>;
    }
     return (
