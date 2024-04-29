@@ -127,7 +127,7 @@ const Home = () => {
             </div>
             <div className="section-name">Services</div>
             {isPending ? "loading..." : error ? 'Ops There is an Error ' :
-                categories.length > 0 && <Slide slidesToShow={4} arrowsToScroll={4}>
+                categories.length > 0 && <Slide slidesToShow={slidesToShow} arrowsToScroll={4}>
                     {categories.map((cat) => {
                         if (cat.services && cat.services.length > 0) {
                             return <ProjectCard item={cat.services[0]} key={cat.services[0].id}/>;

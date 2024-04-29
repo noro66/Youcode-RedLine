@@ -1,62 +1,108 @@
-.footer{
+.footer {
+  background-color: #f8f9fa;
+  color: #6c757d;
+  padding: 50px 0;
   display: flex;
-  justify-content: center;
-  color: #999;
-  margin: 50px 0;
-  img{
-    width: 24px;
-    height: 24px;
-  }
-  .container{
-    width: 80%;
-    .top{
+
+  flex-wrap: wrap;
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .footer-left,
+    .footer-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-inline: 4rem;
+
+      .footer-logo-img {
+        width: 100px;
+        height: auto;
+        margin-bottom: 20px;
+      }
+
+      .footer-social {
+        display: flex;
+        gap: 20px;
+
+        .ri {
+          font-size: 24px;
+          color: #6c757d;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #343a40;
+          }
+        }
+      }
+    }
+
+    .footer-middle {
       display: flex;
       justify-content: space-between;
-      .item{
+      flex: 2;
+
+      .footer-nav {
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        h2{
+        gap: 20px;
+
+        .footer-nav-link {
+          color: #6c757d;
+          text-decoration: none;
           font-size: 16px;
-          color: #555;
-        }
-        span{
-          font-weight: 300;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: #343a40;
+          }
         }
       }
     }
-    hr{
-      margin: 50px 0;
-      height: 0;
-      border: 1px #ccc solid;
-    }
-    .bottom{
+
+    .footer-form {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      .left{
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        span{
-          font-size: 13px;
+      gap: 10px;
+      margin-bottom: 20px;
+
+      .footer-form-input {
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        width: 250px;
+        font-size: 14px;
+        transition: border-color 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff;
         }
       }
-      .right{
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        .social{
-          display: flex;
-          align-items: center;
-          gap: 20px;
-        }
-        .link{
-          display: flex;
-          align-items: center;
-          gap: 10px;
+
+      .footer-form-button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background-color: #0056b3;
         }
       }
+    }
+
+    .footer-copyright {
+      font-size: 14px;
     }
   }
 }
