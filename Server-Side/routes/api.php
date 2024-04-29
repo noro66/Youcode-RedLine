@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('categories/{category}/update', [CategoryController::class, 'update']);
 
 Route::middleware(['auth:api'])->get('/user', function (Request $request) {
     return $request->user();
@@ -56,4 +57,4 @@ Route::get('home', [HomeController::class, 'index']);
 
 Route::get('users', [DashboardController::class, 'users']);
 Route::post('users/{user}/toggle-restrict', [DashboardController::class, 'toggleRestrict']);
-Route::resource('categories', CategoryController::class);
+    Route::resource('categories', CategoryController::class);

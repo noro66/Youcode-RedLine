@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
              'password' => bcrypt('password'),
              'isSeller' => false,
              'is_admin' => true,
-             'type' => 'client'
+             'type' => 'admin'
          ]);
         \App\Models\Admin::create([
             'user_id' => $user->id,

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import customAxios from "../../../CustomAxios.js";
 import './Categories.scss'
+import {imageFromat} from "../../utils/imgaes/ImageFormat.js";
 
 function Categories() {
     const [categories, setCategories] = useState([]);
@@ -33,9 +34,13 @@ function Categories() {
 
     const addCategory = async () => {
         try {
-            await customAxios.post('/categories', newCategory);
+            const formData = new FormData();
+            Object.entries(newCategory).forEach(([key, value]) => {
+                formData.append(key, value);
+            })
+            await customAxios.post('/categories', formData);
             setNewCategory({ title: '', description: '', image: '' });
-            fetchCategories();
+            await fetchCategories();
             setMessage({ type: 'success', text: 'Category added successfully' });
         } catch (error) {
             console.log(error);
@@ -56,7 +61,12 @@ function Categories() {
 
     const updateCategory = async () => {
         try {
-            await customAxios.put(`/categories/${editCategoryId}`, editCategory);
+            const formData = new FormData();
+            Object.entries(editCategory).forEach(([key, value]) => {
+                formData.append(key, value);
+            });
+            console.log("form data : ",  formData,'edite Category :',  editCategory);
+            await customAxios.post(`/categories/${editCategoryId}/update`,formData );
             setEditCategoryId(null);
             setEditCategory({ title: '', description: '', image: '' });
             await fetchCategories();
@@ -109,7 +119,7 @@ function Categories() {
                             <div>
                                 <div>{category.title}</div>
                                 <div>{category.description}</div>
-                                <div>{category.image}</div>
+                                <div><img src={imageFromat(category.image)} width={250} height={150}  alt=""/></div>
                                 <button onClick={() => handleEdit(category)}>Edit</button>
                                 <button onClick={() => deleteCategory(category.id)}>Delete</button>
                             </div>

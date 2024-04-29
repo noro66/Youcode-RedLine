@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\ServiceCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class CategoryController extends Controller
 {
@@ -20,26 +20,15 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        // Validate incoming request
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $validator = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
-
-        // Save category
         $category = new ServiceCategory();
         $category->title = $request->title;
         $category->description = $request->description;
 
-        // Handle image upload
-        $imagePath = $request->file('image')->store('categories');
+        $imagePath = $request->file('image')->store('categories', 'public');
         $category->image = $imagePath;
 
         $category->save();
@@ -50,50 +39,43 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(ServiceCategory $category): \Illuminate\Http\JsonResponse
     {
-        $category = ServiceCategory::findOrFail($id);
         return response()->json($category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+
+    public function update(CategoryRequest $request, ServiceCategory $category): \Illuminate\Http\JsonResponse
     {
-        // Find the category
-        $category = ServiceCategory::findOrFail($id);
 
-        // Validate incoming request
-        $validator = Validator::make($request->all(), [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        // Validate the request
+        $validator = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
-        }
+        // Update category properties
+        $category->title = $request->input('title');
+        $category->description = $request->input('description');
 
-        // Update category
-        $category->title = $request->title;
-        $category->description = $request->description;
-
-        // Handle image upload if provided
+        // Handle image upload
         if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('categories');
+            $imagePath = $request->file('image')->store('categories', 'public');
             $category->image = $imagePath;
         }
 
+        // Save the category changes
         $category->save();
 
-        return response()->json($category, 200);
+        // Return a JSON response with the updated category
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully',
+            'ctegory' => $category
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): \Illuminate\Http\JsonResponse
     {
         $category = ServiceCategory::findOrFail($id);
         $category->delete();
