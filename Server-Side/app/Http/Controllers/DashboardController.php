@@ -11,4 +11,11 @@ class DashboardController extends Controller
     {
         return response()->json(User::paginate(12));
     }
+
+    public function toggleRestrict(User $user): \Illuminate\Http\JsonResponse
+    {
+        $user->is_restricted = !$user->is_restricted;
+        $user->save();
+        return response()->json($user);
+    }
 }

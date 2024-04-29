@@ -74,10 +74,7 @@ function Users() {
                                 <td className="cell">{user.is_restricted ? 'Restricted' : 'Active'}</td>
                                 <td className="cell">
                                     <div className="flex">
-                                        <button onClick={() => toggleRestrict(user.id, true)} className="button gray">
-                                            {/* SVG here */}
-                                        </button>
-                                        <button onClick={() => toggleRestrict(user.id, false)} className="button green">
+                                        <button onClick={() => toggleRestrict(user.id)} className={`button ${ user.is_restricted ? "green" : "red"}`}>
                                             {/* SVG here */}
                                         </button>
                                     </div>

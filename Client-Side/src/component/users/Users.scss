@@ -8,7 +8,7 @@
       margin: 1.5rem 0;
       font-size: 2rem;
       font-weight: bold;
-      color: #6b7280; /* Darker shade for a bitter tone */
+      color: #6b7280;
     }
 
     .flashMessage {
@@ -17,11 +17,11 @@
       font-weight: bold;
 
       &.success {
-        color: #48bb78; /* A bit less vibrant green */
+        color: #48bb78;
       }
 
       &.error {
-        color: #f56565; /* A bit less vibrant red */
+        color: #f56565;
       }
     }
 
@@ -83,6 +83,10 @@
 
       &.green {
         background-color: #48bb78;
+      }
+
+      &.red {
+        background-color: #fb0000;
       }
     }
   }
