@@ -28,6 +28,7 @@ import {
 import customAxios from "../CustomAxios.js";
 import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Users from "./component/users/Users.jsx";
+import Categories from "./component/categories/Categories.jsx";
 
 function App() {
     const queryClient = new QueryClient();
@@ -105,6 +106,10 @@ function App() {
                 {
                     path: '/dashboard/users',
                     element: <Users/>
+                },
+                {
+                    path: '/dashboard/categories',
+                    element: <Categories />
                 }
             ]
         }

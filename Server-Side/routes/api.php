@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AuthorizationController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
@@ -55,4 +56,4 @@ Route::get('home', [HomeController::class, 'index']);
 
 Route::get('users', [DashboardController::class, 'users']);
 Route::post('users/{user}/toggle-restrict', [DashboardController::class, 'toggleRestrict']);
-
+Route::resource('categories', CategoryController::class);
