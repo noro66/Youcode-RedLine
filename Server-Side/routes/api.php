@@ -56,6 +56,7 @@ Route::get('home', [HomeController::class, 'index']);
 
 
 Route::get('users', [DashboardController::class, 'users']);
+Route::get('statistics', [DashboardController::class, 'statistics']);
 Route::post('aproveService/{service}', [DashboardController::class, 'aproveService']);
 Route::post('users/{user}/toggle-restrict', [DashboardController::class, 'toggleRestrict']);
 Route::get('servicestoApprove', [DashboardController::class, 'servicestoApprove']);

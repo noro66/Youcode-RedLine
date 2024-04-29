@@ -30,6 +30,7 @@ import Dashboard from "./pages/dashboard/Dashboard.jsx";
 import Users from "./component/users/Users.jsx";
 import Categories from "./component/categories/Categories.jsx";
 import ServicesApprove from "./component/approveSrervices/ServicesApprove.jsx";
+import Statistics from "./component/statistics/Statistics.jsx";
 
 function App() {
     const queryClient = new QueryClient();
@@ -115,6 +116,10 @@ function App() {
                 {
                     path: '/dashboard/approve',
                     element: <ServicesApprove/>
+                },
+                {
+                    path: '/dashboard/statistics',
+                    element: <Statistics />
                 }
             ]
         }

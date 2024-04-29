@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -27,8 +28,27 @@ class DashboardController extends Controller
         return response()->json($service);
     }
 
-    public function servicestoApprove()
+    public function servicestoApprove(): \Illuminate\Http\JsonResponse
     {
         return response()->json(Service::all()->where('is_approved', false));
+    }
+    public function statistics()
+    {
+        $totaleUsers = DB::table('users')->count();
+        $clients = DB::table('users')->where('type', '=', 'client')->count();
+        $sellers = DB::table('users')->where('type','=',  'seller')->count();
+        $services =  DB::table('services')->count();
+        $orders = DB::table('orders')->count();
+        $totalSales = Service::sum('sales');
+
+        return response()->json([
+            'totalUsers' => $totaleUsers,
+            'clients' => $clients,
+            'sellers' => $sellers,
+            'services' => $services,
+            'orders' => $orders,
+            'totalSales' => $totalSales
+        ]);
+
     }
 }
