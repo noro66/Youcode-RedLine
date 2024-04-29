@@ -13,7 +13,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = ServiceCategory::all();
+        $categories = ServiceCategory::latest()->get();
         return response()->json($categories);
     }
 

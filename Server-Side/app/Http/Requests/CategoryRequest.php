@@ -22,10 +22,15 @@ class CategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048',
         ];
+
+        if (!$this->has('id')) {
+            $rules['image'] = 'required|image|mimes:jpeg,png,jpg,gif,svg,bmp|max:2048';
+        }
+
+        return $rules;
     }
 }

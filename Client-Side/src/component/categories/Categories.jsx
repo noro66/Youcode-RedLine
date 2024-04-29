@@ -27,8 +27,7 @@ function Categories() {
             const response = await customAxios.get('/categories');
             setCategories(response.data);
         } catch (error) {
-            console.log(error);
-            setMessage({ type: 'error', text: 'Failed to fetch categories' });
+            setMessage({ type: 'error', text: 'Failed to fetch categories ' + error.response.message});
         }
     };
 
@@ -43,8 +42,7 @@ function Categories() {
             await fetchCategories();
             setMessage({ type: 'success', text: 'Category added successfully' });
         } catch (error) {
-            console.log(error);
-            setMessage({ type: 'error', text: 'Failed to add category' });
+            setMessage({ type: 'error', text: 'Failed to add category ' + error.response.data.message });
         }
     };
 
