@@ -88,45 +88,59 @@ function Categories() {
     };
 
     return (
-        <div className="categories-container">
-            <h2>Categories Management</h2>
+        <div className="categories">
+            <div className="categories-container">
+                <h2>Categories Management</h2>
 
-            {message && (
-                <div className={`flashMessage ${message.type}`}>
-                    {message.text}
+                {message && (
+                    <div className={`flashMessage ${message.type}`}>
+                        {message.text}
+                    </div>
+                )}
+
+                <div>
+                    <input type="text" value={newCategory.title}
+                           onChange={(e) => setNewCategory({...newCategory, title: e.target.value})}
+                           placeholder="Title"/>
+                    <input type="text" value={newCategory.description}
+                           onChange={(e) => setNewCategory({...newCategory, description: e.target.value})}
+                           placeholder="Description"/>
+                    <input type="file" onChange={(e) => setNewCategory({...newCategory, image: e.target.files[0]})}/>
+                    <button onClick={addCategory}>Add Category</button>
                 </div>
-            )}
 
-            <div>
-                <input type="text" value={newCategory.title} onChange={(e) => setNewCategory({ ...newCategory, title: e.target.value })} placeholder="Title" />
-                <input type="text" value={newCategory.description} onChange={(e) => setNewCategory({ ...newCategory, description: e.target.value })} placeholder="Description" />
-                <input type="file" onChange={(e) => setNewCategory({ ...newCategory, image: e.target.files[0] })} />
-                <button onClick={addCategory}>Add Category</button>
+                <ul>
+                    {categories.map(category => (
+                        <li key={category.id}>
+                            {editCategoryId === category.id ? (
+                                <div>
+                                    <input type="text" value={editCategory.title}
+                                           onChange={(e) => setEditCategory({...editCategory, title: e.target.value})}/>
+                                    <input type="text" value={editCategory.description}
+                                           onChange={(e) => setEditCategory({
+                                               ...editCategory,
+                                               description: e.target.value
+                                           })}/>
+                                    <input type="file" onChange={(e) => setEditCategory({
+                                        ...editCategory,
+                                        image: e.target.files[0]
+                                    })}/>
+                                    <button className="save" onClick={updateCategory}>Save</button>
+                                    <button className="cancel" onClick={handleCancelEdit}>Cancel</button>
+                                </div>
+                            ) : (
+                                <div>
+                                    <div>{category.title}</div>
+                                    <div>{category.description}</div>
+                                    <div><img src={imageFromat(category.image)} width={250} height={150} alt=""/></div>
+                                    <button onClick={() => handleEdit(category)}>Edit</button>
+                                    <button onClick={() => deleteCategory(category.id)}>Delete</button>
+                                </div>
+                            )}
+                        </li>
+                    ))}
+                </ul>
             </div>
-
-            <ul>
-                {categories.map(category => (
-                    <li key={category.id}>
-                        {editCategoryId === category.id ? (
-                            <div>
-                                <input type="text" value={editCategory.title} onChange={(e) => setEditCategory({ ...editCategory, title: e.target.value })} />
-                                <input type="text" value={editCategory.description} onChange={(e) => setEditCategory({ ...editCategory, description: e.target.value })} />
-                                <input type="file" onChange={(e) => setEditCategory({ ...editCategory, image: e.target.files[0] })} />
-                                <button onClick={updateCategory}>Save</button>
-                                <button onClick={handleCancelEdit}>Cancel</button>
-                            </div>
-                        ) : (
-                            <div>
-                                <div>{category.title}</div>
-                                <div>{category.description}</div>
-                                <div><img src={imageFromat(category.image)} width={250} height={150}  alt=""/></div>
-                                <button onClick={() => handleEdit(category)}>Edit</button>
-                                <button onClick={() => deleteCategory(category.id)}>Delete</button>
-                            </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
         </div>
     );
 }
