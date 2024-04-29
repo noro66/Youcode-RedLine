@@ -27,6 +27,11 @@ class AuthController extends Controller
         $this->middleware('auth:api')->except(['login', 'register']);
     }
 
+    public function profile(): JsonResponse
+    {
+        return response()->json(auth()->user());
+    }
+
     /**
      * @throws ValidationException
      */

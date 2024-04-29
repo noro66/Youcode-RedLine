@@ -26,9 +26,13 @@ const MyServices = (props) => {
             queryClient.invalidateQueries(["MyServices", user.id]);
         }
     });
-
+    useEffect(() => {
+        refetch();
+    }, []);
    function handleClick(id){
-            mutation.mutate(id);
+            if (confirm('Are you sure you want to delete this service?')) {
+                mutation.mutate(id);
+            }
     }
 
     if (!token || !user.isSeller) {
@@ -56,9 +60,11 @@ const MyServices = (props) => {
                 <tbody>
                 { isPending ? "Loading..." : error ? "Ops there is an error please try again later" : services?.map((service) => (
                     <tr key={service?.id}>
-                        <td>
-                            <img className={'img'} src={imageFromat(service?.cover_image)} alt=""/>
-                        </td>
+                        <Link to={`/service/${service?.id}`}>
+                            <td>
+                                <img className={'img'} src={imageFromat(service?.cover_image)} alt=""/>
+                            </td>
+                        </Link>
                         <td>{service?.title}</td>
                         <td>{service?.price}</td>
                         <td>{service?.sales}</td>

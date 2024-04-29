@@ -53,6 +53,7 @@ Route::post('accept/{order}', [OrderController::class, 'accept']);
 Route::post('completed/{order}', [OrderController::class, 'completed']);
 
 Route::get('home', [HomeController::class, 'index']);
+Route::get('profile', [AuthController::class, 'profile']);
 
 
 Route::get('users', [DashboardController::class, 'users']);

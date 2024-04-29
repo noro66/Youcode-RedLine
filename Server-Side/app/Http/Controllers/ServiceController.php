@@ -12,6 +12,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ServiceController extends Controller
 {
@@ -78,7 +79,7 @@ class ServiceController extends Controller
 //        return \response()->json(['isSeller' => Auth::user()->isSeller]);
             $data = $request->validated();
             $imgPath = $request->file('cover_image')->store('coverImages', 'public');
-            $data['seller_id'] = Auth::id();
+            $data['seller_id'] = Auth::user()->seller->id;
             $data['cover_image'] = $imgPath;
             $service = Service::create($data);
             if ($request->hasFile('images')) {
@@ -121,7 +122,7 @@ class ServiceController extends Controller
     {
         $seller = Auth::user()->seller;
         if ($seller) {
-            $services = Service::where('seller_id', $seller->id)->with('images')->get();
+            $services = Service::where('seller_id', $seller->id)->get();
             return response()->json([
                 'services' => $services,
             ]);

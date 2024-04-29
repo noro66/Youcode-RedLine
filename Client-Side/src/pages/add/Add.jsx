@@ -26,7 +26,7 @@ const Add = () => {
             });
         console.log(formData);
             await customAxios.post("services", formData);
-            navigate("/");
+            navigate("/myservices");
         }catch (err){
             console.log(err?.response?.data);
         }

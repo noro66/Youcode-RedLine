@@ -73,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
     }
     public function seller(): \Illuminate\Database\Eloquent\Relations\HasOne
     {
-        return $this->hasOne(Seller::class);
+        return $this->hasOne(Seller::class, 'user_id');
     }
 
     public  function admin(): \Illuminate\Database\Eloquent\Relations\HasOne
