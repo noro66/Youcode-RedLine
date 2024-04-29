@@ -12,6 +12,18 @@
     max-width: 360px;
     padding: 34px;
     box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+    .alert {
+      background-color: #f8d7da;
+      color: #721c24;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
 
     label {
       color: gray;

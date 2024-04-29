@@ -109,15 +109,19 @@ class AuthController extends Controller
         ])->validated();
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['error' => 'Your credential are incorrect '], 401);
         }
-        $expirationTime = Carbon::now()->addDays(12);
-
-        config()->set('jwt.ttl', 60*24*7);
         $user = Auth::user();
+        if ($user->is_restricted){
+            return response()->json([
+                'success' => false,
+                'message' => "You have been restricted by administrator",
+            ]);
+        }
         $token = auth()->claims([
             'user' => auth()->user(),
-        ])->attempt($credentials, ['exp' => $expirationTime->timestamp]);
+        ])->attempt($credentials);
+
         return $this->respondWithToken($token);
     }
 

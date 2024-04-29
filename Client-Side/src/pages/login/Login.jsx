@@ -11,7 +11,7 @@ import {jwtDecode} from "jwt-decode";
 export  default function Login (key, value) {
     const navigate = useNavigate();
     const {setUser, setToken, user, token} = useStateContext();
-    const [error, setError] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
 
     function onsubmit(data) {
         CustomAxios.post("auth/login", data).then(({data}) =>  {
@@ -19,7 +19,7 @@ export  default function Login (key, value) {
             setUser(buffuser);
             setToken(data.token);
             navigate("/");
-        }).catch(err => setError(err.response.data));
+        }).catch(err => setErrorMessage(err.response.data.error));
     }
     const {register, handleSubmit,formState: {errors : formErrors}} = useForm();
 
@@ -37,7 +37,11 @@ export  default function Login (key, value) {
                     <p className={'message'}>
                         Not Registered ? <Link to={'/register'}>Create an account !</Link>
                     </p>
-                    {error && JSON.stringify(error)}
+                    {errorMessage && (
+                        <div className="alert">
+                            {errorMessage}
+                        </div>
+                    )}
                 </form>
             </div>
         </div>
