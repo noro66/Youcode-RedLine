@@ -57,9 +57,12 @@ const Orders = (props) => {
                 </thead>
                 <tbody>
                 {isLoading ? "Loading..." : error ? "Ops an Error !" : orders?.map((order) => (
-                    <tr key={order.id}>
+
+                   <tr key={order.id}>
                         <td>
+                            <Link className={'link'} to={`/service/${order.id}`}>
                             <img className={'img'} src={imageFromat(order.image)} alt=""/>
+                            </Link >
                         </td>
                         <td>{order.title}</td>
                         <td>{order.price} $</td>
@@ -78,6 +81,7 @@ const Orders = (props) => {
                             ) : null}
                         </td>
                     </tr>
+
                 ))}
                 </tbody>
             </table>

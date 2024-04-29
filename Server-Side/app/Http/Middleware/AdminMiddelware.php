@@ -16,7 +16,7 @@ class AdminMiddelware
      * @param Closure $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         if (Auth::check() && Auth::user()->type === 'admin') {
             return $next($request);

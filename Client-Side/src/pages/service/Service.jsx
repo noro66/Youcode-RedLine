@@ -92,14 +92,14 @@ const Service = () => {
                                     <div className="info">
                                         <span>{/**/data?.seller.user.username}</span>
                                         <div className="stars">
-                                            {stars > 0 ? (
-                                                Array.from({length: stars}, (_, index) => (
+                                            { (stars > 0 && stars <= 5) ? (
+                                               Array.from({length: stars ?? 1}, (_, index) => (
                                                     <img key={index} src="/images/icons8-star-48.png" alt=""/>
                                                 ))
                                             ) : (
                                                 <img src="/images/icons8-star-48.png" alt=""/>
                                             )}
-                                            <span>{stars}</span>
+                                            <span>{stars ?? 0}</span>
                                         </div>
                                         <button onClick={()=>alert('Coming Soon')}>Contact Me</button>
                                     </div>

@@ -46,7 +46,6 @@ const isActive = ()=>{
                 </div>
                 <div className="links">
                     <Link to={'/services'} className={'link'}><span>Services</span></Link>
-                    {!user?.isSeller && <span>Became a SP</span>}
                     {!user && (
                         <>
                             <Link to="/register" className="link">
@@ -71,7 +70,6 @@ const isActive = ()=>{
                                 ) : ""
                             }
                             <Link className={'link'} to={'/orders'}> <span>Orders</span> </Link>
-                            <Link className={'link'} to={'messages'}> <span>Profile</span> </Link>
                             <hr/>
                             <span onClick={onLogout}>Logout</span>
                         </div>}
