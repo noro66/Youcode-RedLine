@@ -7,8 +7,10 @@ import CategoCard from "../../component/categoCart/CategoCard.jsx";
 import ProjectCard from "../../component/projectCart/ProjectCard.jsx";
 import {useQuery} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
-import {useEffect} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {useStateContext} from "../../context/ContextProvider.jsx";
+
+
 
 const Home = () => {
 
@@ -20,13 +22,39 @@ const Home = () => {
         refetch();
         setCategories(categories);
     }, [categories]);
+    const [slidesToShow, setSlidesToShow] = useState(4);
+    useEffect(() => {
+        const handleResize = () => {
+            const windowWidth = window.innerWidth;
+            let newSlidesToShow;
+
+            if (windowWidth >= 1200) {
+                newSlidesToShow = 4;
+            } else if (windowWidth >= 768) {
+                newSlidesToShow = 3;
+            } else {
+                newSlidesToShow = 1;
+            }
+
+            setSlidesToShow(newSlidesToShow);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Call the handler right away so state gets updated with initial window size
+        handleResize();
+
+        // Remove event listener on cleanup
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <div className={'home'}>
             <Featured cat={categories}/>
             <TrustedBy/>
             <div className="section-name">Categories</div>
             {isLoading ? "loading..." : error ? "Ops there is an error" :
-                <Slide slidesToShow={5} arrowsToScroll={5}>
+                <Slide slidesToShow={slidesToShow} arrowsToScroll={5}>
                     {categories && categories.map((card) => (
                         <CategoCard item={card} key={card.id}/>
                     ))}
