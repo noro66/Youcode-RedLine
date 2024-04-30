@@ -9,4 +9,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Feature extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $fillable =
+        [
+            'service_id',
+            'name'
+        ];
 }

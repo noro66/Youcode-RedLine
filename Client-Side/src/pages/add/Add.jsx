@@ -3,28 +3,41 @@ import { useForm } from 'react-hook-form';
 import {useMutation, useQuery} from "@tanstack/react-query";
 import customAxios from "../../../CustomAxios.js";
 import {useNavigate} from "react-router-dom";
+import {useState} from "react";
+import MultiSelect from "../../component/multiselect/MultiSelect.jsx";
 
 const Add = () => {
     const { isPending, isLoading, error, data: categories, refetch } = useQuery({ queryKey: ['categories'],
         queryFn: () => customAxios.get('home').then(res => res.data.categories) });
     const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const [features, setFeatures] = useState([]);
 
     const   onSubmit = async data => {
         try {
             const formData = new FormData();
             data.cover_image = Array.isArray(data.cover_image) ? data.cover_image[0] : data.cover_image;
             const imagesArray = Array.from(data.images);
+
             imagesArray.forEach(image => {
                 formData.append("images[]", image);
             });
+
+
+            if (Array.isArray(features)) {
+                features.forEach((feature, index) => {
+                    formData.append(`features[${index}]`, feature.trim());
+                });
+            }
+
+
             formData.append('cover_image', data.cover_image[0]);
             Object.keys(data).forEach((key) => {
                 if (key !== "images" && key !== "cover_image") {
                     formData.append(key, data[key]);
                 }
             });
-        console.log(formData);
+
             await customAxios.post("services", formData);
             navigate("/myservices");
         }catch (err){
@@ -82,10 +95,12 @@ const Add = () => {
                             <input  className={ errors.revision_time && "border-red"} type="number" min={1} {...register("revision_time",{ required: 'Revision Time is required' })} />
                             {errors.revision_time && <p>{errors.revision_time.message}</p>}
 
-                            <label htmlFor="features">Add Features</label>
-                            {Array.from({ length: 5 }, (_, index) => (
-                                <input  key={index} {...register(`features[${index}]`)} type="text" placeholder="Feature" />
-                            ))}
+                            {/*<label htmlFor="features">Add Features</label>*/}
+                            {/*{Array.from({ length: 5 }, (_, index) => (*/}
+                            {/*    <input  key={index} {...register(`features[${index}]`)} type="text" placeholder="Feature" />*/}
+                            {/*))}*/}
+
+                            <MultiSelect features={features}  setFeatures={ setFeatures} />
 
                             <label htmlFor="price">Price</label>
                             <input  className={ errors.price && "border-red"} type="number" min={1} {...register("price", { required: 'Price is required and must be greater than 0' })} />

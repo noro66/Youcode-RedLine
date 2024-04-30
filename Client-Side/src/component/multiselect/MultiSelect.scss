@@ -1,0 +1,50 @@
+.multi-select {
+  font-family: Arial, sans-serif;
+}
+
+.multi-select__message {
+  font-size: 12px;
+  color: #666;
+}
+
+.multi-select__container {
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  transition: border-color 0.3s ease;
+}
+
+.multi-select__container.focused {
+  border-color: #555;
+}
+
+.multi-select__tag {
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  margin: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.multi-select__tag-text {
+  margin-right: 4px;
+}
+
+.multi-select__tag-remove {
+  cursor: pointer;
+  color: #999;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.multi-select__input {
+  padding: 8px;
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  border-radius: 4px;
+}
+

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreServiceRequest;
+use App\Models\Feature;
 use App\Models\Image;
 use App\Models\Service;
 use App\Models\ServiceCategory;
@@ -89,6 +90,15 @@ class ServiceController extends Controller
                     Image::create([
                         'image_url' => $imgPath,
                         'service_id' => $service->id,
+                    ]);
+                }
+            }
+            if($request->has('features')){
+                $features = $request->input('features');
+                foreach ($features as $feature) {
+                    Feature::create([
+                        'service_id' => $service->id,
+                        'name' => $feature,
                     ]);
                 }
             }

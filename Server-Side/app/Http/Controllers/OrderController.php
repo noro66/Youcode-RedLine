@@ -56,7 +56,6 @@ class OrderController extends Controller
         $this->authorize('OrderService', $service);
         $user = Auth::user();
         $order = $service->orders()->create([
-            'payment_intent' => $request->input('payment_intent'),
             'client_id' => $user->client->id,
             'price' => $service->price,
             'image' => $service->cover_image,
